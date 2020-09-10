@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<div id="titulo">
+		<title><ui:insert name="pageTitle">Gerenciador de Torneios de Padel</ui:insert></title>
+	</div>
+
+	<h:outputStylesheet library="css" name="estilos.css"></h:outputStylesheet>
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+		crossorigin="anonymous"></link>
+
+	<link rel="icon" href="../resources/images/icone.png" type="image/png"></link>
+
+<style>
+body {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #4CAF50;
+}
+</style>
+
+</h:head>
+
+<h:body>
+
+	<p:dialog id="inscDupla" header="Inscrição Dupla"
+		widgetVar="dialogInscDupla" resizable="false" modal="true"
+		showEffect="slide" width="500">
+
+
+
+		<h:form id="inscricaoDupla">
+			<h3>Atleta 1</h3>
+
+			<div class="row">
+				<div class="col-lg-6">
+					<h:outputLabel value="Nome:" />
+					<h:inputText id="nomeAtleta1"
+						required="#{param['inscricaoDupla:cancelar']==null}"
+						value="#{duplaMB.atleta1.nome}"
+						requiredMessage="Preencha o campo Nome, do atleta 1, corretamente." />
+
+				</div>
+
+
+				<div class="col-lg-6">
+					<h:outputLabel value="Email:" />
+					<h:inputText id="emailAtleta1"
+						required="#{param['inscricaoDupla:cancelar']==null}"
+						value="#{duplaMB.atleta1.email}"
+						requiredMessage="Preencha o campo Email, do atleta 1, corretamente.">
+						<f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+					</h:inputText>
+				</div>
+
+
+				<div class="col-lg-6">
+					<h:outputLabel value="CPF:" />
+					<p:inputMask id="cpfAtleta1" mask="999.999.999-99"
+						required="#{param['inscricaoDupla:cancelar']==null}"
+						requiredMessage="Preencha o campo CPF, do atleta 1, corretamente."
+						size="14" value="#{duplaMB.atleta1.cpf}" />
+				</div>
+
+				<div class="col-lg-6">
+					<h:outputLabel value="Telefone:" />
+					<p:inputMask id="numCelAtleta1" mask="(99) 9 9999-9999"
+						required="#{param['inscricaoDupla:cancelar']==null}"
+						value="#{duplaMB.atleta1.numCel}"
+						requiredMessage="Preencha o campo Telefone, do atleta 1, corretamente."
+						size="16" />
+					<br></br>
+				</div>
+
+			</div>
+
+			<h3>Atleta 2</h3>
+			<br></br>
+
+			<div class="row">
+				<div class="col-lg-6">
+					<h:outputLabel value="Nome:" />
+					<h:inputText id="nomeAtleta2"
+						required="#{param['inscricaoDupla:cancelar']==null}"
+						value="#{duplaMB.atleta2.nome}"
+						requiredMessage="Preencha o campo Nome, do atleta 2, corretamente." />
+
+				</div>
+
+
+				<div class="col-lg-6">
+					<h:outputLabel value="Email:" />
+					<h:inputText id="emailAtleta2"
+						required="#{param['inscricaoDupla:cancelar']==null}"
+						value="#{duplaMB.atleta2.email}"
+						requiredMessage="Preencha o campo Email, do atleta 2, corretamente.">
+						<f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+					</h:inputText>
+				</div>
+
+
+				<div class="col-lg-6">
+					<h:outputLabel value="CPF:" />
+					<p:inputMask id="cpfAtleta2" mask="999.999.999-99"
+						required="#{param['inscricaoDupla:cancelar']==null}"
+						requiredMessage="Preencha o campo CPF, do atleta 2, corretamente."
+						size="14" value="#{duplaMB.atleta2.cpf}" />
+				</div>
+
+				<div class="col-lg-6">
+					<h:outputLabel value="Telefone:" />
+					<p:inputMask id="numCelAtleta2" mask="(99) 9 9999-9999"
+						required="#{param['inscricaoDupla:cancelar']==null}"
+						requiredMessage="Preencha o campo Telefone, do atleta 2, corretamente."
+						size="16" value="#{duplaMB.atleta2.numCel}" />
+					<br></br>
+				</div>
+
+
+
+				<div class="col-lg-6">
+					<h:outputLabel for="categoria" value="Categoria:" />
+					<h:selectOneMenu class="btn btn-secondary" id="categoria"
+						value="#{duplaMB.categoria.id}">
+						<f:selectItem itemLabel="1ª Livre" itemValue="1" />
+						<f:selectItem itemLabel="2ª Livre" itemValue="2" />
+						<f:selectItem itemLabel="3ª Livre" itemValue="3" />
+						<f:selectItem itemLabel="4ª Livre" itemValue="4" />
+						<f:selectItem itemLabel="5ª Livre" itemValue="5" />
+						<f:selectItem itemLabel="Iniciantes Livre" itemValue="6" />
+						<f:selectItem itemLabel="Iniciantes Feminina" itemValue="7" />
+						<f:selectItem itemLabel="2ª feminina" itemValue="8" />
+						<f:selectItem itemLabel="3ª feminina" itemValue="9" />
+						<f:selectItem itemLabel="4ª feminina" itemValue="10" />
+						<f:selectItem itemLabel="5ª feminina" itemValue="11" />
+					</h:selectOneMenu>
+
+				</div>
+
+				<div class="col-lg-6">
+					<h:outputLabel for="impedimento" value="Impedimento:" />
+					<h:selectOneMenu class="btn btn-secondary" id="impedimento"
+						value="#{duplaMB.dupla.impedimento}">
+						<f:selectItem itemLabel="Sábado Manhã" itemValue="1" />
+						<f:selectItem itemLabel="Sábado Tarde" itemValue="2" />
+						<f:selectItem itemLabel="Sábado Noite" itemValue="3" />
+
+					</h:selectOneMenu>
+
+				</div>
+			</div>
+			<div class="float-left">
+				<br></br>
+				<h:commandButton class="btn btn-success"
+					action="#{duplaMB.inscrever}" update="inscricaoDupla"
+					value="Inscrever Dupla">
+				</h:commandButton>
+			</div>
+
+			<div class="float-right">
+				<br></br>
+				<h:commandButton id="cancelar" oncomplete="dialogInscDupla.hide();"
+					value="Cancelar" styleClass="btn btn-danger" />
+			</div>
+
+		</h:form>
+	</p:dialog>
+
+
+</h:body>
+
+
+</html>

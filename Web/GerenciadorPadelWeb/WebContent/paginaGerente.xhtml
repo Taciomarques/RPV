@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="paginaInicial.xhtml">
+
+	<ui:define name="dialogs">
+		<ui:include src="WEB-INF/dialogs/DialogLogin.xhtml" />
+		<ui:include src="WEB-INF/dialogs/DialogInscDupla.xhtml" />
+		<ui:include src="WEB-INF/dialogs/DialogViewDuplas.xhtml" />
+		<ui:include src="WEB-INF/dialogs/DialogViewChaves.xhtml" />
+		<ui:include src="WEB-INF/dialogs/DialogViewPartidas.xhtml" />
+	</ui:define>
+
+	<p:growl id="growl" />
+
+	<div class="hero_image">
+
+		<ui:define name="btLogado">
+			<div class="float-right">
+				<h:commandButton styleClass="button"
+					value="Gerente: #{gerenteMB.gerenteLogado.nome}" disabled="true" />
+			</div>
+		</ui:define>
+
+		<div class="hero_text">
+			<h1 style="font-size: 50px">Software Gerenciador de Torneios de
+				Padel</h1>
+			<h3>RPIV - Grupo Alfa</h3>
+
+			<ui:define name="btLogin">
+				<h:form>
+					<h:commandButton class="button" value="Logout"
+						action="#{gerenteMB.logout}" />
+				</h:form>
+			</ui:define>
+
+		</div>
+	</div>
+
+	<ui:define name="botoes">
+		<div
+			style="display: flex; justify-content: center; align-items: center;">
+			<div>
+				<h:form id="botoesGer">
+					<h:commandButton class="button buttonGreen"
+						onclick="dialogInscDupla.show()" value="Increver Dupla"
+						type="button" disabled="#{param['botoesGer:encerraInsc']==true}" />
+					<h:commandButton class="button buttonGreen"
+						onclick="dialogViewDuplas.show()" value="Visualizar Inscrições"
+						type="button" />
+					<h:commandButton id="encerraInsc" class="button buttonGreen"
+						value="Encerrar Inscrições" type="button" />
+					<!-- <h:commandButton class="button buttonGreen" onclick=""
+				value="Gerar Chaves" type="button" /> -->
+					<br></br>
+					<div
+						style="display: flex; justify-content: center; align-items: center;">
+
+						<h:commandButton class="button buttonGreen"
+							onclick="dialogViewChaves.show()" value="Visualizar Chaves"
+							type="button" />
+						<!-- <h:commandButton class="button buttonGreen" onclick=""
+					value="Gerar Partidas" type="button" /> -->
+						<h:commandButton class="button buttonGreen"
+							onclick="dialogViewPartidas.show()" value="Visualizar Partidas"
+							type="button" />
+						<!-- <h:commandButton class="button buttonGreen" onclick=""
+					value="Ranking" type="button" /> -->
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+
+	<p:dialog id="circuitodialog" header="Circiuto"
+		widgetVar="dialogCircuito" resizable="false" modal="true"
+		showEffect="slide" width="300">
+
+		<h:form id="formCircuito">
+
+			<div class="col">
+				<div class="col-lg-12">
+					<h:outputLabel for="circuito" value="Circuito:" />
+					<h:selectOneMenu class="btn btn-secondary" id="circuito"
+						value="#{gerenteMB.circuito.id}">
+						<f:selectItem itemLabel="Circuito 1" itemValue="1" />
+						<f:selectItem itemLabel="Circuito 2" itemValue="2" />
+					</h:selectOneMenu>
+				</div>
+
+			</div>
+			<div class="float-left">
+				<br></br>
+				<h:commandButton class="btn btn-success" update="formLogin"
+					value="Escolher" actionListener="#{gerenteMB.carregaCircuito}"
+					oncomplete="" />
+			</div>
+
+			<div class="float-right">
+				<br></br>
+				<h:commandButton id="cancelar" oncomplete="dialogCircuito.hide();"
+					value="Cancelar" styleClass="btn btn-danger" />
+			</div>
+		</h:form>
+	</p:dialog>
+
+</ui:composition>
+</html>

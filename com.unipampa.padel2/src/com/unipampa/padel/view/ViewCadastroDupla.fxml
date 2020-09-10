@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.media.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="555.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unipampa.padel.controller.ControllerDupla">
+	<children>
+		<Label layoutX="54.0" layoutY="13.0" text="Inscrição da Dupla">
+			<font>
+				<Font name="Century" size="36.0" />
+			</font>
+		</Label>
+		<Pane layoutX="50.0" layoutY="66.0" prefHeight="514.0" prefWidth="301.0">
+			<children>
+				<Label layoutX="28.0" layoutY="29.0" text="Categoria Dupla:" />
+				<MenuButton fx:id="catDupla" layoutX="123.0" layoutY="25.0" prefWidth="150.0" text="Escolher Categoria" />
+            <Label layoutX="29.0" layoutY="75.0" text="Impedimento:" />
+            <MenuButton fx:id="selectImpedimento" layoutX="108.0" layoutY="71.0" prefHeight="25.0" prefWidth="165.0" text="Escolher Impedimento" />
+				<Label layoutX="119.0" layoutY="102.0" text="Atleta 1" textFill="#f59707">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Label>
+				<Label layoutX="62.0" layoutY="140.0" text="Nome:" />
+				<TextField fx:id="nomeAtleta1" layoutX="108.0" layoutY="136.0" />
+				<Label layoutX="66.0" layoutY="173.0" text="Email:" />
+				<TextField fx:id="emailAtleta1" layoutX="108.0" layoutY="169.0" />
+				<Label layoutX="73.0" layoutY="211.0" text="CPF:" />
+				<TextField fx:id="cpfAtleta1" layoutX="108.0" layoutY="207.0" />
+				<Label layoutX="17.0" layoutY="244.0" text="Número Celular:" />
+				<TextField fx:id="numCelAtleta1" layoutX="108.0" layoutY="240.0" />
+				<Line endX="100.0" layoutX="159.0" layoutY="281.0" startX="-100.0" />
+				<Label layoutX="119.0" layoutY="281.0" text="Atleta 2" textFill="#0f229e">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Label>
+				<Label layoutX="62.0" layoutY="319.0" text="Nome:" />
+				<TextField fx:id="nomeAtleta2" layoutX="108.0" layoutY="315.0" />
+				<Label layoutX="66.0" layoutY="352.0" text="Email:" />
+				<TextField fx:id="emailAtleta2" layoutX="108.0" layoutY="348.0" />
+				<Label layoutX="73.0" layoutY="385.0" text="CPF:" />
+				<TextField fx:id="cpfAtleta2" layoutX="108.0" layoutY="381.0" />
+				<Label layoutX="18.0" layoutY="416.0" text="Número Celular:" />
+				<TextField fx:id="numCelAtleta2" layoutX="109.0" layoutY="412.0" />
+				<Button fx:id="botaoCancelar" cancelButton="true" layoutX="17.0" layoutY="465.0" mnemonicParsing="false" onAction="#clickBotaoCancelar" text="Cancelar" textAlignment="CENTER" textFill="#dd0b0b" />
+				<Button fx:id="botaoInscrever" layoutX="226.0" layoutY="465.0" mnemonicParsing="false" onAction="#clickBotaoInscrever" text="Inscrever" textAlignment="CENTER" textFill="#29e115" />
+			</children>
+		</Pane>
+
+	</children>
+</AnchorPane>

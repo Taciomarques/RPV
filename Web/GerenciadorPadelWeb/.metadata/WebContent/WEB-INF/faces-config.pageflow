@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15721994842280" configfile="/GerenciadorPadelWeb/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="paginaInicial.xhtml" x="338" y="178" id="pf15722001506401" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf15722001506402" inlinks="pf15722001506403" path="/paginaInicial.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="paginaGerente.xhtml" x="122" y="178" id="pf15722001506414" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf15722001506403" inlinks="pf15722001506402" path="/paginaGerente.xhtml"/>
+  <links id="pf15722001506402" target="pf15722001506414" source="pf15722001506401" outcome="paginaGerente"/>
+  <links id="pf15722001506403" target="pf15722001506401" source="pf15722001506414" outcome="paginaInicial"/>
+</pageflow:Pageflow>

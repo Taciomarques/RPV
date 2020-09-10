@@ -1,0 +1,111 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+
+
+body {
+		background-image: url(../_imagens/fundo_index.jpg);
+		background-size: cover;
+		background-repeat: no-repeat;
+		color: rgba(0, 0, 0, 1);
+}
+
+div#interface{
+	width: 900px;
+	background-color: #bfccde;
+	margin: -20px auto 0px auto;
+	box-shadow: 0px 0px 10px rgba(0,0,0,.5);
+	padding: 10px 10px 10px 10px;
+
+}
+
+div#interface header#cabecalho img#icone{
+	position: absolute;
+	left: 73%;
+	top: 1%;
+	transform: translate(-73%, -1%);
+}
+
+header#cabecalho h1{
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 30pt
+	color: #606060;
+	text-shadow: 1px 1px 1px rgba(0,0,0,.6);
+	padding: 0px;
+	margin-bottom: 0px;
+}
+
+header#cabecalho h2{
+	font-family: 'Ubuntu', sans-serif;
+	color: #808080;
+	font-size: 15pt;
+	padding: 0px;
+	margin-top: 0px;
+}
+figure.foto-legenda{
+	border: 8px solid white;
+	box-shadow: 1px 1px 4px black;
+	position: relative;
+}
+
+figure.foto-legenda img{
+	width: 100%;
+	height: 100%;
+}
+
+figure.foto-legenda figcaption{
+	opacity: 0;
+	position: absolute;
+	top: 0px;
+	background-color: rgba(0,0,0,.4);
+	color: white;
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	transition: opacity 1s;
+
+}
+
+figure.foto-legenda:hover figcaption{
+	opacity: 1;
+}
+
+nav#menu {
+	display: inline-block;
+}
+
+div#interface nav#menu ul {
+	list-style: none;
+	text-transform: uppercase;
+	position: absolute;
+	top: 8%;
+	left: 27%;
+	transform: translate(-8%, -27%);
+
+}
+
+nav#menu li {
+	display: inline-block;
+	background-color: #dddddd;
+	padding: 10px;
+	margin: 2px;
+	transition: background-color 1s;
+}
+
+nav#menu li:hover {
+	background-color: #606060;
+}
+
+nav#menu h1 {
+	display: none;
+}
+
+nav#menu a{
+	color: #000000;
+	text-decoration: none;	
+}
+
+nav#menu a:hover {
+	color: #ffffff;
+}
+

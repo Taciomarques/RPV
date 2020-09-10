@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<div id="titulo">
+		<title><ui:insert name="pageTitle">Gerenciador de Torneios de Padel</ui:insert></title>
+	</div>
+
+	<h:outputStylesheet library="css" name="estilos.css"></h:outputStylesheet>
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+		crossorigin="anonymous"></link>
+
+	<link rel="icon" href="../resources/images/icone.png" type="image/png"></link>
+
+	<style>
+body {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #4CAF50;
+}
+</style>
+
+</h:head>
+
+<h:body>
+	<ui:insert name="dialogs">
+		<ui:include src="WEB-INF/dialogs/DialogLogin.xhtml" />
+		<ui:include src="WEB-INF/dialogs/DialogInscDupla.xhtml" />
+		<ui:include src="WEB-INF/dialogs/DialogViewDuplas.xhtml" />
+	</ui:insert>
+	<p:growl id="growl" />
+
+	<div class="hero_image">
+		<ui:insert name="btLogado">
+
+		</ui:insert>
+		<div class="hero_text">
+			<h1 style="font-size: 50px">Software Gerenciador de Torneios de
+				Padel</h1>
+			<h3>RPIV - Grupo Alfa</h3>
+			
+			<ui:insert name="btLogin">
+				<h:commandButton class="button" value="Login"
+					onclick="dialogLogin.show()" type="button" />
+			</ui:insert>
+		
+		</div>
+	</div>
+	<ui:insert name="botoes">
+		<div
+			style="display: flex; justify-content: center; align-items: center;">
+			<div>
+
+				<h:commandButton class="button buttonGreen"
+					onclick="dialogInscDupla.show()" value="Increver Dupla"
+					type="button" />
+
+				<h:commandButton class="button buttonGreen"
+					onclick="dialogViewDuplas.show()" value="Visualizar Inscrições"
+					type="button" />
+
+			</div>
+		</div>
+	</ui:insert>
+</h:body>
+</html>

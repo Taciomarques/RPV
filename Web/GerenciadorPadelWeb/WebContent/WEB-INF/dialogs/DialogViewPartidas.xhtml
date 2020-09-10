@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<p:dialog id="viewPartidas" header="Partidas"
+		widgetVar="dialogViewPartidas" resizable="false" modal="true"
+		showEffect="slide" width="1000">
+
+		<h:form id="diaSelecionado">
+			<div class="col-lg-6">
+				<h:outputLabel value="Dia:" />
+				<h:selectOneMenu class="btn btn-secondary" id="selectDia"
+					value="#{partidaMB.selectDia}">
+					<f:selectItem itemLabel="Quinta" itemValue="4" />
+					<f:selectItem itemLabel="Sexta" itemValue="5" />
+					<f:selectItem itemLabel="Sábado" itemValue="6" />
+					<f:selectItem itemLabel="Domingo" itemValue="0" />
+					<f:ajax execute="@this" render="tabelaPartidas"
+						listener="#{partidaMB.methodAjax}" />
+				</h:selectOneMenu>
+			</div>
+
+			<!-- order="asc" data-order="#{dupla.categoria.id}"  paginator="true"
+					rows="20"   sortBy="#{dupla.nome}"  <p:separator />-->
+			<h:panelGroup id="tabelaPartidas">
+				<p:dataTable var="partida" value="#{partidaMB.partidas}" resizableColumns="false" scrollable="true" scrollHeight="150">
+					<p:column style="max-width: 500px; min-width: 500px; overflow: hidden" headerText="Nome">
+						<h:outputText value="#{partida.nome}" />
+					</p:column>
+
+					<p:column style="max-width: 300px; min-width: 300px; overflow: hidden" headerText="Data">
+						<h:outputText value="#{partida.dataHora}" />
+					</p:column>
+
+					<p:column style="max-width: 130px; min-width: 130px; overflow: hidden" headerText="Quadra">
+						<h:outputText value="{partida.quadra.id}" />
+					</p:column>
+
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+
+	</p:dialog>
+
+</html>

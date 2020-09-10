@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<div id="titulo">
+		<title><ui:insert name="pageTitle">Gerenciador de Torneios de Padel</ui:insert></title>
+	</div>
+
+	<h:outputStylesheet library="css" name="estilos.css"></h:outputStylesheet>
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+		crossorigin="anonymous"></link>
+
+	<link rel="icon" href="../resources/images/icone.png" type="image/png"></link>
+
+	<style>
+body {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #4CAF50;
+}
+</style>
+
+</h:head>
+
+<h:body>
+
+	<p:dialog id="viewChaves" header="Chaves" widgetVar="dialogViewChaves"
+		resizable="false" modal="true" showEffect="slide" width="700">
+
+		<h:form id="categoriaSelecionadaChave">
+			<div class="col-lg-6">
+				<h:outputLabel value="Categoria:" />
+				<h:selectOneMenu class="btn btn-secondary" id="selectCat"
+					value="#{chaveMB.selectCategoria.id}">
+					<f:selectItem itemLabel="1ª Livre" itemValue="1" />
+					<f:selectItem itemLabel="2ª Livre" itemValue="2" />
+					<f:selectItem itemLabel="3ª Livre" itemValue="3" />
+					<f:selectItem itemLabel="4ª Livre" itemValue="4" />
+					<f:selectItem itemLabel="5ª Livre" itemValue="5" />
+					<f:selectItem itemLabel="Iniciantes Livre" itemValue="6" />
+					<f:selectItem itemLabel="Iniciantes Feminina" itemValue="7" />
+					<f:selectItem itemLabel="2ª feminina" itemValue="8" />
+					<f:selectItem itemLabel="3ª feminina" itemValue="9" />
+					<f:selectItem itemLabel="4ª feminina" itemValue="10" />
+					<f:selectItem itemLabel="5ª feminina" itemValue="11" />
+					<f:ajax execute="@this" render="tabelaChaves"
+						listener="#{chaveMB.methodAjax}" />
+				</h:selectOneMenu>
+			</div>
+
+			<!-- order="asc" data-order="#{dupla.categoria.id}"  paginator="true"
+					rows="20"   sortBy="#{dupla.nome}"  <p:separator />-->
+			<h:panelGroup id="tabelaChaves">
+				<p:dataTable var="chave" value="#{chaveMB.chaves}"
+					resizableColumns="false" scrollable="true" scrollHeight="150">
+
+					<p:columnGroup type="header">
+						<p:row>
+							<p:column style="max-width: 140px; min-width: 140px; overflow: hidden" headerText="Chave" />
+							<p:column style="max-width: 520px; min-width: 520px; overflow: hidden" headerText="Duplas" />
+						</p:row>
+					</p:columnGroup>
+
+					<p:subTable var="dupla" value="#{chave.duplaList}">
+
+					<f:facet name="header" style="max-width: 640px; min-width: 640px; overflow: hidden">  
+           				 <h:outputText value="#{chave.nome}"/>  
+        			</f:facet>
+
+						<p:column style="max-width: 660px; min-width: 660px; overflow: hidden">
+							<h:outputText value="#{dupla.nome}" />
+						</p:column>
+
+					</p:subTable>
+
+<!-- 
+					<p:column
+						style="max-width: 80px; min-width: 80px; overflow: hidden"
+						headerText="Pontos">
+						<h:outputText value="#{chave.nome}" />
+					</p:column>
+
+					<p:subTable var="dupla" value="#{chave.duplas}">
+						<p:columnGroup
+							style="max-width: 450px; min-width: 450px; overflow: hidden"
+							headerText="Duplas">
+							<h:outputText value="#{dupla.nome}" />
+						</p:columnGroup>
+					</p:subTable>
+ -->
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+
+	</p:dialog>
+
+</h:body>
+
+
+</html>

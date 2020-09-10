@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.media.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unipampa.padel.controller.ControllerPrevisaoPartidas">
+   <children>
+      <Text layoutX="232.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Partidas " AnchorPane.topAnchor="14.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tabela_partidas" layoutX="1.0" layoutY="102.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="297.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+        <columns>
+          <TableColumn fx:id="horario" maxWidth="800.0" text="Horário" />
+            <TableColumn fx:id="quadra" maxWidth="500.0" text="Quadra" />
+          <!-- <TableColumn fx:id="nomeCat" prefWidth="319.0" text="Categoria" /> -->
+            <TableColumn fx:id="nome" text="Confronto (Dupla x Dupla)" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <MenuButton fx:id="diaList" layoutX="242.0" layoutY="65.0" mnemonicParsing="false" text="Escolher Dia" AnchorPane.topAnchor="65.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </MenuButton>
+      <Button fx:id="botaoVoltar" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#clickBotaoVoltar" text="Voltar" AnchorPane.topAnchor="65.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

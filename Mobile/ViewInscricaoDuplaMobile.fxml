@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.AppBar?>
+<?import com.gluonhq.charm.glisten.control.CardPane?>
+<?import com.gluonhq.charm.glisten.control.Icon?>
+<?import com.gluonhq.charm.glisten.mvc.View?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+
+<View maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <AppBar titleText="Inscrição de Dupla" BorderPane.alignment="CENTER">
+         <navIcon>
+            <Button>
+               <graphic>
+                  <Icon content="ARROW_BACK" />
+               </graphic>
+            </Button>
+         </navIcon>
+         <menuItems>
+            <MenuItem text="Menu Item 1" />
+            <MenuItem text="Menu Item 2" />
+         </menuItems>
+      </AppBar>
+   </top>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Atleta 1">
+               <content>
+                  <CardPane>
+                      <Label contentDisplay="RIGHT" prefHeight="46.0" prefWidth="320.0" style="-fx-padding:10;" text="Nome:">
+                        <graphic>
+                           <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="255.0" />
+                        </graphic>
+                     </Label>
+                     <Label contentDisplay="RIGHT" prefHeight="46.0" prefWidth="321.0" style="-fx-padding:10;" text="Email:">
+                        <graphic>
+                           <TextField prefHeight="26.0" prefWidth="258.0" />
+                        </graphic>
+                     </Label>
+                     <Label contentDisplay="RIGHT" prefHeight="46.0" prefWidth="320.0" style="-fx-padding:10;" text="Telefone:">
+                        <graphic>
+                           <TextField prefHeight="26.0" prefWidth="238.0" />
+                        </graphic>
+                     </Label>
+                      <Label contentDisplay="RIGHT" prefHeight="46.0" prefWidth="320.0" style="-fx-padding:10;" text="CPF:">
+                        <graphic>
+                           <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="264.0" />
+                        </graphic>
+                     </Label>
+                  </CardPane>
+               </content>
+            </Tab>
+          <Tab text="Atleta 2">
+               <content>
+                  <CardPane>
+                      <Label contentDisplay="RIGHT" prefHeight="46.0" prefWidth="321.0" style="-fx-padding:10;" text="Nome:">
+                        <graphic>
+                           <TextField alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="253.0" />
+                        </graphic>
+                     </Label>
+                      <Label contentDisplay="RIGHT" prefHeight="46.0" prefWidth="321.0" style="-fx-padding:10;" text="Email:">
+                        <graphic>
+                           <TextField prefHeight="26.0" prefWidth="254.0" />
+                        </graphic>
+                     </Label>
+                     <Label contentDisplay="RIGHT" prefHeight="46.0" prefWidth="321.0" style="-fx-padding:10;" text="Telefone:">
+                        <graphic>
+                           <TextField prefHeight="26.0" prefWidth="237.0" />
+                        </graphic>
+                     </Label>
+                      <Label contentDisplay="RIGHT" prefHeight="46.0" prefWidth="322.0" style="-fx-padding:10;" text="CPF:">
+                        <graphic>
+                           <TextField prefHeight="26.0" prefWidth="259.0" />
+                        </graphic>
+                     </Label>
+                  </CardPane>
+               </content></Tab>
+            <Tab text="Dupla">
+               <content>
+                  <CardPane>
+                      <Label contentDisplay="RIGHT" prefHeight="60.0" prefWidth="400.0" style="-fx-padding:10;" text="Categoria:">
+                        <graphic>
+                           <ComboBox prefHeight="28.0" prefWidth="229.0" />
+                        </graphic>
+                     </Label>
+                      <Label contentDisplay="RIGHT" prefHeight="60.0" prefWidth="400.0" style="-fx-padding:10;" text="Circuito:">
+                        <graphic>
+                           <ComboBox prefHeight="28.0" prefWidth="240.0" />
+                        </graphic>
+                     </Label>
+                     <Label contentDisplay="RIGHT" prefHeight="60.0" prefWidth="400.0" text="Impedimento:">
+                        <graphic>
+                           <ComboBox prefWidth="219.0" />
+                        </graphic>
+                     </Label>
+                     <BorderPane prefHeight="60.0" prefWidth="400.0">
+                        <bottom>
+                           <Button minHeight="0.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="400.0" text="Inscrever" BorderPane.alignment="CENTER" />
+                        </bottom>
+                     </BorderPane>
+                  </CardPane>
+               </content></Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</View>

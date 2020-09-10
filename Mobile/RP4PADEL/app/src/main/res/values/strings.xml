@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">RP4-PADEL</string>
+    <string name="inscricao">Inscrever Dupla</string>
+    <string name="inscritos">Ver Inscritos</string>
+    <string name="copyrights">Grupo ALFA / RP IV</string>
+    <string name="tabAtleta1">Atleta 1</string>
+    <string name="tabAtleta2">Atleta 2</string>
+    <string name="tabDupla">Dupla</string>
+    <string name="name1">Nome do Atleta 1</string>
+    <string name="name2">Nome do Atleta 2</string>
+    <string name="email1">Email do Atleta 1</string>
+    <string name="email2">Email do Atleta 2</string>
+    <string name="fone1">Telefone do Atleta 1</string>
+    <string name="fone2">Telefone do Atleta 2</string>
+    <string name="cpf1">CPF do Atleta 1</string>
+    <string name="cpf2">CPF do Atleta 2</string>
+    <string name="categoria">Categoria da Dupla</string>
+    <string name="impedimento">Impedimento da Dupla</string>
+
+    <string-array name="planets_array">
+        <item>Nenhum</item>
+        <item>Quinta de Noite</item>
+        <item>Sexta de Noite</item>
+        <item>Sabado de Manha</item>
+    </string-array>
+
+    <string-array name="categoria_array">
+        <item>chora de ruim</item>
+        <item>livre</item>
+    </string-array>
+
+</resources>

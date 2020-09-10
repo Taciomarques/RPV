@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_weight="1"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center"
+                android:padding="18dip"
+                android:text="@string/tabDupla"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@android:color/background_light" />
+
+            <TextView
+                android:id="@+id/TextView02"
+                android:layout_weight="1"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center"
+                android:padding="18dip"
+                android:text="Ranking"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@android:color/background_light" />
+
+            <TextView
+                android:id="@+id/horaTable"
+                android:layout_weight="1"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center"
+                android:padding="18dip"
+                android:text="Hora"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@android:color/background_light" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@android:dimen/app_icon_size"
+                android:text="teste1/teste2"
+                android:gravity="center_horizontal"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@android:dimen/app_icon_size"
+                android:text="1000"
+                android:gravity="center_horizontal"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@android:dimen/app_icon_size"
+                android:text="13:45"
+                android:gravity="center_horizontal"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+
+        </TableRow>
+
+        <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+
+
+    </TableLayout>
+</LinearLayout>
