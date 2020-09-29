@@ -68,6 +68,7 @@ public class Dupla implements Comparable, Serializable{
 	@ManyToMany
 	private List<Partida> partidaList;
 	
+	//,cascade = {CascadeType.MERGE}
 	@ManyToMany(mappedBy = "duplas")
 	private List<Atleta> atletaList;
 	

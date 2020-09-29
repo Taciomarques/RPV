@@ -8,10 +8,15 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -25,6 +30,7 @@ import interfaces.*;;
 
 public class CriaTabelas {
 	public static void main(String[] args) throws Exception {
+		try {
 //		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 //		entityManager.getTransaction().begin();
 //
@@ -38,7 +44,7 @@ public class CriaTabelas {
 //		entityManager.close();
 //
 //		JPAUtil.shutdown();
-		try {
+		
 			populaBanco();
 		} catch (NoSuchElementException e) {
 			System.out.println("Fim do arquivo excel");
@@ -115,7 +121,7 @@ public class CriaTabelas {
 	        Categoria categoria = getCategoria(nomeCategoria, listCategorias);
 	        
 	        Dupla dupla = new Dupla();
-	        List<Dupla> listDuplas = new ArrayList<Dupla>();
+	        Set<Dupla> listDuplas = new HashSet<Dupla>();
 	        
 	        // seta os dados dos atletas 1 e 2
 			Atleta atleta1 = new Atleta();

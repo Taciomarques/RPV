@@ -17,7 +17,7 @@ import com.unipampa.padel.model.Dupla;
 import interfaces.PersisteAtletaIF;
 
 public class PersisteAtleta extends UnicastRemoteObject implements PersisteAtletaIF {
-	
+
 	protected PersisteAtleta() throws RemoteException {
 		super();
 		// TODO Auto-generated constructor stub
@@ -26,17 +26,20 @@ public class PersisteAtleta extends UnicastRemoteObject implements PersisteAtlet
 	@Override
 	public Atleta cadastroAtleta(Atleta a) {
 
+		try {
+			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
-		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+			entityManager.getTransaction().begin();
 
-		entityManager.getTransaction().begin();
+			entityManager.persist(a);
 
-		entityManager.persist(a);
+			entityManager.getTransaction().commit();
 
-		entityManager.getTransaction().commit();
-
-		entityManager.close();
-
+			entityManager.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 		return a;
 
 	}
@@ -44,17 +47,21 @@ public class PersisteAtleta extends UnicastRemoteObject implements PersisteAtlet
 	@Override
 	public Dupla cadastroDupla(Dupla d) {
 
+		try {
 
-		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
-		entityManager.getTransaction().begin();
-		
-		entityManager.persist(d);
+			entityManager.getTransaction().begin();
 
-		entityManager.getTransaction().commit();
+			entityManager.persist(d);
 
-		entityManager.close();
+			entityManager.getTransaction().commit();
 
+			entityManager.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 		return d;
 
 	}
@@ -79,7 +86,7 @@ public class PersisteAtleta extends UnicastRemoteObject implements PersisteAtlet
 			return null;
 		}
 	}
-	
+
 	@Override
 	public ArrayList<Atleta> recuperaAtleta() {
 
@@ -101,7 +108,6 @@ public class PersisteAtleta extends UnicastRemoteObject implements PersisteAtlet
 		}
 	}
 
-
 	@Override
 	public ArrayList<Dupla> recuperaDuplasPorCategoria(Categoria categoria) {
 
@@ -111,7 +117,7 @@ public class PersisteAtleta extends UnicastRemoteObject implements PersisteAtlet
 			entityManager.getTransaction().begin();
 
 			String sql = "FROM " + Dupla.class.getName() + " WHERE id_categoria = :categoria";
-			
+
 			Query query = entityManager.createQuery(sql);
 			query.setParameter("categoria", categoria.getId());
 			ArrayList<Dupla> encontrada = (ArrayList<Dupla>) query.getResultList();
@@ -124,11 +130,10 @@ public class PersisteAtleta extends UnicastRemoteObject implements PersisteAtlet
 			return null;
 		}
 	}
-	
+
 	@Override
 	public Dupla atualizaDupla(Dupla d) {
 
-		
 		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
 		entityManager.getTransaction().begin();
@@ -141,15 +146,14 @@ public class PersisteAtleta extends UnicastRemoteObject implements PersisteAtlet
 
 		return d;
 	}
-	
+
 	@Override
 	public Atleta atualizaAtleta(Atleta d) {
 
-		
 		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
 		entityManager.getTransaction().begin();
-
+//
 		entityManager.merge(d);
 
 		entityManager.getTransaction().commit();

@@ -1,11 +1,15 @@
 package com.unipampa.padel.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,8 +60,8 @@ public class Atleta implements Serializable{//*
 	@JoinTable(name = "atleta_dupla", joinColumns = {
 	    @JoinColumn(name = "atleta", referencedColumnName = "id")}, inverseJoinColumns = {
 	    @JoinColumn(name = "dupla", referencedColumnName = "id")})
-	@ManyToMany
-	private List<Dupla> duplas;
+	@ManyToMany(fetch = FetchType.EAGER )
+	private Set<Dupla> duplas;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "atleta1")
 	private List<Ranking> rankList;
@@ -100,10 +104,10 @@ public class Atleta implements Serializable{//*
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public List<Dupla> getDuplas() {
+	public Set<Dupla> getDuplas() {
 		return duplas;
 	}
-	public void setDuplas(List<Dupla> duplas) {
+	public void setDuplas(Set<Dupla> duplas) {
 		this.duplas = duplas;
 	}
 	
@@ -118,7 +122,7 @@ public class Atleta implements Serializable{//*
 		this.rankList = rankList;
 	}
 	
-	public Atleta(String nome, String cpf, String numCel, String email, List<Dupla> duplas,
+	public Atleta(String nome, String cpf, String numCel, String email, Set<Dupla> duplas,
 			List<Ranking> rankList) {
 		super();
 		this.nome = nome;

@@ -59,7 +59,7 @@ public class Circuito implements Serializable {
         return id;
     }
 
-    public void setIdcircuito(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
