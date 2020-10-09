@@ -37,15 +37,15 @@ public class Dupla implements Comparable, Serializable{
 	private int id;
 	
 	@Basic(optional = false)
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false, length = 40)
 	private String nome;
 	
 	@Basic(optional = false)
-	@Column(name = "impedimento")
+	@Column(name = "impedimento", nullable = false, length = 15)
 	private String impedimento;
 	
 	@Basic(optional = false)
-	@Column(name = "pontosrank")
+	@Column(name = "pontosrank",nullable = false, length = 4)
 	private int pontosRank;//*
 	
 	@JoinColumn(name = "categoria", referencedColumnName = "id")
@@ -56,7 +56,7 @@ public class Dupla implements Comparable, Serializable{
 	private List<Chave> chaves;//*
 	
 	@Basic(optional = false)
-    @Column(name = "suplente")
+    @Column(name = "suplente", length = 6)
 	private boolean suplente = true;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dupla1")
@@ -74,7 +74,7 @@ public class Dupla implements Comparable, Serializable{
 	
 	
 	
-public List<Partida> getPartidaList() {
+	public List<Partida> getPartidaList() {
 		return partidaList;
 	}
 

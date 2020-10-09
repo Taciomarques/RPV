@@ -31,15 +31,15 @@ public class Gerente implements Serializable{
     private int id;
 	
     @Basic(optional = false)
-    @Column(name = "login")
+    @Column(name = "login", nullable = false, length = 15)
     private String login;
     
     @Basic(optional = false)
-    @Column(name = "senha")
+    @Column(name = "senha", nullable = false, length = 12)
     private String senha;
     
     @Basic(optional = false)
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false, length = 20)
     private String nome;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gerente")

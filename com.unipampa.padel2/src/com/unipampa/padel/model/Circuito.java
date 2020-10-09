@@ -31,7 +31,7 @@ public class Circuito implements Serializable {
     private int id;
     
     @Basic(optional = false)
-    @Column(name = "nome")
+    @Column(name = "nome",nullable = false, length = 20)
     private String nome;
     
     @JoinColumn(name = "gerente", referencedColumnName = "id")

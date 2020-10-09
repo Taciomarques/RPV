@@ -33,7 +33,7 @@ public class Chave implements Serializable, Comparable  {
 	private int id;
 	
 	@Basic(optional = false)
-	@Column(name = "nome", length = 2)
+	@Column(name = "nome",nullable = false, length = 2)
 	private String nome;
 	
 	@JoinTable(name = "dupla_chave", joinColumns = {

@@ -29,7 +29,7 @@ public class Categoria implements Serializable {
 	private int id;
 	
 	@Basic(optional = false)
-	@Column(name = "nome")
+	@Column(name = "nome", nullable = false, length = 10)
 	private String nome;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")

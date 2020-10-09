@@ -42,19 +42,19 @@ public class Atleta implements Serializable{//*
 	private int id;
 	
 	@Basic(optional = false)
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false,length = 30)
 	private String nome;
 	
 	@Basic(optional = false)
-    @Column(name = "cpf")
+    @Column(name = "cpf", nullable = false, length = 11)
 	private String cpf;
 	
 	@Basic(optional = false)
-	@Column(name = "numcel")
+	@Column(name = "numcel", nullable = false, length = 23)
 	private String numCel;
 	
 	@Basic(optional = false)
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, length = 40)
 	private String email;
 	
 	@JoinTable(name = "atleta_dupla", joinColumns = {

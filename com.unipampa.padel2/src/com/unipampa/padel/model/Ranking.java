@@ -25,7 +25,7 @@ public class Ranking implements Serializable {
 	protected RankingPK rankingPK;
 	
 	@Basic(optional = false)
-    @Column(name = "pontosrank")
+    @Column(name = "pontosrank", nullable = false, length = 4)
 	private int pontosrank;
 	
 	@JoinColumn(name = "atleta", referencedColumnName = "id", insertable = false, updatable = false)

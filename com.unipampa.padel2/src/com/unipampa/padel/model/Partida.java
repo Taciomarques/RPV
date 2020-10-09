@@ -38,20 +38,20 @@ public class Partida implements Serializable{
 	private int id;
 	
 	@Basic(optional = false)
-    @Column(name = "dataHora")
+    @Column(name = "dataHora", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
 	private Date dataHora;
 
 	@Basic(optional = false)
-    @Column(name = "pontosdupla1")
+    @Column(name = "pontosdupla1", nullable = false, length = 4)
 	private int pontosDupla1;
 	
 	@Basic(optional = false)
-    @Column(name = "pontosdupla2")
+    @Column(name = "pontosdupla2", nullable = false, length = 4)
 	private int pontosDupla2;
 	
 	@Basic(optional = false)
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false, length = 40)
 	private String nome;
 	
 	@ManyToMany(mappedBy = "partidaList",fetch = FetchType.EAGER)

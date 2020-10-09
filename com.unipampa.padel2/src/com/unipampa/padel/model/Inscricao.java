@@ -27,7 +27,7 @@ public class Inscricao implements Serializable{
 	protected InscricaoPK inscricaoPK;
 	
 	@Basic(optional = false)
-    @Column(name = "horainsc")
+    @Column(name = "horainsc", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
 	private Date horainsc;
 	

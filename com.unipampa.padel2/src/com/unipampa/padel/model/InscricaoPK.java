@@ -9,10 +9,10 @@ import javax.persistence.Embeddable;
 public class InscricaoPK implements Serializable {
 	
 	@Basic(optional = false)
-    @Column(name = "dupla")
+    @Column(name = "dupla", nullable = false)
     private int dupla;
     @Basic(optional = false)
-    @Column(name = "etapa")
+    @Column(name = "etapa", nullable = false, length = 3)
     private int etapa;
 
     public InscricaoPK() {

@@ -9,10 +9,10 @@ import javax.persistence.Embeddable;
 public class RankingPK implements Serializable {
 
 	@Basic(optional = false)
-    @Column(name = "atleta")
+    @Column(name = "atleta", nullable = false, length = 5)
     private int atleta;
     @Basic(optional = false)
-    @Column(name = "circuito")
+    @Column(name = "circuito", nullable = false, length = 40)
     private int circuito;
 
     public RankingPK() {

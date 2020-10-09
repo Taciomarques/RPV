@@ -37,16 +37,16 @@ public class Etapa implements Serializable{
 	private int id;
 	
 	@Basic(optional = false)
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false, length = 20)
 	private String nome;
 	
 	@Basic(optional = false)
-    @Column(name = "datainicial")
+    @Column(name = "datainicial", nullable = false)
     @Temporal(TemporalType.DATE)
 	private Date dataInicial;
 	
 	@Basic(optional = false)
-    @Column(name = "datafinal")
+    @Column(name = "datafinal", nullable = false)
     @Temporal(TemporalType.DATE)
 	private Date dataFinal;
 	
