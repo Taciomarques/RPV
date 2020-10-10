@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-public class InscricaoResponse implements Serializable{
+public class InscricaoDTO implements Serializable{
 	
 //	protected InscricaoPK inscricaoPK;
 	

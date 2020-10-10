@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.padel.apirest.models.Circuito;
 import com.padel.apirest.models.Gerente;
 import com.padel.apirest.repository.GerenteRepository;
-import com.padel.apirest.response.GerenteResponse;
+import com.padel.apirest.response.GerenteDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,11 +36,11 @@ public class GerenteResource {
 	
 	@ApiOperation(value="Retorna um lista de Gerente")
 	@GetMapping("/gerentes")
-	public List<GerenteResponse> listaGerente(){ 
+	public List<GerenteDTO> listaGerente(){ 
 		List<Gerente> gerenteList = gerenteRepository.findAll();
-		ArrayList<GerenteResponse> gerenteResponseList = new ArrayList<>();
+		ArrayList<GerenteDTO> gerenteResponseList = new ArrayList<>();
 		for(Gerente gerente: gerenteList) {
-			GerenteResponse gerenteResponse = new GerenteResponse();
+			GerenteDTO gerenteResponse = new GerenteDTO();
 			gerenteResponse.setId(gerente.getId());
 			gerenteResponse.setLogin(gerente.getLogin());
 			gerenteResponse.setNome(gerente.getNome());
@@ -57,9 +57,9 @@ public class GerenteResource {
 	
 	@ApiOperation(value="Retorna um gerente unico")
 	@GetMapping("/gerente/{id}")
-	public GerenteResponse listaGerenteUnico(@PathVariable(value="id") int id){
+	public GerenteDTO listaGerenteUnico(@PathVariable(value="id") int id){
 		Gerente gerente = gerenteRepository.findById(id);
-		GerenteResponse gerenteResponse = new GerenteResponse();
+		GerenteDTO gerenteResponse = new GerenteDTO();
 		gerenteResponse.setId(gerente.getId());
 		gerenteResponse.setLogin(gerente.getLogin());
 		gerenteResponse.setNome(gerente.getNome());

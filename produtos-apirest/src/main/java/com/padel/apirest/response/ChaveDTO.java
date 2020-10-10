@@ -2,8 +2,8 @@ package com.padel.apirest.response;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,31 +12,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-public class PartidaResponse implements Serializable{
-	
+
+public class ChaveDTO implements Serializable, Comparable  {
+
+
 	private int id;
 	
-	private Date dataHora;
-
-	private int pontosDupla1;
-	
-	private int pontosDupla2;
 	
 	private String nome;
 	
-	private List<Integer> duplaList;
 	
-	private int etapa;
+	private List<Integer>duplaList;
 	
-	private int quadra;
+	
+	private List<Integer> etapaList;
 	
 	
 	
@@ -45,24 +40,6 @@ public class PartidaResponse implements Serializable{
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public Date getDataHora() {
-		return dataHora;
-	}
-	public void setDataHora(Date dataHora) {
-		this.dataHora = dataHora;
-	}
-	public int getPontosDupla1() {
-		return pontosDupla1;
-	}
-	public void setPontosDupla1(int pontosDupla1) {
-		this.pontosDupla1 = pontosDupla1;
-	}
-	public int getPontosDupla2() {
-		return pontosDupla2;
-	}
-	public void setPontosDupla2(int pontosDupla2) {
-		this.pontosDupla2 = pontosDupla2;
 	}
 	public String getNome() {
 		return nome;
@@ -79,19 +56,22 @@ public class PartidaResponse implements Serializable{
 	public void setDuplaList(List<Integer> duplaList) {
 		this.duplaList = duplaList;
 	}
-	public int getEtapa() {
-		return etapa;
+	public List<Integer> getEtapaList() {
+		return etapaList;
 	}
-	public void setEtapa(int etapa) {
-		this.etapa = etapa;
+	public void setEtapaList(List<Integer> etapaList) {
+		this.etapaList = etapaList;
 	}
-	public int getQuadra() {
-		return quadra;
-	}
-	public void setQuadra(int quadra) {
-		this.quadra = quadra;
-	}
+	@Override
+	public int compareTo(Object o) {
 	
-
+		ChaveDTO c = (ChaveDTO) o;
+		if(this.getNome().compareTo(c.getNome()) < 0 ) {
+			return -1;
+		}else if(this.getNome().compareTo(c.getNome()) > 0){
+			 return 1;
+		 }
+		return 0;
+	}
 	
 }

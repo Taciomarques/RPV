@@ -3,7 +3,7 @@ package com.padel.apirest.response;
 import java.io.Serializable;
 import java.util.List;
 
-public class CategoriaResponse implements Serializable {
+public class CategoriaDTO implements Serializable {
 	
 	
 	private int id;

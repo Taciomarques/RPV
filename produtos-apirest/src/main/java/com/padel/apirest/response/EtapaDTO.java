@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-public class EtapaResponse implements Serializable{
+public class EtapaDTO implements Serializable{
 
 	private int id;
 	

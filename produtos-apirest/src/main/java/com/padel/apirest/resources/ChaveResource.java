@@ -21,7 +21,7 @@ import com.padel.apirest.models.Chave;
 import com.padel.apirest.models.Dupla;
 import com.padel.apirest.models.Etapa;
 import com.padel.apirest.repository.ChaveRepository;
-import com.padel.apirest.response.ChaveResponse;
+import com.padel.apirest.response.ChaveDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,11 +37,11 @@ public class ChaveResource {
 	
 	@ApiOperation(value="Retorna uma lista de Chave")
 	@GetMapping("/chaves")
-	public List<ChaveResponse> listaChave(){
+	public List<ChaveDTO> listaChave(){
 		List<Chave> chaveList = chaveRepository.findAll();
-		ArrayList<ChaveResponse> chaveResponseList = new ArrayList<>();
+		ArrayList<ChaveDTO> chaveResponseList = new ArrayList<>();
 		for(Chave chave: chaveList) {
-			ChaveResponse chaveResponse = new ChaveResponse();
+			ChaveDTO chaveResponse = new ChaveDTO();
 			chaveResponse.setId(chave.getId());
 			chaveResponse.setNome(chave.getNome());
 			ArrayList<Integer> duplaIds = new ArrayList<>(); 
@@ -61,9 +61,9 @@ public class ChaveResource {
 	
 	@ApiOperation(value="Retorna uma chave unica")
 	@GetMapping("/chave/{id}")
-	public ChaveResponse listaChaveUnico(@PathVariable(value="id") int id){
+	public ChaveDTO listaChaveUnico(@PathVariable(value="id") int id){
 		Chave chave = chaveRepository.findById(id);
-		ChaveResponse chaveResponse = new ChaveResponse();
+		ChaveDTO chaveResponse = new ChaveDTO();
 		chaveResponse.setId(chave.getId());
 		chaveResponse.setNome(chave.getNome());
 		ArrayList<Integer> duplaIds = new ArrayList<>(); 

@@ -23,7 +23,7 @@ import com.padel.apirest.models.Inscricao;
 import com.padel.apirest.models.Partida;
 import com.padel.apirest.models.Quadra;
 import com.padel.apirest.repository.EtapaRepository;
-import com.padel.apirest.response.EtapaResponse;
+import com.padel.apirest.response.EtapaDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,11 +39,11 @@ public class EtapaResource {
 	
 	@ApiOperation(value="Retorna uma lista de Etapa")
 	@GetMapping("/etapas")
-	public List<EtapaResponse> listaEtapa(){
+	public List<EtapaDTO> listaEtapa(){
 		List<Etapa> etapaList = etapaRepository.findAll();
-		ArrayList<EtapaResponse> etapaResponseList = new ArrayList<>();
+		ArrayList<EtapaDTO> etapaResponseList = new ArrayList<>();
 		for(Etapa etapa: etapaList) {
-			EtapaResponse etapaResponse = new EtapaResponse();
+			EtapaDTO etapaResponse = new EtapaDTO();
 			etapaResponse.setCircuito(etapa.getCircuito().getId());
 			etapaResponse.setDataFinal(etapa.getDataFinal());
 			etapaResponse.setDataInicial(etapa.getDataInicial());
@@ -82,9 +82,9 @@ public class EtapaResource {
 	
 	@ApiOperation(value="Retorna uma etapa unica")
 	@GetMapping("/etapa/{id}")
-	public EtapaResponse listaEtapaUnico(@PathVariable(value="id") int id){
+	public EtapaDTO listaEtapaUnico(@PathVariable(value="id") int id){
 		Etapa etapa = etapaRepository.findById(id);
-		EtapaResponse etapaResponse = new EtapaResponse();
+		EtapaDTO etapaResponse = new EtapaDTO();
 		etapaResponse.setCircuito(etapa.getCircuito().getId());
 		etapaResponse.setDataFinal(etapa.getDataFinal());
 		etapaResponse.setDataInicial(etapa.getDataInicial());
