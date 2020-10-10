@@ -1,6 +1,5 @@
 package com.unipampa.padel.controller;
 
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.Naming;
@@ -36,31 +35,57 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ControllerRanking implements Initializable {
-	
+
 	@FXML
 	private MenuButton categoriaLista;
-	
+
 	@FXML
 	private Button botaoVoltar;
-	
+
 	@FXML
 	private TableView<Atleta> tabela_ranking;
-	
+
 	@FXML
 	private TableColumn<Atleta, String> nome;
-	
+
 	@FXML
 	private TableColumn<Atleta, String> cpf;
-	
+
 	@FXML
 	private TableColumn<Atleta, Integer> pontos;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		nome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		cpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-		pontos.setCellValueFactory(new PropertyValueFactory<>("pontos"));
-		
+
+		try {
+
+			nome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+			cpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+			pontos.setCellValueFactory(new PropertyValueFactory<>("pontos"));
+
+			EventHandler<ActionEvent> eventoCategoria = eventoAtualizaTabela();
+
+			adicionaItensEvento(eventoCategoria);
+
+		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
+
+			e1.printStackTrace();
+		}
+	}
+
+	private void adicionaItensEvento(EventHandler<ActionEvent> eventoCategoria)
+			throws NotBoundException, MalformedURLException, RemoteException {
+		PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
+
+		for (Categoria c : pC.recuperaCategorias()) {
+			MenuItem m = new MenuItem(c.getNome());
+			m.setOnAction(eventoCategoria);
+			categoriaLista.getItems().add(m);
+		}
+	}
+
+	private EventHandler<ActionEvent> eventoAtualizaTabela() {
+
 		EventHandler<ActionEvent> eventoCategoria = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				Categoria c = new Categoria();
@@ -69,46 +94,24 @@ public class ControllerRanking implements Initializable {
 				try {
 					tabela_ranking.setItems(FXCollections.observableArrayList(atualizaRanking(c)));
 				} catch (MalformedURLException | RemoteException | NotBoundException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		};
-
-
-		try {
-			PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
-		
-		
-			for (Categoria c : pC.recuperaCategorias()) {
-				MenuItem m = new MenuItem(c.getNome());
-				m.setOnAction(eventoCategoria);
-				categoriaLista.getItems().add(m);
-			}
-		
-		
-		
-			Categoria c = new Categoria();
-			c.setNome(categoriaLista.getAccessibleText());
-	
-			tabela_ranking.setItems(FXCollections.observableArrayList(atualizaRanking(c)));
-		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		return eventoCategoria;
 	}
-	
-	
+
 	public void clickBotaoVoltar(ActionEvent event) {
-		
+
 		ViewRanking.sair();
-		
+
 	}
-	
-	public ArrayList<Atleta> atualizaRanking(Categoria c) throws MalformedURLException, RemoteException, NotBoundException {
+
+	public ArrayList<Atleta> atualizaRanking(Categoria c)
+			throws MalformedURLException, RemoteException, NotBoundException {
 		PersisteAtletaIF pA = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
 		ArrayList<Atleta> atleta = new ArrayList<>();
-		
+
 		ArrayList<Atleta> atletasRanking = new ArrayList<>();
 //		-- filtra as duplas por categoria escolhida para serem mostradas-- 
 		for (Dupla d : pA.recuperaDuplas()) {
@@ -117,11 +120,11 @@ public class ControllerRanking implements Initializable {
 				atleta.add(d.getAtletaList().get(1));
 			}
 		}
-		
+
 		for (Atleta d : atleta) {
 			System.out.println(d.getCpf());
 			System.out.println(d.getNome());
-			
+
 			System.out.println(d.getRankList().get(0));
 			Atleta ranking = new Atleta(d.getNome(), d.getCpf(), d.getRankList());
 			atletasRanking.add(ranking);

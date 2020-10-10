@@ -1,6 +1,8 @@
 package com.unipampa.padel.controller;
 
+import java.net.MalformedURLException;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,233 +69,11 @@ public class Partidas {
 
 	}
 
-//	public HashMap<String, ArrayList<Dupla>> distribuicaoMataMata(
-//			HashMap<String, ArrayList<Dupla>> classificadosPorCat) {
-//
-//		HashMap<String, ArrayList<Dupla>> mataMata = classificadosPorCat;
-//
-//		int numeroClassificados = mataMata.size();
-//		System.out.print(numeroClassificados);
-//
-//		ArrayList<Dupla> duplasA = new ArrayList<>();
-//		ArrayList<Dupla> duplasB = new ArrayList<>();
-//		ArrayList<Dupla> duplasC = new ArrayList<>();
-//		ArrayList<Dupla> duplasD = new ArrayList<>();
-//		ArrayList<Dupla> duplasE = new ArrayList<>();
-//		ArrayList<Dupla> duplasF = new ArrayList<>();
-//
-//		switch (numeroClassificados) {
-//		case 2:
-//			duplasA = mataMata.get("A");
-//			duplasB = mataMata.get("B");
-//
-//			ArrayList<Dupla> duplasSF1 = new ArrayList<>();
-//			duplasSF1.add(duplasA.get(0));
-//			duplasSF1.add(duplasB.get(0));
-//
-//			ArrayList<Dupla> duplasSF2 = new ArrayList<>();
-//			duplasSF1.add(duplasA.get(1));
-//			duplasSF1.add(duplasB.get(1));
-//
-//			mataMata.put("SF1XSF2", duplasSF1);
-//			mataMata.put("SF3XSF4", duplasSF2);
-//
-//			break;
-//		case 3:
-//
-//			break;
-//		case 4:
-//
-//			break;
-//		case 5:
-//
-//			duplasA = mataMata.get("A");
-//			duplasB = mataMata.get("B");
-//			duplasC = mataMata.get("C");
-//			duplasD = mataMata.get("D");
-//			duplasE = mataMata.get("E");
-//
-//			ArrayList<Dupla> duplasO1 = new ArrayList<>();
-//			duplasO1.add(duplasA.get(0));
-//
-//			ArrayList<Dupla> duplasO2 = new ArrayList<>();
-//			duplasO2.add(duplasB.get(0));
-//
-//			ArrayList<Dupla> duplasO3 = new ArrayList<>();
-//			duplasO3.add(duplasC.get(0));
-//
-//			ArrayList<Dupla> duplasO4 = new ArrayList<>();
-//			duplasO4.add(duplasD.get(0));
-//
-//			ArrayList<Dupla> duplasO5 = new ArrayList<>();
-//			duplasO5.add(duplasE.get(0));
-//
-//			ArrayList<Dupla> duplasO6 = new ArrayList<>();
-//			duplasO6.add(duplasE.get(1));
-//
-//			ArrayList<Dupla> duplasO7 = new ArrayList<>();
-//			duplasO7.add(duplasD.get(1));
-//			duplasO7.add(duplasC.get(1));
-//
-//			ArrayList<Dupla> duplasO8 = new ArrayList<>();
-//			duplasO8.add(duplasB.get(1));
-//			duplasO8.add(duplasA.get(1));
-//
-//			mataMata.put("O1", duplasO1);
-//			mataMata.put("O2", duplasO2);
-//			mataMata.put("O3", duplasO3);
-//			mataMata.put("O4", duplasO4);
-//			mataMata.put("O5", duplasO5);
-//			mataMata.put("O6", duplasO6);
-//			mataMata.put("O7 - D2xC2", duplasO7);
-//			mataMata.put("O8 - B2xA2", duplasO8);
-//
-//			if (duplasO7.get(0).getPontosRank() > duplasO7.get(1).getPontosRank()) {
-//				ArrayList<Dupla> aux = new ArrayList<>();
-//				aux.add(duplasO7.get(1));
-////				mataMata.get("O7 - D2xC2").clear();
-//
-//				mataMata.put("O7", aux);
-//			} else {
-//				ArrayList<Dupla> aux = new ArrayList<>();
-//				aux.add(duplasO7.get(0));
-////				mataMata.get("O7 - D2xC2").clear();
-//
-//				mataMata.put("O7", aux);
-//			}
-//
-//			if (duplasO8.get(0).getPontosRank() > duplasO8.get(1).getPontosRank()) {
-//				ArrayList<Dupla> aux = new ArrayList<>();
-//				aux.add(duplasO8.get(0));
-////				mataMata.get("O8 - B2xA2").clear();
-//
-//				mataMata.put("O8", aux);
-//			} else {
-//				ArrayList<Dupla> aux = new ArrayList<>();
-//				aux.add(duplasO8.get(0));
-////				mataMata.get("O8 - B2xA2").clear();
-//
-//				mataMata.put("O8", aux);
-//			}
-//			
-//			for (Map.Entry<String, ArrayList<Dupla>> entrada : mataMata.entrySet()) {
-//				ArrayList<Dupla> duplas = entrada.getValue();
-//				System.out.println("Chave " + entrada.getKey());
-//				System.out.println("Duplas :");
-//				for (Dupla d : duplas) {
-//					System.out.println("\t" + d.getNome());
-//				}
-//			}
-//
-//			break;
-//		case 6:
-//
-//			break;
-//		case 7:
-//
-//			break;
-//		case 8:
-//
-//			break;
-//		case 9:
-//			break;
-//		}
-//		return mataMata;
-//	}
-//
-//	public ArrayList<Dupla> buscaDuplasMapa(HashMap<String, ArrayList<Dupla>> mapa, String nomeChave) {
-//		ArrayList<Dupla> duplas = mapa.get(nomeChave);
-//
-//		return duplas;
-//	}
-//
-//	public ArrayList<HashMap<String, ArrayList<Dupla>>> elencaChassificadosChave() throws Exception {
-//
-//		ArrayList<HashMap<String, ArrayList<Dupla>>> listaMapasChavesPorCategoria = new ArrayList<>();
-//
-//		PersisteChaveIF pchave = (PersisteChaveIF) Naming.lookup(Connection.getUrl() + "chave");
-//		ArrayList<Chave> todasChaves = pchave.recuperaChaves();
-//
-//		PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
-//		ArrayList<Categoria> cats = pC.recuperaCategorias();
-//
-//		for (Categoria cat : cats) {
-//			ArrayList<Chave> chaves = new ArrayList<>();
-//			for (Chave chave : todasChaves) {
-//				if (cat.getNome().equals(chave.getCategoria().getNome())) {
-//					chaves.add(chave);
-//				}
-//			}
-//
-//			HashMap<String, ArrayList<Dupla>> mapaJogos = new LinkedHashMap<>();
-//
-//			Collections.sort(chaves);
-//
-//			for (Chave c : chaves) {
-//
-//				if (c.getDupla1().getPontosRank() >= c.getDupla2().getPontosRank()) {
-//					if (c.getDupla2().getPontosRank() >= c.getDupla3().getPontosRank()) {
-//						ArrayList<Dupla> duplas = new ArrayList<>();
-//						duplas.add(c.getDupla1());
-//						duplas.add(c.getDupla2());
-//						mapaJogos.put(c.getNome(), duplas);
-//					} else if (c.getDupla3().getPontosRank() >= c.getDupla2().getPontosRank()) {
-//						ArrayList<Dupla> duplas = new ArrayList<>();
-//						duplas.add(c.getDupla1());
-//						duplas.add(c.getDupla3());
-//						mapaJogos.put(c.getNome(), duplas);
-//					}
-//				} else {
-//					if (c.getDupla1().getPontosRank() >= c.getDupla3().getPontosRank()) {
-//						ArrayList<Dupla> duplas = new ArrayList<>();
-//						duplas.add(c.getDupla2());
-//						duplas.add(c.getDupla1());
-//						mapaJogos.put(c.getNome(), duplas);
-//					} else if (c.getDupla3().getPontosRank() >= c.getDupla1().getPontosRank()) {
-//						ArrayList<Dupla> duplas = new ArrayList<>();
-//						duplas.add(c.getDupla2());
-//						duplas.add(c.getDupla3());
-//						mapaJogos.put(c.getNome(), duplas);
-//					}
-//				}
-//			}
-//
-//			listaMapasChavesPorCategoria.add(mapaJogos);
-//
-////			for (Map.Entry<String, ArrayList<Dupla>> entrada : mapaJogos.entrySet()) {
-////				ArrayList<Dupla> duplas = entrada.getValue();
-////				System.out.println("Chave " + entrada.getKey());
-////				System.out.println("Duplas :");
-////				for (Dupla d : duplas) {
-////					System.out.println("\t" + d.getNome());
-////				}
-////			}
-//		}
-//		setMapa(listaMapasChavesPorCategoria);
-//		return listaMapasChavesPorCategoria;
-//	}
-
-	/*
-	 * 1 - verificar a quantidade de partidas que dar�o, de todas as chaves de todas
-	 * as categorias se for menor que o max suportado por etapas, gera os mapas das
-	 * chaves por categoria senra notifica com alert quais categoria possuim muitas
-	 * chaves, por conseguinte mandar escolher de qual chave ser eliminadas as
-	 * duplas para fechar o limite.
-	 * 
-	 * 2 - com os mapas das partidas das chaves por categoria criados, alocar as
-	 * partidas nos hor�rios das tres quadras disponiveis, verificando os
-	 * impedimentos se existentes de cada dupla.
-	 * 
-	 * 3 - popular uma grade mostrando os jogos e seus hor�rios, escolhendo de um
-	 * combobox o dia para visualizar
-	 */
-
 	public void salvaPartidas() {
 		for (Partida p : partidasProntas) {
 			try {
 				ptida.cadastroPartida(p);
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -301,6 +81,41 @@ public class Partidas {
 
 	public void geraGradePartidas() throws Exception {
 
+		populaMapChavePorCategorias();
+
+		int numeroChaves = todasChaves.size();
+
+		this.numeroPartidasAtual = (numeroChaves * 5) + 4;
+
+		System.out.println("Número Total de Partidas no circuito " + this.numeroPartidasAtual);
+
+		if (this.numeroPartidasAtual > getMaxJogosEtapa()) {
+
+			alertReducaoChavesParaPartidas();
+
+		}
+
+		geraPartidasFaseGrupo();
+		geraPartidasPosFaseGrupo();
+
+	}
+
+	private void alertReducaoChavesParaPartidas() throws RemoteException, Exception {
+		int numeroChaves;
+		int numeroChavesReduzir = numeroChavesReduzir();
+
+		if (ControllerPrevisaoPartidas.alertConfimarion(getMaxJogosEtapa(), numeroChavesReduzir)) {
+
+			numeroChaves = todasChaves.size() - numeroChavesReduzir;
+
+			this.numeroPartidasAtual = (numeroChaves * 5) + 4;
+			setNumeroPartidasAtual(numeroPartidasAtual);
+			ControllerPrevisaoPartidas.alertFeedback(redutorChaves(numeroChavesReduzir));
+
+		}
+	}
+
+	private void populaMapChavePorCategorias() throws NotBoundException, MalformedURLException, RemoteException {
 		pchave = (PersisteChaveIF) Naming.lookup(Connection.getUrl() + "chave");
 		this.todasChaves = pchave.recuperaChaves();
 
@@ -322,379 +137,280 @@ public class Partidas {
 			chavesCat.put(cat.getNome(), chaves);
 
 		}
-
-		int numeroChaves = todasChaves.size();
-
-		this.numeroPartidasAtual = (numeroChaves * 5) + 4;
-
-		System.out.println("Número Total de Partidas no circuito " + this.numeroPartidasAtual);
-
-		if (this.numeroPartidasAtual > getMaxJogosEtapa()) {
-//			JOptionPane.showMessageDialog(null, "Erro! Essa etapa suporta " + getMaxJogosEtapa() + "partidas e o numero "
-//					+ "de partidas estimado para as chaves atuais excede esse limite.");
-//			
-			int numeroChavesReduzir = numeroChavesReduzir();
-
-			if (ControllerPrevisaoPartidas.alertConfimarion(getMaxJogosEtapa(), numeroChavesReduzir)) {
-
-				numeroChaves = todasChaves.size() - numeroChavesReduzir;
-
-				this.numeroPartidasAtual = (numeroChaves * 5) + 4;
-				setNumeroPartidasAtual(numeroPartidasAtual);
-				ControllerPrevisaoPartidas.alertFeedback(redutorChaves(numeroChavesReduzir));
-				geraPartidasFaseGrupo();
-				geraPartidasPosFaseGrupo();
-//
-			}
-
-			// Alert dialogoExe = new Alert(Alert.AlertType.CONFIRMATION);
-//            ButtonType btnSim = new ButtonType("Sim");
-//            ButtonType btnNao = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
-//
-//            dialogoExe.setTitle("Confirmação");
-//            dialogoExe.setHeaderText("O numero de partidas por etapa, excedeu o limite!");
-//            dialogoExe.setContentText("Para ser possível gerar a tabela dos jogos, teremos que reduzir as chaves de determinadas "
-//            		+ "categorias. Você deseja fazer isso?");
-//            dialogoExe.getButtonTypes().setAll(btnSim, btnNao);
-//            dialogoExe.showAndWait().ifPresent(b -> {
-//                if (b == btnSim) {
-//                    
-//                } else if (b == btnNao) {
-//                    
-//                }
-//            });
-
-		} else {
-
-			geraPartidasFaseGrupo();
-			geraPartidasPosFaseGrupo();
-
-		}
-
-//		if(partidasProntas!=null) {
-//			salvaPartidas();
-//		}
-
 	}
 
 	public void geraPartidasPosFaseGrupo() throws Exception {
 
 		for (Map.Entry<String, ArrayList<Chave>> entrada : chavesCat.entrySet()) {
 			ArrayList<Chave> cs = entrada.getValue();
-//				System.out.println("Categoria " + entrada.getKey());
-			Partida p;
-			ArrayList<Partida> ps;
+			Partida p = new Partida();
+			ArrayList<Partida> ps = new ArrayList<>();
 			switch (cs.size()) {
 
 			case 2:
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("S1 - 1A| x |2B");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("S2 - 2A| x |1B");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Semi", ps);
-
-				p = new Partida();
-				p.setNome("F - S1| x |S2");
-				ps = new ArrayList<>();
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Final", ps);
-
+				partidasComDuasChaves(entrada, p, ps);
 				break;
 			case 3:
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("Q1 - 2B| x |2C");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q2 - 2A| x |1C");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Quartas", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("S1 - 1A| x |Q1");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("S2 - Q2| x |1B");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Semi", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("F - S1| x |S2");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Final", ps);
-
+				partidasComTresChaves(entrada, p, ps);
 				break;
 			case 4:
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("Q1 - 1A| x |2B");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q2 - 2C| x |1D");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q3 - 1C| x |2D");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q4 - 2A| x |1B");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Quartas", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("S1 - Q1| x |Q2");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("S2 - Q3| x |Q4");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Semi", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("F - S1| x |S2");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Final", ps);
-
+				partidasComQuatroChaves(entrada, p, ps);
 				break;
 			case 5:
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("O1 - 2B| x |2C");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O2 - 2D| x |2A");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Oitavas", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("Q1 - 1A| x |O1");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q2 - 2E| x |1D");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q3 - 1C| x |1E");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q4 - O2| x |1B");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Quartas", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("S1 - Q1| x |Q2");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("S2 - Q3| x |Q4");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Semi", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("F - S1| x |S2");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Final", ps);
-
+				partidasComCincoChaves(entrada, p, ps);
 				break;
 			case 6:
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("O1 - 2B| x |2C");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O2 - 2E| x |1F");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O3 - 1E| x |2F");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O4 - 2A| x |2D");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Oitavas", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("Q1 - 1A| x |O1");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q2 - O2| x |1D");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q3 - 1C| x |O3");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q4 - O4| x |1B");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Quartas", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("S1 - Q1| x |Q2");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("S2 - Q3| x |Q4");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Semi", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("F - S1| x |S2");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Final", ps);
-
+				partidasComSeisChaves(entrada, p, ps);
 				break;
 			case 7:
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("O1 - 2F| x |2G");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O2 - 2C| x |1E");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O3 - 1D| x |2B");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O4 - 1C| x |2A");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O5 - 1F| x |2D");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O6 - 2E| x |1G");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Oitavas", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("Q1 - 1A| x |O1");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q2 - O2| x |O3");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q3 - O4| x |O5");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q4 - 1B| x |O6");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Quartas", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("S1 - Q1| x |Q2");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("S2 - Q3| x |Q4");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Semi", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("F - S1| x |S2");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Final", ps);
-
+				partidasComSeteChaves(entrada, p, ps);
 				break;
 			case 8:
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("O1 - 1A| x |2B");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O2 - 1H| x |2G");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O3 - 1E| x |2F");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O4 - 1D| x |2C");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O5 - 1C| x |2D");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O6 - 1F| x |2E");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O7 - 1G| x |2H");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("O8 - 1B| x |2A");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Oitavas", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("Q1 - O1| x |O2");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q2 - O3| x |O4");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q3 - O5| x |O6");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("Q4 - O7| x |O8");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Quartas", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("S1 - Q1| x |Q2");
-				ps.add(p);
-				p = new Partida();
-				p.setNome("S2 - Q3| x |Q4");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Semi", ps);
-
-				ps = new ArrayList<>();
-				p = new Partida();
-				p.setNome("F - S1| x |S2");
-				ps.add(p);
-				partidas.put("Categoria " + entrada.getKey() + " Final", ps);
-
+				partidasComOitoChaves(entrada, p, ps);
 				break;
-
 			default:
-
 				break;
 			}
-
-		}
-
-		for (Map.Entry<String, ArrayList<Partida>> entrada : partidas.entrySet()) {
-			ArrayList<Partida> p = entrada.getValue();
-			System.out.println(entrada.getKey());
-			for (Partida part : p) {
-				System.out.println("\t" + part.getNome());
-
-			}
-			System.out.println("\n");
-
 		}
 
 		alocaPartidasHorarios();
 
 	}
 
+	private void partidasComDuasChaves(Map.Entry<String, ArrayList<Chave>> entrada, Partida p, ArrayList<Partida> ps) {
+
+		p.setNome("S1 - 1A| x |2B");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("S2 - 2A| x |1B");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Semi", ps);
+
+		adicionaFinaisNoMap(entrada);
+
+	}
+
+	private void partidasComTresChaves(Map.Entry<String, ArrayList<Chave>> entrada, Partida p, ArrayList<Partida> ps) {
+
+		p.setNome("Q1 - 2B| x |2C");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q2 - 2A| x |1C");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Quartas", ps);
+
+		ps = new ArrayList<>();
+		p = new Partida();
+		p.setNome("S1 - 1A| x |Q1");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("S2 - Q2| x |1B");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Semi", ps);
+
+		adicionaFinaisNoMap(entrada);
+
+	}
+
+	private void partidasComQuatroChaves(Map.Entry<String, ArrayList<Chave>> entrada, Partida p,
+			ArrayList<Partida> ps) {
+
+		p.setNome("Q1 - 1A| x |2B");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q2 - 2C| x |1D");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q3 - 1C| x |2D");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q4 - 2A| x |1B");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Quartas", ps);
+
+		adicionaSemiNoMap(entrada);
+
+		adicionaFinaisNoMap(entrada);
+	}
+
+	private void partidasComCincoChaves(Map.Entry<String, ArrayList<Chave>> entrada, Partida p, ArrayList<Partida> ps) {
+
+		p.setNome("O1 - 2B| x |2C");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O2 - 2D| x |2A");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Oitavas", ps);
+
+		ps = new ArrayList<>();
+		p = new Partida();
+		p.setNome("Q1 - 1A| x |O1");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q2 - 2E| x |1D");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q3 - 1C| x |1E");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q4 - O2| x |1B");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Quartas", ps);
+
+		adicionaSemiNoMap(entrada);
+
+		adicionaFinaisNoMap(entrada);
+	}
+
+	private void partidasComSeisChaves(Map.Entry<String, ArrayList<Chave>> entrada, Partida p, ArrayList<Partida> ps) {
+
+		p.setNome("O1 - 2B| x |2C");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O2 - 2E| x |1F");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O3 - 1E| x |2F");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O4 - 2A| x |2D");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Oitavas", ps);
+
+		ps = new ArrayList<>();
+		p = new Partida();
+		p.setNome("Q1 - 1A| x |O1");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q2 - O2| x |1D");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q3 - 1C| x |O3");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q4 - O4| x |1B");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Quartas", ps);
+
+		adicionaSemiNoMap(entrada);
+
+		adicionaFinaisNoMap(entrada);
+	}
+
+	private void partidasComSeteChaves(Map.Entry<String, ArrayList<Chave>> entrada, Partida p, ArrayList<Partida> ps) {
+
+		p.setNome("O1 - 2F| x |2G");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O2 - 2C| x |1E");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O3 - 1D| x |2B");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O4 - 1C| x |2A");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O5 - 1F| x |2D");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O6 - 2E| x |1G");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Oitavas", ps);
+
+		ps = new ArrayList<>();
+		p = new Partida();
+		p.setNome("Q1 - 1A| x |O1");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q2 - O2| x |O3");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q3 - O4| x |O5");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q4 - 1B| x |O6");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Quartas", ps);
+
+		adicionaSemiNoMap(entrada);
+
+		adicionaFinaisNoMap(entrada);
+	}
+
+	private void partidasComOitoChaves(Map.Entry<String, ArrayList<Chave>> entrada, Partida p, ArrayList<Partida> ps) {
+
+		p.setNome("O1 - 1A| x |2B");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O2 - 1H| x |2G");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O3 - 1E| x |2F");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O4 - 1D| x |2C");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O5 - 1C| x |2D");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O6 - 1F| x |2E");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O7 - 1G| x |2H");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("O8 - 1B| x |2A");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Oitavas", ps);
+
+		ps = new ArrayList<>();
+		p = new Partida();
+		p.setNome("Q1 - O1| x |O2");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q2 - O3| x |O4");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q3 - O5| x |O6");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("Q4 - O7| x |O8");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Quartas", ps);
+
+		adicionaSemiNoMap(entrada);
+
+		adicionaFinaisNoMap(entrada);
+	}
+
+	private void adicionaSemiNoMap(Map.Entry<String, ArrayList<Chave>> entrada) {
+		Partida p;
+		ArrayList<Partida> ps;
+		ps = new ArrayList<>();
+		p = new Partida();
+		p.setNome("S1 - Q1| x |Q2");
+		ps.add(p);
+		p = new Partida();
+		p.setNome("S2 - Q3| x |Q4");
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Semi", ps);
+	}
+
+	private void adicionaFinaisNoMap(Map.Entry<String, ArrayList<Chave>> entrada) {
+		Partida p;
+		ArrayList<Partida> ps;
+		p = new Partida();
+		p.setNome("F - S1| x |S2");
+		ps = new ArrayList<>();
+		ps.add(p);
+		partidas.put("Categoria " + entrada.getKey() + " Final", ps);
+	}
+
 	public void alocaGradeHorarios() {
 
 		// 0 seg - 1 terç - 2 quart - 3 quint - 4 sext - 5 sab - 6 domin
-
 		int hora = 18;
 		int min = 0;
 		int dia = 26;
@@ -706,51 +422,28 @@ public class Partidas {
 		// For de Quinta, Sexta, Sábado e Domingo
 		for (int d = 0; d < 4; d++) {
 
-			// If que verifica se o array não possui nenhum objeto
 			if (datas.size() == 0) {
 				geraDias(dia, hora, min, hrInicial, qtdHr);
 			} else {
 
-				// If que verifica em qual dia está, se for menor que dois é na quinta ou na
-				// sexta
 				if (d < 2) {
 					geraDias(dia, hora, min, hrInicial, qtdHr);
-				} // Else If que se o dia que está for maior ou igual a dois é no sábado e no
-					// domingo
-					// assim é necessário alterar a quantidade de horarios por dia e o horário
-					// inicial do primeiro jogo do dia.
-				else if (d >= 2) {
+				} else if (d >= 2) {
 					qtdHr = 19;
 					hrInicial = 8;
 					geraDias(dia, hora, min, hrInicial, qtdHr);
 				}
 			}
-
 			dia++;
-
 		}
-
 		SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
-//		for (Date lDT : datas) {
-//			System.out.println(lDT.toString());
-//			System.out.println("Dia da semana: " + lDT.getDay());
-//			System.out.println("Mes: " + lDT.getMonth());
-//			System.out.println("Ano: " + lDT.getYear());
-//			System.out.println("Horas: " + lDT.getHours());
-//			System.out.println("Minutos: " + lDT.getMinutes());
-//			System.out.println("==================================");
-//		}
 
 	}
 
 	public void geraDias(int dia, int hora, int min, int hrInicial, int qtdHr) {
 
-		// For da quantidade de horários no dia, que pode ser 19 ou 7.
 		for (int h = 0; h < qtdHr; h++) {
 
-			// If para verificar se o for se encontra na primeira execução sendo assim
-			// resetando a hora para seu estado inicial
 			if (h == 0) {
 				hora = hrInicial;
 			}
@@ -758,13 +451,9 @@ public class Partidas {
 			Date data = new Date(119, 8, dia, hora, min, 0);
 			datas.add(data);
 
-			// Incrementa 50 minutos na variavel dos minutos
 			min = min + 50;
-			// If que verifica se os minutos incrementados excedem o limite de 60
 			if (min >= 60) {
-				// Incrementa uma hora, pois 60 min são equivalentes a uma hora
 				hora++;
-				// Zera os minutos
 				min = min - 60;
 			}
 		}
@@ -780,32 +469,30 @@ public class Partidas {
 		for (int i = 0; i < this.todasChaves.size(); i++) {
 			Chave chave = this.todasChaves.get(i);
 			ArrayList<Dupla> duplas = new ArrayList<Dupla>();
+			ArrayList<Partida> ps = new ArrayList<>();
 
 			Partida p = new Partida();
-			Partida p1 = new Partida();
-			Partida p2 = new Partida();
-
 			duplas.add(chave.getDuplaList().get(0));
 			duplas.add(chave.getDuplaList().get(1));
 			p.setDuplaList(duplas);
 			p.setNome(chave.getDuplaList().get(0).getNome() + "| x |" + chave.getDuplaList().get(1).getNome());
 			duplas.clear();
+			ps.add(p);
 
+			Partida p1 = new Partida();
 			duplas.add(chave.getDuplaList().get(1));
 			duplas.add(chave.getDuplaList().get(2));
 			p1.setDuplaList(duplas);
 			p1.setNome(chave.getDuplaList().get(1).getNome() + "| x |" + chave.getDuplaList().get(2).getNome());
 			duplas.clear();
+			ps.add(p1);
 
+			Partida p2 = new Partida();
 			duplas.add(chave.getDuplaList().get(0));
 			duplas.add(chave.getDuplaList().get(2));
 			p2.setDuplaList(duplas);
 			p2.setNome(chave.getDuplaList().get(0).getNome() + "| x |" + chave.getDuplaList().get(2).getNome());
 			duplas.clear();
-
-			ArrayList<Partida> ps = new ArrayList<>();
-			ps.add(p);
-			ps.add(p1);
 			ps.add(p2);
 
 			partidas.put("Categoria " + chave.getDuplaList().get(0).getCategoria().getNome()
@@ -825,15 +512,59 @@ public class Partidas {
 
 		alocaGradeHorarios();
 
+		separaFaseGruposEmArrays(faseGps, oitavas, quartas, semis, finais);
+
+		int index_datas = 0;
+		int quadra = 0;
+
+		ArrayList<Quadra> quadras = criaQuadras();
+
+		faseGps = alocaPartidasHorariosQuadras(index_datas, quadra, quadras, faseGps);
+
+		oitavas = alocaPartidasHorariosQuadras(index_datas, quadra, quadras, oitavas);
+
+		quartas = alocaPartidasHorariosQuadras(index_datas, quadra, quadras, quartas);
+
+		semis = alocaPartidasHorariosQuadras(index_datas, quadra, quadras, semis);
+
+		finais = alocaPartidasHorariosQuadras(index_datas, quadra, quadras, finais);
+
+		this.partidasProntas = new ArrayList<>();
+		this.partidasProntas.addAll(faseGps);
+		this.partidasProntas.addAll(oitavas);
+		this.partidasProntas.addAll(quartas);
+		this.partidasProntas.addAll(semis);
+		this.partidasProntas.addAll(finais);
+
+		for (Partida p : partidasProntas) {
+			System.out.println(p.getDataHora() + " | " + p.getNome() + " | " + "Quadra " + p.getQuadra().getId());
+		}
+
+	}
+
+	private ArrayList<Quadra> criaQuadras() {
+		Quadra quadra1 = new Quadra();
+		quadra1.setId(1);
+		Quadra quadra2 = new Quadra();
+		quadra2.setId(2);
+		Quadra quadra3 = new Quadra();
+		quadra3.setId(3);
+		ArrayList<Quadra> quadras = new ArrayList<>();
+		quadras.add(quadra1);
+		quadras.add(quadra2);
+		quadras.add(quadra3);
+		return quadras;
+	}
+
+	private void separaFaseGruposEmArrays(ArrayList<Partida> faseGps, ArrayList<Partida> oitavas,
+			ArrayList<Partida> quartas, ArrayList<Partida> semis, ArrayList<Partida> finais) {
 		for (Map.Entry<String, ArrayList<Partida>> entrada : partidas.entrySet()) {
 			ArrayList<Partida> p = entrada.getValue();
-//			System.out.println(entrada.getKey());
 
 			if (entrada.getKey().contains("Grupo")) {
 				System.out.println("Grupo =" + entrada.getKey());
 				for (Partida part : p) {
 					faseGps.add(part);
-
 				}
 			} else if (entrada.getKey().contains("Oitavas")) {
 				for (Partida part : p) {
@@ -853,30 +584,10 @@ public class Partidas {
 				}
 			}
 		}
+	}
 
-		int index_datas = 0;
-		int quadra = 0;
-
-		Quadra quadra1 = new Quadra();
-		quadra1.setId(1);
-		Quadra quadra2 = new Quadra();
-		quadra2.setId(2);
-		Quadra quadra3 = new Quadra();
-		quadra3.setId(3);
-		ArrayList<Quadra> quadras = new ArrayList<>();
-		quadras.add(quadra1);
-		quadras.add(quadra2);
-		quadras.add(quadra3);
-
-		System.out.println(faseGps.size());
-
-		System.out.println(oitavas.size());
-
-		System.out.println(quartas.size());
-
-		System.out.println(semis.size());
-
-		System.out.println(finais.size());
+	private ArrayList<Partida> alocaPartidasHorariosFaseGrupo(int index_datas, int quadra, ArrayList<Quadra> quadras,
+			ArrayList<Partida> faseGps) {
 
 		for (Partida p : faseGps) {
 
@@ -890,7 +601,14 @@ public class Partidas {
 			quadra++;
 		}
 
-		for (Partida p : oitavas) {
+		return faseGps;
+
+	}
+
+	private ArrayList<Partida> alocaPartidasHorariosQuadras(int index_datas, int quadra, ArrayList<Quadra> quadras,
+			ArrayList<Partida> etapas) {
+
+		for (Partida p : etapas) {
 
 			p.setDataHora(datas.get(index_datas));
 			p.setQuadra(quadras.get(quadra));
@@ -902,52 +620,7 @@ public class Partidas {
 			quadra++;
 		}
 
-		for (Partida p : quartas) {
-
-			p.setDataHora(datas.get(index_datas));
-			p.setQuadra(quadras.get(quadra));
-
-			if (quadra == 2) {
-				index_datas++;
-				quadra = -1;
-			}
-			quadra++;
-		}
-
-		for (Partida p : semis) {
-
-			p.setDataHora(datas.get(index_datas));
-			p.setQuadra(quadras.get(quadra));
-
-			if (quadra == 2) {
-				index_datas++;
-				quadra = -1;
-			}
-			quadra++;
-		}
-
-		for (Partida p : finais) {
-
-			p.setDataHora(datas.get(index_datas));
-			p.setQuadra(quadras.get(quadra));
-
-			if (quadra == 2) {
-				index_datas++;
-				quadra = -1;
-			}
-			quadra++;
-		}
-
-		this.partidasProntas = new ArrayList<>();
-		this.partidasProntas.addAll(faseGps);
-		this.partidasProntas.addAll(oitavas);
-		this.partidasProntas.addAll(quartas);
-		this.partidasProntas.addAll(semis);
-		this.partidasProntas.addAll(finais);
-
-		for (Partida p : partidasProntas) {
-			System.out.println(p.getDataHora() + " | " + p.getNome() + " | " + "Quadra " + p.getQuadra().getId());
-		}
+		return etapas;
 
 	}
 
@@ -960,8 +633,6 @@ public class Partidas {
 
 			numeroReduzir = redutor;
 			numeroPartidas = numeroPartidasTotal - ((redutor * 5) + 4);
-//			System.out.println("Número de chaves a reduzir " + numeroReduzir);
-//			System.out.println("Número de partidas reduzindo as " + numeroReduzir + " chaves = " + numeroPartidas);
 		}
 
 		return numeroReduzir;
@@ -977,9 +648,6 @@ public class Partidas {
 		for (Map.Entry<String, ArrayList<Chave>> entrada : chavesCat.entrySet()) {
 
 			ArrayList<Chave> chaves = entrada.getValue();
-//			System.out.println("Categoria " + entrada.getKey());
-//			System.out.println("Chaves :");
-//			System.out.println("Quantidade Chaves na Categoria " + entrada.getKey() + " = " + chaves.size());
 			if (numChave < chaves.size()) {
 
 				if (numChave2 <= numChave) {
@@ -996,16 +664,7 @@ public class Partidas {
 				numChave = chaves.size();
 
 			}
-//			for (Chave c : chaves) {
-//				System.out.println("\t" + c.getNome());
-//			}
 		}
-
-//		System.out.println("Categoria com mais chaves " + indexCategoriaMaisChave + " com " + numChave + " Chaves");
-//		System.out.println(
-//				"Segunda Categoria com mais chaves " + indexCategoriaMaisChave2 + " com " + numChave2 + " Chaves");
-//		System.out.println(
-//				"Terceira Categoria com mais chaves " + indexCategoriaMaisChave3 + " com " + numChave3 + " Chaves");
 
 		int divisao = 0;
 
@@ -1015,18 +674,14 @@ public class Partidas {
 		ArrayList<Chave> chaves2 = new ArrayList<>();
 		ArrayList<Chave> chaves3 = new ArrayList<>();
 
-//		System.out.println("Divisão =" + divisao);
 		for (int i = 1; i <= divisao; i++) {
 			chaves1.add(chavesCat.get(indexCategoriaMaisChave).get(numChave - i));
-//			System.out.println(chavesCat.get(indexCategoriaMaisChave).get(numChave-i).getNome());
 			chavesCat.get(indexCategoriaMaisChave).remove(numChave - i);
 
 			chaves2.add(chavesCat.get(indexCategoriaMaisChave2).get(numChave2 - i));
-//			System.out.println(chavesCat.get(indexCategoriaMaisChave2).get(numChave2-i).getNome());
 			chavesCat.get(indexCategoriaMaisChave2).remove(numChave2 - i);
 
 			chaves3.add(chavesCat.get(indexCategoriaMaisChave3).get(numChave3 - i));
-//			System.out.println(chavesCat.get(indexCategoriaMaisChave3).get(numChave3-i).getNome());
 			chavesCat.get(indexCategoriaMaisChave3).remove(numChave3 - i);
 		}
 
