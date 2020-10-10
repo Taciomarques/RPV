@@ -8,8 +8,8 @@ import com.unipampa.padel.model.Circuito;
 
 public interface PersisteCircuitoIF extends Remote {
 
-	Circuito cadastroCircuito(Circuito c) throws RemoteException;
+	public Circuito cadastroCircuito(Circuito c) throws Exception;
 
-	ArrayList<Circuito> recuperaCircuitos() throws RemoteException;
+	public ArrayList<Circuito> recuperaCircuitos() throws RemoteException;
 
 }

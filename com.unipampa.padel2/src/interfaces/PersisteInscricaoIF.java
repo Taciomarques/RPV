@@ -8,8 +8,8 @@ import com.unipampa.padel.model.Inscricao;
 
 public interface PersisteInscricaoIF extends Remote {
 
-	Inscricao cadastroInscricao(Inscricao i) throws RemoteException;
+	public Inscricao cadastroInscricao(Inscricao i) throws Exception;
 
-	ArrayList<Inscricao> recuperaInscricoes() throws RemoteException;
+	public ArrayList<Inscricao> recuperaInscricoes() throws RemoteException;
 
 }

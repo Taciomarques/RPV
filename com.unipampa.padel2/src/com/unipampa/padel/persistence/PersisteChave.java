@@ -12,78 +12,76 @@ import com.unipampa.padel.model.Chave;
 import interfaces.PersisteChaveIF;
 
 public class PersisteChave extends UnicastRemoteObject implements PersisteChaveIF {
-	
+
 	protected PersisteChave() throws RemoteException {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public boolean cadastroChave(Chave a) {
+	public void cadastroChave(Chave a) throws Exception {
 
-        try {
-        	EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-        	
-            entityManager.getTransaction().begin();
-            
-            entityManager.persist(a);
+		try {
+			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
-            entityManager.getTransaction().commit();
+			entityManager.getTransaction().begin();
 
-            entityManager.close();
+			entityManager.persist(a);
 
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-	
+			entityManager.getTransaction().commit();
+
+			entityManager.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
 	@Override
 	public ArrayList<Chave> recuperaChaves() {
 
-        try {
-        	EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-        	
-            entityManager.getTransaction().begin();
-        	
-        	String sql = "From " + Chave.class.getName();
-            Object result = entityManager.createQuery(sql).getResultList();
-            ArrayList<Chave> encontrada = (ArrayList<Chave>) result;
-            
-            entityManager.close();
-            
-            return encontrada;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-	
+		try {
+			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+
+			entityManager.getTransaction().begin();
+
+			String sql = "From " + Chave.class.getName();
+			Object result = entityManager.createQuery(sql).getResultList();
+			ArrayList<Chave> encontrada = (ArrayList<Chave>) result;
+
+			entityManager.close();
+
+			return encontrada;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	@Override
 	public boolean removeChaves(ArrayList<Chave> chaves) {
 
-        try {
-        	EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-        	
-            entityManager.getTransaction().begin();
-            
-            for(Chave c : chaves) {
-            	c = entityManager.find(Chave.class, c.getId());
-                
-                entityManager.remove(c);
-	
-            }
-            
-            entityManager.getTransaction().commit();
+		try {
+			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
-            entityManager.close();
-            
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-	
+			entityManager.getTransaction().begin();
+
+			for (Chave c : chaves) {
+				c = entityManager.find(Chave.class, c.getId());
+
+				entityManager.remove(c);
+
+			}
+
+			entityManager.getTransaction().commit();
+
+			entityManager.close();
+
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

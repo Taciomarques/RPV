@@ -12,43 +12,46 @@ import com.unipampa.padel.model.Gerente;
 import interfaces.PersisteGerenteIF;
 
 public class PersisteGerente extends UnicastRemoteObject implements PersisteGerenteIF {
-	
+
 	protected PersisteGerente() throws RemoteException {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Gerente cadastroGerente(Gerente g) {
+	public Gerente cadastroGerente(Gerente g) throws Exception {
 
+		try {
+			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
-    	EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-    	
-        entityManager.getTransaction().begin();
-        
-        entityManager.persist(g);
+			entityManager.getTransaction().begin();
 
-        entityManager.getTransaction().commit();
+			entityManager.persist(g);
 
-        entityManager.close();
+			entityManager.getTransaction().commit();
 
-        return g;
-    }
-	
+			entityManager.close();
+
+			return g;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
 	@Override
 	public ArrayList<Gerente> recuperaGerentes() {
 
-    	EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-    	
-        entityManager.getTransaction().begin();
-    	
-    	String sql = "From " + Gerente.class.getName();
-        Object result = entityManager.createQuery(sql).getResultList();
-        ArrayList<Gerente> encontrada = (ArrayList<Gerente>) result;
-        
-        entityManager.close();
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
-        return encontrada;
-    }
-	
+		entityManager.getTransaction().begin();
+
+		String sql = "From " + Gerente.class.getName();
+		Object result = entityManager.createQuery(sql).getResultList();
+		ArrayList<Gerente> encontrada = (ArrayList<Gerente>) result;
+
+		entityManager.close();
+
+		return encontrada;
+	}
+
 }

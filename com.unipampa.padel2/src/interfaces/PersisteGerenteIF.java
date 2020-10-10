@@ -8,8 +8,8 @@ import com.unipampa.padel.model.Gerente;
 
 public interface PersisteGerenteIF extends Remote {
 
-	Gerente cadastroGerente(Gerente g) throws RemoteException;
+	public Gerente cadastroGerente(Gerente g) throws Exception;
 
-	ArrayList<Gerente> recuperaGerentes() throws RemoteException;
+	public ArrayList<Gerente> recuperaGerentes() throws RemoteException;
 
 }

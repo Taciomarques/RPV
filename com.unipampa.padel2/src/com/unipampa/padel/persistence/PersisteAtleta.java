@@ -20,7 +20,6 @@ public class PersisteAtleta extends UnicastRemoteObject implements PersisteAtlet
 
 	protected PersisteAtleta() throws RemoteException {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

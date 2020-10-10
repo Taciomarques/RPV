@@ -8,11 +8,10 @@ import com.unipampa.padel.model.Partida;
 
 public interface PersistePartidaIF extends Remote {
 
-	boolean cadastroPartida(Partida a) throws RemoteException;
+	public void cadastroPartida(Partida a) throws Exception;
 
-	ArrayList<Partida> recuperaPartida() throws RemoteException;
-	
+	public ArrayList<Partida> recuperaPartida() throws RemoteException;
+
 	public boolean cadastroPartidas(ArrayList<Partida> partidas) throws RemoteException;
-
 
 }

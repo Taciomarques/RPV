@@ -12,43 +12,45 @@ import com.unipampa.padel.model.Inscricao;
 import interfaces.PersisteInscricaoIF;
 
 public class PersisteInscricao extends UnicastRemoteObject implements PersisteInscricaoIF {
-	
+
 	protected PersisteInscricao() throws RemoteException {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Inscricao cadastroInscricao(Inscricao i) {
+	public Inscricao cadastroInscricao(Inscricao i) throws Exception {
 
+		try {
+			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
-    	EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-    	
-        entityManager.getTransaction().begin();
-        
-        entityManager.persist(i);
+			entityManager.getTransaction().begin();
 
-        entityManager.getTransaction().commit();
+			entityManager.persist(i);
 
-        entityManager.close();
+			entityManager.getTransaction().commit();
 
-        return i;
-    }
-	
+			entityManager.close();
+
+			return i;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
 	@Override
 	public ArrayList<Inscricao> recuperaInscricoes() {
 
-    	EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-    	
-        entityManager.getTransaction().begin();
-    	
-    	String sql = "From " + Inscricao.class.getName();
-        Object result = entityManager.createQuery(sql).getResultList();
-        ArrayList<Inscricao> encontrada = (ArrayList<Inscricao>) result;
-        
-        entityManager.close();
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
-        return encontrada;
-    }
-	
+		entityManager.getTransaction().begin();
+
+		String sql = "From " + Inscricao.class.getName();
+		Object result = entityManager.createQuery(sql).getResultList();
+		ArrayList<Inscricao> encontrada = (ArrayList<Inscricao>) result;
+
+		entityManager.close();
+
+		return encontrada;
+	}
+
 }

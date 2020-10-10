@@ -15,43 +15,45 @@ import interfaces.PersisteCategoriaIF;
 import interfaces.PersisteEtapaIF;
 
 public class PersisteEtapa extends UnicastRemoteObject implements PersisteEtapaIF {
-	
+
 	protected PersisteEtapa() throws RemoteException {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Etapa cadastroEtapa(Etapa e) {
+	public Etapa cadastroEtapa(Etapa e) throws Exception {
 
+		try {
+			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
-    	EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-    	
-        entityManager.getTransaction().begin();
-        
-        entityManager.persist(e);
+			entityManager.getTransaction().begin();
 
-        entityManager.getTransaction().commit();
+			entityManager.persist(e);
 
-        entityManager.close();
+			entityManager.getTransaction().commit();
 
-        return e;
-    }
-	
+			entityManager.close();
+
+			return e;
+		} catch (Exception error) {
+			throw error;
+		}
+	}
+
 	@Override
 	public ArrayList<Etapa> recuperaEtapas() {
 
-    	EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-    	
-        entityManager.getTransaction().begin();
-    	
-    	String sql = "From " + Etapa.class.getName();
-        Object result = entityManager.createQuery(sql).getResultList();
-        ArrayList<Etapa> encontrada = (ArrayList<Etapa>) result;
-        
-        entityManager.close();
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
-        return encontrada;
-    }
-	
+		entityManager.getTransaction().begin();
+
+		String sql = "From " + Etapa.class.getName();
+		Object result = entityManager.createQuery(sql).getResultList();
+		ArrayList<Etapa> encontrada = (ArrayList<Etapa>) result;
+
+		entityManager.close();
+
+		return encontrada;
+	}
+
 }
