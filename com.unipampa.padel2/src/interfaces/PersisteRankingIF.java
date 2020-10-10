@@ -8,8 +8,8 @@ import com.unipampa.padel.model.Ranking;
 
 public interface PersisteRankingIF extends Remote {
 
-	Ranking cadastroRanking(Ranking r) throws RemoteException;
+	public Ranking cadastroRanking(Ranking r) throws Exception;
 
-	ArrayList<Ranking> recuperaRankings() throws RemoteException;
+	public ArrayList<Ranking> recuperaRankings() throws RemoteException;
 
 }

@@ -10,18 +10,18 @@ import com.unipampa.padel.model.Dupla;
 
 public interface PersisteAtletaIF extends Remote {
 
-	Atleta cadastroAtleta(Atleta a) throws RemoteException, Exception;
+	public Atleta cadastroAtleta(Atleta a) throws RemoteException, Exception;
 
-	Dupla cadastroDupla(Dupla d) throws RemoteException, Exception;
+	public Dupla cadastroDupla(Dupla d) throws RemoteException, Exception;
 
-	ArrayList<Dupla> recuperaDuplas() throws RemoteException;
+	public ArrayList<Dupla> recuperaDuplas() throws RemoteException;
 
-	ArrayList<Atleta> recuperaAtleta() throws RemoteException;
+	public ArrayList<Atleta> recuperaAtleta() throws RemoteException;
 
-	ArrayList<Dupla> recuperaDuplasPorCategoria(Categoria categoria) throws RemoteException;
+	public ArrayList<Dupla> recuperaDuplasPorCategoria(Categoria categoria) throws RemoteException;
 
-	Dupla atualizaDupla(Dupla d) throws RemoteException;
+	public Dupla atualizaDupla(Dupla d) throws RemoteException;
 
-	Atleta atualizaAtleta(Atleta d) throws RemoteException;
+	public Atleta atualizaAtleta(Atleta d) throws RemoteException;
 
 }

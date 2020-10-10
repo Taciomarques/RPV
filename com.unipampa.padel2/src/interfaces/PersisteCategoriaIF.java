@@ -8,8 +8,8 @@ import com.unipampa.padel.model.Categoria;
 
 public interface PersisteCategoriaIF extends Remote {
 
-	Categoria cadastroCategoria(Categoria a) throws RemoteException;
+	public Categoria cadastroCategoria(Categoria a) throws RemoteException;
 
-	ArrayList<Categoria> recuperaCategorias() throws RemoteException;
+	public ArrayList<Categoria> recuperaCategorias() throws RemoteException;
 
 }

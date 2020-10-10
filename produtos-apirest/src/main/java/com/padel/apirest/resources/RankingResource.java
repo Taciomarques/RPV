@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.padel.apirest.models.Gerente;
 import com.padel.apirest.models.Ranking;
 import com.padel.apirest.repository.RankingRepository;
-import com.padel.apirest.response.RankingResponse;
+import com.padel.apirest.response.RankingDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,11 +36,11 @@ public class RankingResource {
 	
 	@ApiOperation(value="Retorna uma lista de Ranking")
 	@GetMapping("/rankings")
-	public List<RankingResponse> listaRanking(){
+	public List<RankingDTO> listaRanking(){
 		List<Ranking> rankingList = rankingRepository.findAll();
-		ArrayList<RankingResponse> rankingResponseList = new ArrayList<>();
+		ArrayList<RankingDTO> rankingResponseList = new ArrayList<>();
 		for(Ranking ranking: rankingList) {
-			RankingResponse rankingResponse = new RankingResponse();
+			RankingDTO rankingResponse = new RankingDTO();
 			rankingResponse.setAtleta1(ranking.getAtleta1().getId());
 			rankingResponse.setCategoria(ranking.getCategoria().getId());
 			rankingResponse.setCircuito1(ranking.getCircuito1().getId());

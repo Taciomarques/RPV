@@ -8,10 +8,10 @@ import com.unipampa.padel.model.Chave;
 
 public interface PersisteChaveIF extends Remote {
 
-	boolean cadastroChave(Chave a) throws RemoteException;
+	public void cadastroChave(Chave a) throws Exception;
 
-	ArrayList<Chave> recuperaChaves() throws RemoteException;
-	
-	boolean removeChaves(ArrayList<Chave> chaves) throws RemoteException;
+	public ArrayList<Chave> recuperaChaves() throws RemoteException;
+
+	public boolean removeChaves(ArrayList<Chave> chaves) throws RemoteException;
 
 }

@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
-public class GerenteResponse implements Serializable{
+public class GerenteDTO implements Serializable{
 	
     private int id;
 	
@@ -30,10 +30,10 @@ public class GerenteResponse implements Serializable{
     
     private List<Integer> circuitoList;
 
-    public GerenteResponse() {
+    public GerenteDTO() {
     }
 
-    public GerenteResponse(String login, String senha, String nome) {
+    public GerenteDTO(String login, String senha, String nome) {
         super();
         this.login = login;
         this.senha = senha;

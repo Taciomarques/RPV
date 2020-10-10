@@ -9,8 +9,8 @@ import com.unipampa.padel.model.Etapa;
 
 public interface PersisteEtapaIF extends Remote {
 
-	Etapa cadastroEtapa(Etapa e) throws RemoteException;
+	public Etapa cadastroEtapa(Etapa e) throws Exception;
 
-	ArrayList<Etapa> recuperaEtapas() throws RemoteException;
+	public ArrayList<Etapa> recuperaEtapas() throws RemoteException;
 
 }

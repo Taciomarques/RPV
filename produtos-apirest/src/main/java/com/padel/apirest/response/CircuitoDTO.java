@@ -3,7 +3,7 @@ package com.padel.apirest.response;
 import java.io.Serializable;
 import java.util.List;
 
-public class CircuitoResponse implements Serializable {
+public class CircuitoDTO implements Serializable {
 
     
     private int id;
@@ -19,14 +19,14 @@ public class CircuitoResponse implements Serializable {
     
     private List<Integer> rankList;
 
-    public CircuitoResponse() {
+    public CircuitoDTO() {
     }
 
-    public CircuitoResponse(int id) {
+    public CircuitoDTO(int id) {
         this.id = id;
     }
 
-    public CircuitoResponse(int id, String nome) {
+    public CircuitoDTO(int id, String nome) {
         this.id = id;
         this.nome = nome;
     }

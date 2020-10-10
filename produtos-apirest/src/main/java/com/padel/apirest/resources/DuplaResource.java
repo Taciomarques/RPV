@@ -23,7 +23,7 @@ import com.padel.apirest.models.Dupla;
 import com.padel.apirest.models.Inscricao;
 import com.padel.apirest.models.Partida;
 import com.padel.apirest.repository.DuplaRepository;
-import com.padel.apirest.response.DuplaResponse;
+import com.padel.apirest.response.DuplaDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,11 +39,11 @@ public class DuplaResource {
 	
 	@ApiOperation(value="Retorna uma lista de Duplas")
 	@GetMapping("/duplas")
-	public List<DuplaResponse> listaDuplas(){ 
+	public List<DuplaDTO> listaDuplas(){ 
 		List<Dupla> duplaList = duplaRepository.findAll();
-		ArrayList<DuplaResponse> duplaResponseList = new ArrayList<>();
+		ArrayList<DuplaDTO> duplaResponseList = new ArrayList<>();
 		for(Dupla dupla: duplaList) {
-			DuplaResponse duplaResponse = new DuplaResponse();
+			DuplaDTO duplaResponse = new DuplaDTO();
 			ArrayList<Integer> atletaIds = new ArrayList<>();
 //			for(Atleta atleta: dupla.getAtletaList()) {
 //				atletaIds.add(atleta.getId());
@@ -81,9 +81,9 @@ public class DuplaResource {
 	
 	@ApiOperation(value="Retorna um dupla unico")
 	@GetMapping("/dupla/{id}")
-	public DuplaResponse listaDuplaUnico(@PathVariable(value="id") int id){
+	public DuplaDTO listaDuplaUnico(@PathVariable(value="id") int id){
 		Dupla dupla = duplaRepository.findById(id);		
-		DuplaResponse duplaResponse = new DuplaResponse();
+		DuplaDTO duplaResponse = new DuplaDTO();
 		ArrayList<Integer> atletaIds = new ArrayList<>();
 //		for(Atleta atleta: dupla.getAtletaList()) {
 //			atletaIds.add(atleta.getId());

@@ -22,8 +22,8 @@ import com.padel.apirest.models.Categoria;
 import com.padel.apirest.models.Dupla;
 import com.padel.apirest.models.Ranking;
 import com.padel.apirest.repository.CategoriaRepository;
-import com.padel.apirest.response.AtletaResponse;
-import com.padel.apirest.response.CategoriaResponse;
+import com.padel.apirest.response.AtletaDTO;
+import com.padel.apirest.response.CategoriaDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,11 +39,11 @@ public class CategoriaResource {
 	
 	@ApiOperation(value="Retorna uma lista de Categorias")
 	@GetMapping("/categorias")
-	public List<CategoriaResponse> listaCategorias(){
+	public List<CategoriaDTO> listaCategorias(){
 		List<Categoria> cList = categoriaRepository.findAll();
-		ArrayList<CategoriaResponse> catResponseList = new ArrayList<>();
+		ArrayList<CategoriaDTO> catResponseList = new ArrayList<>();
 		for(Categoria cat : cList) {
-			CategoriaResponse catResponse = new CategoriaResponse();
+			CategoriaDTO catResponse = new CategoriaDTO();
 			catResponse.setId(cat.getId());
 			catResponse.setNome(cat.getNome());
 			
@@ -70,9 +70,9 @@ public class CategoriaResource {
 	
 	@ApiOperation(value="Retorna uma categoria unica")
 	@GetMapping("/categoria/{id}")
-	public CategoriaResponse listaCategoriaUnico(@PathVariable(value="id") int id){
+	public CategoriaDTO listaCategoriaUnico(@PathVariable(value="id") int id){
 		Categoria categoria = categoriaRepository.findById(id);
-		CategoriaResponse categoriaResponse = new CategoriaResponse();
+		CategoriaDTO categoriaResponse = new CategoriaDTO();
 		categoriaResponse.setId(categoria.getId());
 		categoriaResponse.setNome(categoria.getNome());
 		

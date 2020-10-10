@@ -12,7 +12,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-public class RankingResponse implements Serializable {
+public class RankingDTO implements Serializable {
 	
 //	protected RankingPK rankingPK;
 	

@@ -21,7 +21,7 @@ import com.padel.apirest.models.Atleta;
 import com.padel.apirest.models.Dupla;
 import com.padel.apirest.models.Ranking;
 import com.padel.apirest.repository.AtletaRepository;
-import com.padel.apirest.response.AtletaResponse;
+import com.padel.apirest.response.AtletaDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,11 +37,11 @@ public class AtletaResource {
 	
 	@ApiOperation(value="Retorna uma lista de Atletas")
 	@GetMapping("/atletas")
-	public List<AtletaResponse> listaAtletas(){ 
+	public List<AtletaDTO> listaAtletas(){ 
 		List<Atleta> atl = atletaRepository.findAll();
-		ArrayList<AtletaResponse> atlResponse = new ArrayList<AtletaResponse>();
+		ArrayList<AtletaDTO> atlResponse = new ArrayList<AtletaDTO>();
 		for(Atleta atleta : atl) {
-			AtletaResponse atlR = new AtletaResponse();
+			AtletaDTO atlR = new AtletaDTO();
 			atlR.setCpf(atleta.getCpf());
 			atlR.setEmail(atleta.getEmail());
 			atlR.setId(atleta.getId());
@@ -69,9 +69,9 @@ public class AtletaResource {
 	
 	@ApiOperation(value="Retorna um atleta unico")
 	@GetMapping("/atleta/{id}")
-	public AtletaResponse listaAtletaUnico(@PathVariable(value="id") int id){
+	public AtletaDTO listaAtletaUnico(@PathVariable(value="id") int id){
 		Atleta atleta = atletaRepository.findById(id);
-		AtletaResponse atletaResponse = new AtletaResponse();
+		AtletaDTO atletaResponse = new AtletaDTO();
 		
 		atletaResponse.setCpf(atleta.getCpf());
 		atletaResponse.setEmail(atleta.getEmail());

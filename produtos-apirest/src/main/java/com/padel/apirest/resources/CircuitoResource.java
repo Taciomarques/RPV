@@ -23,8 +23,8 @@ import com.padel.apirest.models.Dupla;
 import com.padel.apirest.models.Etapa;
 import com.padel.apirest.models.Ranking;
 import com.padel.apirest.repository.CircuitoRepository;
-import com.padel.apirest.response.CategoriaResponse;
-import com.padel.apirest.response.CircuitoResponse;
+import com.padel.apirest.response.CategoriaDTO;
+import com.padel.apirest.response.CircuitoDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,12 +40,12 @@ public class CircuitoResource {
 	
 	@ApiOperation(value="Retorna um lista de Circuito")
 	@GetMapping("/circuitos")
-	public List<CircuitoResponse> listaCircuito(){ 
+	public List<CircuitoDTO> listaCircuito(){ 
 		List<Circuito> circuitoList = circuitoRepository.findAll();
-		ArrayList<CircuitoResponse> circuitoResponseList = new ArrayList<>();
+		ArrayList<CircuitoDTO> circuitoResponseList = new ArrayList<>();
 		
 		for(Circuito circuito : circuitoList) {
-			CircuitoResponse circuitoResponse = new CircuitoResponse();
+			CircuitoDTO circuitoResponse = new CircuitoDTO();
 			
 			circuitoResponse.setGerente(circuito.getGerente().getId());
 			circuitoResponse.setIdcircuito(circuito.getId());
@@ -76,9 +76,9 @@ public class CircuitoResource {
 	
 	@ApiOperation(value="Retorna um circuito unica")
 	@GetMapping("/circuito/{id}")
-	public CircuitoResponse listaCircuitoUnico(@PathVariable(value="id") int id){
+	public CircuitoDTO listaCircuitoUnico(@PathVariable(value="id") int id){
 		Circuito circuito = circuitoRepository.findById(id);
-		CircuitoResponse circuitoResponse = new CircuitoResponse();
+		CircuitoDTO circuitoResponse = new CircuitoDTO();
 		
 		circuitoResponse.setGerente(circuito.getGerente().getId());
 		circuitoResponse.setIdcircuito(circuito.getId());

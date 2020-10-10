@@ -16,7 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-public class QuadraResponse implements Serializable{
+public class QuadraDTO implements Serializable{
 	
 	private int id;
 	
@@ -24,12 +24,12 @@ public class QuadraResponse implements Serializable{
 	
 	private List<Integer> partidaList;
 	
-	public QuadraResponse () {
+	public QuadraDTO () {
 		
 	}
 	
 	
-	public QuadraResponse(int id) {
+	public QuadraDTO(int id) {
 		this.id = id;
 	}
 

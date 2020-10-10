@@ -21,7 +21,7 @@ import com.padel.apirest.models.Gerente;
 import com.padel.apirest.models.Partida;
 import com.padel.apirest.models.Quadra;
 import com.padel.apirest.repository.QuadraRepository;
-import com.padel.apirest.response.QuadraResponse;
+import com.padel.apirest.response.QuadraDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,11 +37,11 @@ public class QuadraResource {
 	
 	@ApiOperation(value="Retorna uma lista de Quadra")
 	@GetMapping("/quadras")
-	public List<QuadraResponse> listaQuadra(){ 
+	public List<QuadraDTO> listaQuadra(){ 
 		List<Quadra> quadraList = quadraRepository.findAll();
-		ArrayList<QuadraResponse> quadraResponseList = new ArrayList<>();
+		ArrayList<QuadraDTO> quadraResponseList = new ArrayList<>();
 		for(Quadra quadra: quadraList) {
-			QuadraResponse quadraResponse = new QuadraResponse();
+			QuadraDTO quadraResponse = new QuadraDTO();
 			quadraResponse.setId(quadra.getId());
 			quadraResponse.setEtapa(quadra.getEtapa().getId());
 			ArrayList<Integer> partidaIds = new ArrayList<>();
@@ -56,9 +56,9 @@ public class QuadraResource {
 	
 	@ApiOperation(value="Retorna um quadra unica")
 	@GetMapping("/quadra/{id}")
-	public QuadraResponse listaQuadraUnico(@PathVariable(value="id") int id){
+	public QuadraDTO listaQuadraUnico(@PathVariable(value="id") int id){
 		Quadra quadra = quadraRepository.findById(id);
-		QuadraResponse quadraResponse = new QuadraResponse();
+		QuadraDTO quadraResponse = new QuadraDTO();
 		quadraResponse.setId(quadra.getId());
 		quadraResponse.setEtapa(quadra.getEtapa().getId());
 		ArrayList<Integer> partidaIds = new ArrayList<>();

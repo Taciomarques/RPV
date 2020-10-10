@@ -17,43 +17,45 @@ import interfaces.PersisteCircuitoIF;
 import interfaces.PersisteEtapaIF;
 
 public class PersisteCircuito extends UnicastRemoteObject implements PersisteCircuitoIF {
-	
+
 	protected PersisteCircuito() throws RemoteException {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Circuito cadastroCircuito(Circuito c) {
+	public Circuito cadastroCircuito(Circuito c) throws Exception {
 
+		try {
+			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
-    	EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-    	
-        entityManager.getTransaction().begin();
-        
-        entityManager.persist(c);
+			entityManager.getTransaction().begin();
 
-        entityManager.getTransaction().commit();
+			entityManager.persist(c);
 
-        entityManager.close();
+			entityManager.getTransaction().commit();
 
-        return c;
-    }
-	
+			entityManager.close();
+
+			return c;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
 	@Override
 	public ArrayList<Circuito> recuperaCircuitos() {
 
-    	EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-    	
-        entityManager.getTransaction().begin();
-    	
-    	String sql = "From " + Circuito.class.getName();
-        Object result = entityManager.createQuery(sql).getResultList();
-        ArrayList<Circuito> encontrada = (ArrayList<Circuito>) result;
-        
-        entityManager.close();
+		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
-        return encontrada;
-    }
-	
+		entityManager.getTransaction().begin();
+
+		String sql = "From " + Circuito.class.getName();
+		Object result = entityManager.createQuery(sql).getResultList();
+		ArrayList<Circuito> encontrada = (ArrayList<Circuito>) result;
+
+		entityManager.close();
+
+		return encontrada;
+	}
+
 }

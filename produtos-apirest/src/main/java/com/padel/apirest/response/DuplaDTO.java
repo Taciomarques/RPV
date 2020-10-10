@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
-public class DuplaResponse implements Comparable, Serializable{
+public class DuplaDTO implements Comparable, Serializable{
 	
 	private int id;
 	
@@ -146,12 +146,12 @@ public String getImpedimento() {
 //	private List<Integer> partidas;
 
 	public int compareTo(Object arg0) {
-		int pontosParaComparar=((DuplaResponse)arg0).getPontosRank();
+		int pontosParaComparar=((DuplaDTO)arg0).getPontosRank();
         /* For Ascending order*/
         return pontosParaComparar - this.getPontosRank();
 	}
 	
-	public ArrayList<DuplaResponse> ordenaDuplas(){
+	public ArrayList<DuplaDTO> ordenaDuplas(){
 		
 		return null;
 	}

@@ -21,7 +21,7 @@ import com.padel.apirest.models.Dupla;
 import com.padel.apirest.models.Gerente;
 import com.padel.apirest.models.Partida;
 import com.padel.apirest.repository.PartidaRepository;
-import com.padel.apirest.response.PartidaResponse;
+import com.padel.apirest.response.PartidaDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,11 +37,11 @@ public class PartidaResource {
 	
 	@ApiOperation(value="Retorna uma lista de Partida")
 	@GetMapping("/partidas")
-	public List<PartidaResponse> listaPartida(){
+	public List<PartidaDTO> listaPartida(){
 		List<Partida> partidaList = partidaRepository.findAll();
-		ArrayList<PartidaResponse> partidaResponseList = new ArrayList<>();
+		ArrayList<PartidaDTO> partidaResponseList = new ArrayList<>();
 		for(Partida partida: partidaList) {
-			PartidaResponse partidaResponse = new PartidaResponse();
+			PartidaDTO partidaResponse = new PartidaDTO();
 			partidaResponse.setDataHora(partida.getDataHora());
 			partidaResponse.setEtapa(partida.getEtapa().getId());
 			partidaResponse.setId(partida.getId());
@@ -62,9 +62,9 @@ public class PartidaResource {
 	
 	@ApiOperation(value="Retorna um partida unica")
 	@GetMapping("/partida/{id}")
-	public PartidaResponse listaGerenteUnico(@PathVariable(value="id") int id){
+	public PartidaDTO listaGerenteUnico(@PathVariable(value="id") int id){
 		Partida partida = partidaRepository.findById(id);
-		PartidaResponse partidaResponse = new PartidaResponse();
+		PartidaDTO partidaResponse = new PartidaDTO();
 		partidaResponse.setDataHora(partida.getDataHora());
 		partidaResponse.setEtapa(partida.getEtapa().getId());
 		partidaResponse.setId(partida.getId());
