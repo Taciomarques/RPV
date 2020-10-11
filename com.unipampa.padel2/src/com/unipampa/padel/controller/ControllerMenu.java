@@ -41,8 +41,6 @@ public class ControllerMenu implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		// TODO (don't really need to do anything here).
-
 	}
 
 	public void clickBotaoEncerraCadastro(ActionEvent event) {
@@ -50,13 +48,11 @@ public class ControllerMenu implements Initializable {
 		if (encerraCadastro.getText().equals("Encerrar Inscrição de Duplas")) {
 			encerraCadastro.setText("Reabrir Inscrição Duplas");
 			cadastrarDuplas.setVisible(false);
-//		  cadastrarDuplas.setEnabled(false);
 
 		} else {
 
 			encerraCadastro.setText("Encerrar Inscrição de Duplas");
 			cadastrarDuplas.setVisible(true);
-//		  cadastrarDuplas.setEnabled(true);
 		}
 
 	}
@@ -88,7 +84,6 @@ public class ControllerMenu implements Initializable {
 		try {
 			ControllerChaves.geraChaves();
 		} catch (MalformedURLException | RemoteException | NotBoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -105,7 +100,7 @@ public class ControllerMenu implements Initializable {
 	}
 
 	public void clickBotaoVerJogos(ActionEvent event) {
-//		ViewPartidas vp = new ViewPartidas();
+
 		ViewPrevisaoPartidas vp = new ViewPrevisaoPartidas();
 		vp.start(new Stage());
 

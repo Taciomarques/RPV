@@ -47,21 +47,32 @@ public class ControllerPrevisaoPartidas implements Initializable {
 	@FXML
 	private TableColumn<Quadra, String> quadra;
 
-//	@FXML
-//	private TableColumn categoria;
-
 	@FXML
 	private MenuButton diaList;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		horario.setCellValueFactory(new PropertyValueFactory<>("dataHora"));
-		nome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		quadra.setCellValueFactory(new PropertyValueFactory<>("quadra"));
-//		categoria.setCellValueFactory(new PropertyValueFactory<>("nomeCat"));
+		try {
 
-//		-- Evento para quando escolher o item do menu ele atualizar a tabela--
+			horario.setCellValueFactory(new PropertyValueFactory<>("dataHora"));
+			nome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+			quadra.setCellValueFactory(new PropertyValueFactory<>("quadra"));
+
+			EventHandler<ActionEvent> eventoSelectDia = eventoAtualizaTabela();
+
+			adicionaItensEvento(eventoSelectDia);
+
+			String dia = "";
+			tabela_partidas.setItems(FXCollections.observableArrayList(atualizaSuplencia(dia)));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
+
+	private EventHandler<ActionEvent> eventoAtualizaTabela() {
 		EventHandler<ActionEvent> eventoSelectDia = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				String data = "";
@@ -76,8 +87,10 @@ public class ControllerPrevisaoPartidas implements Initializable {
 
 			}
 		};
+		return eventoSelectDia;
+	}
 
-//        -- adicionando os itens de categoria nos botoes e adicionando o evento --
+	private void adicionaItensEvento(EventHandler<ActionEvent> eventoSelectDia) {
 		ArrayList<String> dias = new ArrayList<>();
 		String dia1 = 4 + "", dia2 = 5 + "", dia3 = 6 + "", dia4 = 0 + "";
 		dias.add(dia1);
@@ -90,18 +103,6 @@ public class ControllerPrevisaoPartidas implements Initializable {
 			m.setOnAction(eventoSelectDia);
 			diaList.getItems().add(m);
 		}
-
-//        -- popula inicialmente a tabela sem nada --
-
-		String dia = "";
-
-		try {
-			tabela_partidas.setItems(FXCollections.observableArrayList(atualizaSuplencia(dia)));
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
 	}
 
 	public void clickBotaoVoltar(ActionEvent event) {
@@ -137,7 +138,7 @@ public class ControllerPrevisaoPartidas implements Initializable {
 		}
 
 	}
-	
+
 	public static void alertFeedback(String chavesReduzidas) {
 		Alert alertSucces = new Alert(AlertType.CONFIRMATION);
 		alertSucces.setTitle("Sucesso");
@@ -145,14 +146,14 @@ public class ControllerPrevisaoPartidas implements Initializable {
 		alertSucces.setContentText(chavesReduzidas);
 		alertSucces.showAndWait();
 	}
-	
+
 	public static void alertDelete() {
 		Alert alertSucces = new Alert(AlertType.CONFIRMATION);
 		alertSucces.setTitle("Sucesso");
 		alertSucces.setHeaderText("A deleção foi bem sucessedida!");
 		alertSucces.showAndWait();
 	}
-	
+
 	public static void alertNaoDelete() {
 		Alert alertSucces = new Alert(AlertType.ERROR);
 		alertSucces.setTitle("ERRO");
@@ -167,18 +168,17 @@ public class ControllerPrevisaoPartidas implements Initializable {
 		try {
 			p.geraGradePartidas();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// PersistePartidaIF part = (PersistePartidaIF)
-		// Naming.lookup(Connection.getUrl() + "partida");
-//		PersisteInscricaoIF pI = (PersisteInscricaoIF) Naming.lookup(Connection.getUrl() + "inscricao");
-		ArrayList<Jogos> partidas = new ArrayList<>();
 		ArrayList<Partida> partidasList = new ArrayList<>();
+		ArrayList<Jogos> partidas = new ArrayList<>();
 
-//		ArrayList<Inscritos> inscritos = new ArrayList<>();
-//		-- filtra as duplas por categoria escolhida para serem mostradas-- 
+		return populaJogos(filtraDuplasPorCategoriaSelecionada(dia, p, partidasList), partidas);
+	}
+
+	private ArrayList<Partida> filtraDuplasPorCategoriaSelecionada(String dia, Partidas p, ArrayList<Partida> partidasList) {
+
 		ArrayList<Partida> partidasProntas = p.getPartidasProntas();
 		for (Partida parts : partidasProntas) {
 
@@ -188,22 +188,23 @@ public class ControllerPrevisaoPartidas implements Initializable {
 
 			}
 		}
+		return partidasList;
+	}
 
-//		-- popula o array de inscritos com as duplas e transforma o atributo horaInscricao de date para String --
+	private ArrayList<Jogos> populaJogos(ArrayList<Partida> partidasList, ArrayList<Jogos> partidas) {
+
 		for (Partida list : partidasList) {
 			DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 			String dataFormatada = dateFormat.format(list.getDataHora());
 			Jogos insc = new Jogos(list.getNome(), list.getQuadra().getId(), dataFormatada);
 			partidas.add(insc);
 		}
-
 		return partidas;
 	}
 
 	public static class Jogos {
 
 		private final SimpleStringProperty nome;
-		// private final SimpleStringProperty nomeCat;
 		private final SimpleStringProperty dataHora;
 		private final SimpleStringProperty quadra;
 
@@ -211,7 +212,6 @@ public class ControllerPrevisaoPartidas implements Initializable {
 			this.nome = new SimpleStringProperty(nome);
 			this.quadra = new SimpleStringProperty(quadra + "");
 			this.dataHora = new SimpleStringProperty(Hora);
-//			this.nomeCat = new SimpleStringProperty(categoria);
 		}
 
 		public String getNome() {
