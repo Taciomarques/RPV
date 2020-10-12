@@ -14,85 +14,83 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "gerente")
-@NamedQueries({
-    @NamedQuery(name = "Gerente.findAll", query = "SELECT g FROM Gerente g")
-    , @NamedQuery(name = "Gerente.findById", query = "SELECT g FROM Gerente g WHERE g.id = :id")
-    , @NamedQuery(name = "Gerente.findByLogin", query = "SELECT g FROM Gerente g WHERE g.login = :login")
-    , @NamedQuery(name = "Gerente.findBySenha", query = "SELECT g FROM Gerente g WHERE g.senha = :senha")
-    , @NamedQuery(name = "Gerente.findByNome", query = "SELECT g FROM Gerente g WHERE g.nome = :nome")})
-public class Gerente implements Serializable{
+@NamedQueries({ @NamedQuery(name = "Gerente.findAll", query = "SELECT g FROM Gerente g"),
+		@NamedQuery(name = "Gerente.findById", query = "SELECT g FROM Gerente g WHERE g.id = :id"),
+		@NamedQuery(name = "Gerente.findByLogin", query = "SELECT g FROM Gerente g WHERE g.login = :login"),
+		@NamedQuery(name = "Gerente.findBySenha", query = "SELECT g FROM Gerente g WHERE g.senha = :senha"),
+		@NamedQuery(name = "Gerente.findByNome", query = "SELECT g FROM Gerente g WHERE g.nome = :nome") })
+public class Gerente implements Serializable {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private int id;
-	
-    @Basic(optional = false)
-    @Column(name = "login", nullable = false, length = 15)
-    private String login;
-    
-    @Basic(optional = false)
-    @Column(name = "senha", nullable = false, length = 12)
-    private String senha;
-    
-    @Basic(optional = false)
-    @Column(name = "nome", nullable = false, length = 20)
-    private String nome;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gerente")
-    private List<Circuito> circuitoList;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "id")
+	private int id;
 
-    public Gerente() {
-    }
+	@Basic(optional = false)
+	@Column(name = "login", nullable = false, length = 15)
+	private String login;
 
-    public Gerente(String login, String senha, String nome) {
-        super();
-        this.login = login;
-        this.senha = senha;
-        this.nome = nome;
-    }
+	@Basic(optional = false)
+	@Column(name = "senha", nullable = false, length = 12)
+	private String senha;
 
-    public int getId() {
-        return id;
-    }
+	@Basic(optional = false)
+	@Column(name = "nome", nullable = false, length = 20)
+	private String nome;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "gerente")
+	private List<Circuito> circuitoList;
 
-    public String getLogin() {
-        return login;
-    }
+	public Gerente() {
+	}
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+	public Gerente(String login, String senha, String nome) {
+		super();
+		this.login = login;
+		this.senha = senha;
+		this.nome = nome;
+	}
 
-    public String getSenha() {
-        return senha;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-    public List<Circuito> getCircuitoList() {
-        return circuitoList;
-    }
+	public String getSenha() {
+		return senha;
+	}
 
-    public void setCircuitoList(List<Circuito> circuitoList) {
-        this.circuitoList = circuitoList;
-    }
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public List<Circuito> getCircuitoList() {
+		return circuitoList;
+	}
+
+	public void setCircuitoList(List<Circuito> circuitoList) {
+		this.circuitoList = circuitoList;
+	}
 
 }

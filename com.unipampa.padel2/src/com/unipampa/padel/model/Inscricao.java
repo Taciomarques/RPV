@@ -16,29 +16,26 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "inscricao")
-@NamedQueries({
-    @NamedQuery(name = "Inscricao.findAll", query = "SELECT i FROM Inscricao i")
-    , @NamedQuery(name = "Inscricao.findByDupla", query = "SELECT i FROM Inscricao i WHERE i.inscricaoPK.dupla = :dupla")
-    , @NamedQuery(name = "Inscricao.findByEtapa", query = "SELECT i FROM Inscricao i WHERE i.inscricaoPK.etapa = :etapa")
-    , @NamedQuery(name = "Inscricao.findByHorainsc", query = "SELECT i FROM Inscricao i WHERE i.horainsc = :horainsc")})
-public class Inscricao implements Serializable{
-	
+@NamedQueries({ @NamedQuery(name = "Inscricao.findAll", query = "SELECT i FROM Inscricao i"),
+		@NamedQuery(name = "Inscricao.findByDupla", query = "SELECT i FROM Inscricao i WHERE i.inscricaoPK.dupla = :dupla"),
+		@NamedQuery(name = "Inscricao.findByEtapa", query = "SELECT i FROM Inscricao i WHERE i.inscricaoPK.etapa = :etapa"),
+		@NamedQuery(name = "Inscricao.findByHorainsc", query = "SELECT i FROM Inscricao i WHERE i.horainsc = :horainsc") })
+public class Inscricao implements Serializable {
+
 	@EmbeddedId
 	protected InscricaoPK inscricaoPK;
-	
+
 	@Basic(optional = false)
-    @Column(name = "horainsc", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "horainsc", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date horainsc;
-	
-    
+
 	@JoinColumn(name = "dupla", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+	@ManyToOne(optional = false)
 	private Dupla dupla1;
-	
-    
-    @JoinColumn(name = "etapa", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+
+	@JoinColumn(name = "etapa", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
 	private Etapa etapa1;
 
 	public Date getHorainsc() {
@@ -48,7 +45,6 @@ public class Inscricao implements Serializable{
 	public void setHorainsc(Date horainsc) {
 		this.horainsc = horainsc;
 	}
-	
 
 	public InscricaoPK getInscricaoPK() {
 		return inscricaoPK;
@@ -73,9 +69,5 @@ public class Inscricao implements Serializable{
 	public void setEtapa1(Etapa etapa1) {
 		this.etapa1 = etapa1;
 	}
-	
-	
-	
-	
 
 }

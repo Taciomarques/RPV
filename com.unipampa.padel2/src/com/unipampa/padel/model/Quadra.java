@@ -18,62 +18,53 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "quadra")
-@NamedQueries({
-    @NamedQuery(name = "Quadra.findAll", query = "SELECT q FROM Quadra q")
-    , @NamedQuery(name = "Quadra.findById", query = "SELECT q FROM Quadra q WHERE q.id = :id")})
-public class Quadra implements Serializable{
-	
+@NamedQueries({ @NamedQuery(name = "Quadra.findAll", query = "SELECT q FROM Quadra q"),
+		@NamedQuery(name = "Quadra.findById", query = "SELECT q FROM Quadra q WHERE q.id = :id") })
+public class Quadra implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
 	@Column(name = "id")
 	private int id;
-	
+
 	@JoinColumn(name = "etapa", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+	@ManyToOne(optional = false)
 	private Etapa etapa;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "quadra")
 	private List<Partida> partidaList;
-	
-	public Quadra () {
-		
+
+	public Quadra() {
+
 	}
-	
-	
+
 	public Quadra(int id) {
 		this.id = id;
 	}
-
 
 	public int getId() {
 		return id;
 	}
 
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 
 	public Etapa getEtapa() {
 		return etapa;
 	}
 
-
 	public void setEtapa(Etapa etapa) {
 		this.etapa = etapa;
 	}
-
 
 	public List<Partida> getPartidaList() {
 		return partidaList;
 	}
 
-
 	public void setPartidaList(List<Partida> partidaList) {
 		this.partidaList = partidaList;
 	}
-	
-	
+
 }

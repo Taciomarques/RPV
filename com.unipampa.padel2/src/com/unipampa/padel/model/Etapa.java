@@ -28,42 +28,41 @@ import javax.persistence.TemporalType;
 //    , @NamedQuery(name = "Etapa.findByDatafinal", query = "SELECT e FROM Etapa e WHERE e.datafinal = :datafinal")
 //    , @NamedQuery(name = "Etapa.findByDatainicial", query = "SELECT e FROM Etapa e WHERE e.datainicial = :datainicial")
 //    , @NamedQuery(name = "Etapa.findByNome", query = "SELECT e FROM Etapa e WHERE e.nome = :nome")})
-public class Etapa implements Serializable{
+public class Etapa implements Serializable {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "id")
 	private int id;
-	
+
 	@Basic(optional = false)
-    @Column(name = "nome", nullable = false, length = 20)
+	@Column(name = "nome", nullable = false, length = 20)
 	private String nome;
-	
+
 	@Basic(optional = false)
-    @Column(name = "datainicial", nullable = false)
-    @Temporal(TemporalType.DATE)
+	@Column(name = "datainicial", nullable = false)
+	@Temporal(TemporalType.DATE)
 	private Date dataInicial;
-	
+
 	@Basic(optional = false)
-    @Column(name = "datafinal", nullable = false)
-    @Temporal(TemporalType.DATE)
+	@Column(name = "datafinal", nullable = false)
+	@Temporal(TemporalType.DATE)
 	private Date dataFinal;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "etapa1")
 	private List<Inscricao> inscList;
-	
+
 	@JoinColumn(name = "circuito", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+	@ManyToOne(optional = false)
 	private Circuito circuito;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "etapa")
 	private List<Quadra> quadras;
-	
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "etapa")
 	private List<Partida> partidas;
-	
+
 	@ManyToMany(mappedBy = "etapaList")
 	private List<Chave> chaves;
 
@@ -138,8 +137,5 @@ public class Etapa implements Serializable{
 	public void setChaves(List<Chave> chaves) {
 		this.chaves = chaves;
 	}
-	
-	
 
-	
 }

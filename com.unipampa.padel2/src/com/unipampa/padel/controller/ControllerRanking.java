@@ -62,7 +62,7 @@ public class ControllerRanking implements Initializable {
 			nome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 			cpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
 			pontos.setCellValueFactory(new PropertyValueFactory<>("pontos"));
-			
+
 			EventHandler<ActionEvent> eventoCategoria = eventoAtualizaTabela();
 
 			adicionaItensEvento(eventoCategoria);
@@ -72,7 +72,7 @@ public class ControllerRanking implements Initializable {
 
 			tabela_ranking.setItems(FXCollections.observableArrayList(atualizaRanking(c)));
 		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
-			
+
 			e1.printStackTrace();
 		}
 	}

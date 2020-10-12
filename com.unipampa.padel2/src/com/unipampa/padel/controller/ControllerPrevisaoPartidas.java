@@ -177,7 +177,8 @@ public class ControllerPrevisaoPartidas implements Initializable {
 		return populaJogos(filtraDuplasPorCategoriaSelecionada(dia, p, partidasList), partidas);
 	}
 
-	private ArrayList<Partida> filtraDuplasPorCategoriaSelecionada(String dia, Partidas p, ArrayList<Partida> partidasList) {
+	private ArrayList<Partida> filtraDuplasPorCategoriaSelecionada(String dia, Partidas p,
+			ArrayList<Partida> partidasList) {
 
 		ArrayList<Partida> partidasProntas = p.getPartidasProntas();
 		for (Partida parts : partidasProntas) {

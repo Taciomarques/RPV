@@ -52,6 +52,56 @@ public class Partidas {
 	public int maxJogosEtapa;
 	private int numeroQuadras = 3;
 	private int numeroPartidasAtual;
+	private int numChave = 0, numChave2 = 0, numChave3 = 0;
+	private String indexCategoriaMaisChave = "", indexCategoriaMaisChave2 = "", indexCategoriaMaisChave3 = "";
+
+	public String getIndexCategoriaMaisChave() {
+		return indexCategoriaMaisChave;
+	}
+
+	public void setIndexCategoriaMaisChave(String indexCategoriaMaisChave) {
+		this.indexCategoriaMaisChave = indexCategoriaMaisChave;
+	}
+
+	public String getIndexCategoriaMaisChave2() {
+		return indexCategoriaMaisChave2;
+	}
+
+	public void setIndexCategoriaMaisChave2(String indexCategoriaMaisChave2) {
+		this.indexCategoriaMaisChave2 = indexCategoriaMaisChave2;
+	}
+
+	public String getIndexCategoriaMaisChave3() {
+		return indexCategoriaMaisChave3;
+	}
+
+	public void setIndexCategoriaMaisChave3(String indexCategoriaMaisChave3) {
+		this.indexCategoriaMaisChave3 = indexCategoriaMaisChave3;
+	}
+
+	public int getNumChave() {
+		return numChave;
+	}
+
+	public void setNumChave(int numChave) {
+		this.numChave = numChave;
+	}
+
+	public int getNumChave2() {
+		return numChave2;
+	}
+
+	public void setNumChave2(int numChave2) {
+		this.numChave2 = numChave2;
+	}
+
+	public int getNumChave3() {
+		return numChave3;
+	}
+
+	public void setNumChave3(int numChave3) {
+		this.numChave3 = numChave3;
+	}
 
 	public int getNumeroPartidasAtual() {
 		return numeroPartidasAtual;
@@ -65,7 +115,6 @@ public class Partidas {
 
 		Partidas p = new Partidas();
 		p.geraGradePartidas();
-//		p.alocaGradeHorarios();
 
 	}
 
@@ -642,9 +691,74 @@ public class Partidas {
 
 		HashMap<String, ArrayList<Chave>> chavesEliminadas = new LinkedHashMap();
 
-		String indexCategoriaMaisChave = "", indexCategoriaMaisChave2 = "", indexCategoriaMaisChave3 = "";
-		int numChave = 0, numChave2 = 0, numChave3 = 0;
+		boolean erro = false;
 
+		selecionaChavesMaiores();
+
+		ArrayList<ArrayList<Chave>> chavesReduzir = eliminaChaves(numeroReduzir);
+
+		ArrayList<Chave> eliminadas = new ArrayList<>();
+		eliminadas.addAll(chavesReduzir.get(0));
+		eliminadas.addAll(chavesReduzir.get(1));
+		eliminadas.addAll(chavesReduzir.get(2));
+
+		if (pchave.removeChaves(eliminadas)) {
+			ControllerPrevisaoPartidas.alertDelete();
+		} else {
+			ControllerPrevisaoPartidas.alertNaoDelete();
+		}
+
+		chavesEliminadas.put(indexCategoriaMaisChave, chavesReduzir.get(0));
+		chavesEliminadas.put(indexCategoriaMaisChave2, chavesReduzir.get(1));
+		chavesEliminadas.put(indexCategoriaMaisChave3, chavesReduzir.get(2));
+
+		String chavesReduzidas = chavesReduzidas(chavesEliminadas);
+
+		return chavesReduzidas;
+
+	}
+
+	private String chavesReduzidas(HashMap<String, ArrayList<Chave>> chavesEliminadas) {
+		String chavesReduzidas = "";
+		for (Map.Entry<String, ArrayList<Chave>> entrada : chavesEliminadas.entrySet()) {
+
+			ArrayList<Chave> chaves = entrada.getValue();
+
+			chavesReduzidas = chavesReduzidas + "\nCategoria " + entrada.getKey() + "\n";
+
+			for (Chave cs : chaves) {
+				chavesReduzidas = chavesReduzidas + "\t Chaves: " + cs.getNome() + "\n";
+			}
+
+		}
+		return chavesReduzidas;
+	}
+
+	private ArrayList<ArrayList<Chave>> eliminaChaves(int numeroReduzir) {
+		int divisao = numeroReduzir / 3;
+
+		ArrayList<Chave> chaves1 = new ArrayList<>();
+		ArrayList<Chave> chaves2 = new ArrayList<>();
+		ArrayList<Chave> chaves3 = new ArrayList<>();
+
+		for (int i = 1; i <= divisao; i++) {
+			chaves1.add(chavesCat.get(indexCategoriaMaisChave).get(numChave - i));
+			chavesCat.get(indexCategoriaMaisChave).remove(numChave - i);
+
+			chaves2.add(chavesCat.get(indexCategoriaMaisChave2).get(numChave2 - i));
+			chavesCat.get(indexCategoriaMaisChave2).remove(numChave2 - i);
+
+			chaves3.add(chavesCat.get(indexCategoriaMaisChave3).get(numChave3 - i));
+			chavesCat.get(indexCategoriaMaisChave3).remove(numChave3 - i);
+		}
+		ArrayList<ArrayList<Chave>> chaves = new ArrayList<>();
+		chaves.add(chaves1);
+		chaves.add(chaves2);
+		chaves.add(chaves3);
+		return chaves;
+	}
+
+	private void selecionaChavesMaiores() {
 		for (Map.Entry<String, ArrayList<Chave>> entrada : chavesCat.entrySet()) {
 
 			ArrayList<Chave> chaves = entrada.getValue();
@@ -665,58 +779,6 @@ public class Partidas {
 
 			}
 		}
-
-		int divisao = 0;
-
-		divisao = numeroReduzir / 3;
-
-		ArrayList<Chave> chaves1 = new ArrayList<>();
-		ArrayList<Chave> chaves2 = new ArrayList<>();
-		ArrayList<Chave> chaves3 = new ArrayList<>();
-
-		for (int i = 1; i <= divisao; i++) {
-			chaves1.add(chavesCat.get(indexCategoriaMaisChave).get(numChave - i));
-			chavesCat.get(indexCategoriaMaisChave).remove(numChave - i);
-
-			chaves2.add(chavesCat.get(indexCategoriaMaisChave2).get(numChave2 - i));
-			chavesCat.get(indexCategoriaMaisChave2).remove(numChave2 - i);
-
-			chaves3.add(chavesCat.get(indexCategoriaMaisChave3).get(numChave3 - i));
-			chavesCat.get(indexCategoriaMaisChave3).remove(numChave3 - i);
-		}
-
-		boolean erro = false;
-
-		ArrayList<Chave> eliminadas = new ArrayList<>();
-		eliminadas.addAll(chaves1);
-		eliminadas.addAll(chaves2);
-		eliminadas.addAll(chaves3);
-
-		if (pchave.removeChaves(eliminadas)) {
-			ControllerPrevisaoPartidas.alertDelete();
-		} else {
-			ControllerPrevisaoPartidas.alertNaoDelete();
-		}
-
-		chavesEliminadas.put(indexCategoriaMaisChave, chaves1);
-		chavesEliminadas.put(indexCategoriaMaisChave2, chaves2);
-		chavesEliminadas.put(indexCategoriaMaisChave3, chaves3);
-
-		String chavesReduzidas = "";
-		for (Map.Entry<String, ArrayList<Chave>> entrada : chavesEliminadas.entrySet()) {
-
-			ArrayList<Chave> chaves = entrada.getValue();
-
-			chavesReduzidas = chavesReduzidas + "\nCategoria " + entrada.getKey() + "\n";
-
-			for (Chave cs : chaves) {
-				chavesReduzidas = chavesReduzidas + "\t Chaves: " + cs.getNome() + "\n";
-			}
-
-		}
-
-		return chavesReduzidas;
-
 	}
 
 	public int getMaxJogosEtapa() {

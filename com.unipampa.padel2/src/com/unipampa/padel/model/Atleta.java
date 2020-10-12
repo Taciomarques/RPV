@@ -21,9 +21,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
-
-
 @Entity
 @Table(name = "atleta")
 //@NamedQueries({
@@ -33,97 +30,107 @@ import javax.persistence.Table;
 //    , @NamedQuery(name = "Atleta.findByEmail", query = "SELECT a FROM Atleta a WHERE a.email = :email")
 //    , @NamedQuery(name = "Atleta.findByNome", query = "SELECT a FROM Atleta a WHERE a.nome = :nome")
 //    , @NamedQuery(name = "Atleta.findByNumcel", query = "SELECT a FROM Atleta a WHERE a.numcel = :numcel")})
-public class Atleta implements Serializable{//*
-	
+public class Atleta implements Serializable {// *
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
-    @Column(name = "id")
+	@Column(name = "id")
 	private int id;
-	
+
 	@Basic(optional = false)
-    @Column(name = "nome", nullable = false,length = 30)
+	@Column(name = "nome", nullable = false, length = 30)
 	private String nome;
-	
+
 	@Basic(optional = false)
-    @Column(name = "cpf", nullable = false, length = 11)
+	@Column(name = "cpf", nullable = false, length = 11)
 	private String cpf;
-	
+
 	@Basic(optional = false)
 	@Column(name = "numcel", nullable = false, length = 23)
 	private String numCel;
-	
+
 	@Basic(optional = false)
-    @Column(name = "email", nullable = false, length = 40)
+	@Column(name = "email", nullable = false, length = 40)
 	private String email;
-	
+
 	@JoinTable(name = "atleta_dupla", joinColumns = {
-	    @JoinColumn(name = "atleta", referencedColumnName = "id")}, inverseJoinColumns = {
-	    @JoinColumn(name = "dupla", referencedColumnName = "id")})
-	@ManyToMany(fetch = FetchType.EAGER )
+			@JoinColumn(name = "atleta", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "dupla", referencedColumnName = "id") })
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Dupla> duplas;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "atleta1")
 	private List<Ranking> rankList;
-	
 
-	
 	public List<Ranking> getRankList() {
 		return rankList;
 	}
+
 	public void setRankList(List<Ranking> rankList) {
 		this.rankList = rankList;
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getCpf() {
 		return cpf;
 	}
+
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+
 	public String getNumCel() {
 		return numCel;
 	}
+
 	public void setNumCel(String numCel) {
 		this.numCel = numCel;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public Set<Dupla> getDuplas() {
 		return duplas;
 	}
+
 	public void setDuplas(Set<Dupla> duplas) {
 		this.duplas = duplas;
 	}
-	
+
 	public Atleta() {
-		
+
 	}
-	
+
 	public Atleta(String nome, String cpf, List<Ranking> rankList) {
 		super();
 		this.nome = nome;
 		this.cpf = cpf;
 		this.rankList = rankList;
 	}
-	
-	public Atleta(String nome, String cpf, String numCel, String email, Set<Dupla> duplas,
-			List<Ranking> rankList) {
+
+	public Atleta(String nome, String cpf, String numCel, String email, Set<Dupla> duplas, List<Ranking> rankList) {
 		super();
 		this.nome = nome;
 		this.cpf = cpf;
@@ -132,5 +139,5 @@ public class Atleta implements Serializable{//*
 		this.duplas = duplas;
 		this.rankList = rankList;
 	}
-	
+
 }

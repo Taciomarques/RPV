@@ -28,52 +28,49 @@ import javax.persistence.Table;
 //    , @NamedQuery(name = "Dupla.findByNome", query = "SELECT d FROM Dupla d WHERE d.nome = :nome")
 //    , @NamedQuery(name = "Dupla.findByPontosrank", query = "SELECT d FROM Dupla d WHERE d.pontosrank = :pontosrank")
 //    , @NamedQuery(name = "Dupla.findBySuplente", query = "SELECT d FROM Dupla d WHERE d.suplente = :suplente")})
-public class Dupla implements Comparable, Serializable{
-	
+public class Dupla implements Comparable, Serializable {
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-	private int id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
-    @Column(name = "nome", nullable = false, length = 40)
+	@Column(name = "id")
+	private int id;
+
+	@Basic(optional = false)
+	@Column(name = "nome", nullable = false, length = 40)
 	private String nome;
-	
+
 	@Basic(optional = false)
 	@Column(name = "impedimento", nullable = false, length = 15)
 	private String impedimento;
-	
+
 	@Basic(optional = false)
-	@Column(name = "pontosrank",nullable = false, length = 4)
-	private int pontosRank;//*
-	
+	@Column(name = "pontosrank", nullable = false, length = 4)
+	private int pontosRank;// *
+
 	@JoinColumn(name = "categoria", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+	@ManyToOne(optional = false)
 	private Categoria categoria;
-	
+
 	@ManyToMany(mappedBy = "duplaList")
-	private List<Chave> chaves;//*
-	
+	private List<Chave> chaves;// *
+
 	@Basic(optional = false)
-    @Column(name = "suplente", length = 6)
+	@Column(name = "suplente", length = 6)
 	private boolean suplente = true;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dupla1")
 	private List<Inscricao> inscList;
-	
+
 	@JoinTable(name = "dupla_partida", joinColumns = {
-	        @JoinColumn(name = "dupla", referencedColumnName = "id")}, inverseJoinColumns = {
-	        @JoinColumn(name = "partida", referencedColumnName = "id")})
+			@JoinColumn(name = "dupla", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "partida", referencedColumnName = "id") })
 	@ManyToMany
 	private List<Partida> partidaList;
-	
-	//,cascade = {CascadeType.MERGE}
+
 	@ManyToMany(mappedBy = "duplas")
 	private List<Atleta> atletaList;
-	
-	
-	
+
 	public List<Partida> getPartidaList() {
 		return partidaList;
 	}
@@ -90,15 +87,13 @@ public class Dupla implements Comparable, Serializable{
 		this.atletaList = atletaList;
 	}
 
-public String getImpedimento() {
+	public String getImpedimento() {
 		return impedimento;
 	}
 
 	public void setImpedimento(String impedimento) {
 		this.impedimento = impedimento;
 	}
-
-	
 
 	public boolean isSuplente() {
 		return suplente;
@@ -107,7 +102,7 @@ public String getImpedimento() {
 	public void setSuplente(boolean suplente) {
 		this.suplente = suplente;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -132,7 +127,6 @@ public String getImpedimento() {
 		this.pontosRank = pontosHank;
 	}
 
-
 	public Categoria getCategoria() {
 		return categoria;
 	}
@@ -140,7 +134,6 @@ public String getImpedimento() {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-	
 
 	public List<Inscricao> getInscList() {
 		return inscList;
@@ -171,25 +164,20 @@ public String getImpedimento() {
 
 	@Override
 	public int compareTo(Object arg0) {
-		int pontosParaComparar=((Dupla)arg0).getPontosRank();
-        /* For Ascending order*/
-        return pontosParaComparar - this.getPontosRank();
+		int pontosParaComparar = ((Dupla) arg0).getPontosRank();
+		/* For Ascending order */
+		return pontosParaComparar - this.getPontosRank();
 	}
-	
-	public ArrayList<Dupla> ordenaDuplas(){
-		
+
+	public ArrayList<Dupla> ordenaDuplas() {
+
 		return null;
 	}
-	
+
 	private void atualizaSituacao() {
-		
+
 		suplente = false;
-		
+
 	}
-	
-	
-//	@Transient
-//	@ManyToMany(mappedBy = "duplas")
-//	private List<Torneio> torneio;
 
 }

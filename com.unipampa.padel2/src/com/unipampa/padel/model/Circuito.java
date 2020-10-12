@@ -18,82 +18,80 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "circuito")
-@NamedQueries({
-    @NamedQuery(name = "Circuito.findAll", query = "SELECT c FROM Circuito c")
-    , @NamedQuery(name = "Circuito.findById", query = "SELECT c FROM Circuito c WHERE c.id = :id")
-    , @NamedQuery(name = "Circuito.findByNome", query = "SELECT c FROM Circuito c WHERE c.nome = :nome")})
+@NamedQueries({ @NamedQuery(name = "Circuito.findAll", query = "SELECT c FROM Circuito c"),
+		@NamedQuery(name = "Circuito.findById", query = "SELECT c FROM Circuito c WHERE c.id = :id"),
+		@NamedQuery(name = "Circuito.findByNome", query = "SELECT c FROM Circuito c WHERE c.nome = :nome") })
 public class Circuito implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private int id;
-    
-    @Basic(optional = false)
-    @Column(name = "nome",nullable = false, length = 20)
-    private String nome;
-    
-    @JoinColumn(name = "gerente", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Gerente gerente;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "circuito")
-    private List<Etapa> etapaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "circuito1")
-    private List<Ranking> rankList;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "id")
+	private int id;
 
-    public Circuito() {
-    }
+	@Basic(optional = false)
+	@Column(name = "nome", nullable = false, length = 20)
+	private String nome;
 
-    public Circuito(int id) {
-        this.id = id;
-    }
+	@JoinColumn(name = "gerente", referencedColumnName = "id")
+	@ManyToOne(optional = false)
+	private Gerente gerente;
 
-    public Circuito(int id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "circuito")
+	private List<Etapa> etapaList;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "circuito1")
+	private List<Ranking> rankList;
 
-    public Integer getId() {
-        return id;
-    }
+	public Circuito() {
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public Circuito(int id) {
+		this.id = id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public Circuito(int id, String nome) {
+		this.id = id;
+		this.nome = nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public Gerente getGerente() {
-        return gerente;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setGerente(Gerente gerente) {
-        this.gerente = gerente;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public List<Etapa> getEtapaList() {
-        return etapaList;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setEtapaList(List<Etapa> etapaList) {
-        this.etapaList = etapaList;
-    }
+	public Gerente getGerente() {
+		return gerente;
+	}
 
-    public List<Ranking> getRankList() {
-        return rankList;
-    }
+	public void setGerente(Gerente gerente) {
+		this.gerente = gerente;
+	}
 
-    public void setRankingList(List<Ranking> rankList) {
-        this.rankList = rankList;
-    }
+	public List<Etapa> getEtapaList() {
+		return etapaList;
+	}
 
-    
+	public void setEtapaList(List<Etapa> etapaList) {
+		this.etapaList = etapaList;
+	}
+
+	public List<Ranking> getRankList() {
+		return rankList;
+	}
+
+	public void setRankingList(List<Ranking> rankList) {
+		this.rankList = rankList;
+	}
+
 }
