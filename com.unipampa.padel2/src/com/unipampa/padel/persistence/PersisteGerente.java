@@ -19,7 +19,7 @@ public class PersisteGerente extends UnicastRemoteObject implements PersisteGere
 	}
 
 	@Override
-	public Gerente cadastroGerente(Gerente g) throws Exception {
+	public Gerente cadastroGerente(Gerente g) throws RemoteException {
 
 		try {
 			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();

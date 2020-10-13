@@ -18,7 +18,7 @@ public class PersisteInscricao extends UnicastRemoteObject implements PersisteIn
 	}
 
 	@Override
-	public Inscricao cadastroInscricao(Inscricao i) throws Exception {
+	public Inscricao cadastroInscricao(Inscricao i) throws RemoteException {
 
 		try {
 			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();

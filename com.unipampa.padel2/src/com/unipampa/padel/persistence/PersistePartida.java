@@ -18,7 +18,7 @@ public class PersistePartida extends UnicastRemoteObject implements PersistePart
 	}
 
 	@Override
-	public void cadastroPartida(Partida a) throws Exception {
+	public void cadastroPartida(Partida a) throws RemoteException {
 
 		try {
 			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -39,7 +39,7 @@ public class PersistePartida extends UnicastRemoteObject implements PersistePart
 	}
 
 	@Override
-	public boolean cadastroPartidas(ArrayList<Partida> partidas) {
+	public void cadastroPartidas(ArrayList<Partida> partidas) {
 
 		try {
 			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -54,15 +54,15 @@ public class PersistePartida extends UnicastRemoteObject implements PersistePart
 
 			entityManager.close();
 
-			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw e;
+
 		}
 	}
 
 	@Override
-	public ArrayList<Partida> recuperaPartida() {
+	public ArrayList<Partida> recuperaPartida() throws RemoteException{
 
 		try {
 			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -78,7 +78,7 @@ public class PersistePartida extends UnicastRemoteObject implements PersistePart
 			return encontrada;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			throw e;
 		}
 	}
 

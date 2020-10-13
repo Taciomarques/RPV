@@ -702,9 +702,11 @@ public class Partidas {
 		eliminadas.addAll(chavesReduzir.get(1));
 		eliminadas.addAll(chavesReduzir.get(2));
 
-		if (pchave.removeChaves(eliminadas)) {
+		try {
+			pchave.removeChaves(eliminadas);
 			ControllerPrevisaoPartidas.alertDelete();
-		} else {
+		}catch(Exception e) {
+			e.printStackTrace();
 			ControllerPrevisaoPartidas.alertNaoDelete();
 		}
 

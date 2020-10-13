@@ -23,7 +23,7 @@ public class PersisteCircuito extends UnicastRemoteObject implements PersisteCir
 	}
 
 	@Override
-	public Circuito cadastroCircuito(Circuito c) throws Exception {
+	public Circuito cadastroCircuito(Circuito c) throws RemoteException {
 
 		try {
 			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();

@@ -18,7 +18,7 @@ public class PersisteRanking extends UnicastRemoteObject implements PersisteRank
 	}
 
 	@Override
-	public Ranking cadastroRanking(Ranking r) throws Exception {
+	public Ranking cadastroRanking(Ranking r) throws RemoteException {
 
 		try {
 			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();

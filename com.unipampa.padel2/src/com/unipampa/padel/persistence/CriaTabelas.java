@@ -30,6 +30,19 @@ import interfaces.*;;
 
 public class CriaTabelas {
 	public static void main(String[] args) throws Exception {
+//		EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+//		entityManager.getTransaction().begin();
+//
+//		// Check database version
+//		String sql = "select version()";
+//
+//		String result = (String) entityManager.createNativeQuery(sql).getSingleResult();
+//		System.out.println(result);
+//
+//		entityManager.getTransaction().commit();
+//		entityManager.close();
+//
+//		JPAUtil.shutdown();
 		try {
 			populaBanco();
 		} catch (NoSuchElementException e) {

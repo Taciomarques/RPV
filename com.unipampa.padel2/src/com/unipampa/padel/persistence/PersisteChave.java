@@ -18,7 +18,7 @@ public class PersisteChave extends UnicastRemoteObject implements PersisteChaveI
 	}
 
 	@Override
-	public void cadastroChave(Chave a) throws Exception {
+	public void cadastroChave(Chave a) throws RemoteException {
 
 		try {
 			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -59,7 +59,7 @@ public class PersisteChave extends UnicastRemoteObject implements PersisteChaveI
 	}
 
 	@Override
-	public void removeChaves(ArrayList<Chave> chaves) throws Exception{
+	public void removeChaves(ArrayList<Chave> chaves) throws RemoteException{
 
 		try {
 			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();

@@ -7,8 +7,13 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
+
+import org.hibernate.Hibernate;
+
 import com.unipampa.padel.model.Atleta;
 import com.unipampa.padel.model.Categoria;
 import com.unipampa.padel.model.Circuito;
@@ -125,29 +130,25 @@ public class ControllerDupla implements Initializable {
 	}
 
 	public MenuItem getSabadoManhaItem() {
-		if (sabadoManhaMenuItem != null) {
-			sabadoManhaMenuItem = new MenuItem("Sábado Manhã");
-			sabadoManhaMenuItem.setOnAction(eventoSelectImpedimento);
-			selectImpedimento.getItems().add(sabadoManhaMenuItem);
-		}
+		sabadoManhaMenuItem = new MenuItem("Sábado Manhã");
+		sabadoManhaMenuItem.setOnAction(eventoSelectImpedimento);
+		selectImpedimento.getItems().add(sabadoManhaMenuItem);
+
 		return sabadoManhaMenuItem;
 	}
 
 	public MenuItem getSabadoTardeMenuItem() {
-		if (sabadoTardeMenuItem != null) {
-			sabadoTardeMenuItem = new MenuItem("Sábado Tarde");
-			sabadoTardeMenuItem.setOnAction(eventoSelectImpedimento);
-			selectImpedimento.getItems().add(sabadoTardeMenuItem);
-		}
+		sabadoTardeMenuItem = new MenuItem("Sábado Tarde");
+		sabadoTardeMenuItem.setOnAction(eventoSelectImpedimento);
+		selectImpedimento.getItems().add(sabadoTardeMenuItem);
+
 		return sabadoTardeMenuItem;
 	}
 
 	public MenuItem getSabadoNoiteMenuItem() {
-		if (sabadoNoiteMenuItem != null) {
-			sabadoNoiteMenuItem = new MenuItem("Sábado Noite");
-			sabadoNoiteMenuItem.setOnAction(eventoSelectImpedimento);
-			selectImpedimento.getItems().add(sabadoNoiteMenuItem);
-		}
+		sabadoNoiteMenuItem = new MenuItem("Sábado Noite");
+		sabadoNoiteMenuItem.setOnAction(eventoSelectImpedimento);
+		selectImpedimento.getItems().add(sabadoNoiteMenuItem);
 		return sabadoNoiteMenuItem;
 	}
 
@@ -184,6 +185,9 @@ public class ControllerDupla implements Initializable {
 	}
 
 	public void createAtleta() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		boolean carregado = false, carregado2 = false;
+
 		try {
 			Atleta at1 = new Atleta();
 			at1.setNome(nomeAtleta1.getText());
@@ -198,8 +202,40 @@ public class ControllerDupla implements Initializable {
 			at2.setNumCel(numCelAtleta2.getText());
 
 			PersisteAtletaIF pa = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
-			at1 = pa.cadastroAtleta(at1);
-			at2 = pa.cadastroAtleta(at2);
+
+			for (Atleta att : pa.recuperaAtleta()) {
+				if (att.getCpf().equals(at1.getCpf())) {
+
+					at1 = att;
+
+					alert.setTitle("INFORMATION");
+					alert.setHeaderText("INFORMATION");
+					alert.setContentText("Atleta1 já cadastrado, dados carregados do Banco!");
+					alert.showAndWait();
+					carregado = true;
+				}
+				if (att.getCpf().equals(at2.getCpf())) {
+					at2.setId(att.getId());
+					at2.setNome(att.getNome());
+					at2.setNumCel(att.getNumCel());
+					at2.setEmail(att.getEmail());
+					at2.setDuplas(att.getDuplas());
+					at2.setRankList(att.getRankList());
+
+					alert.setTitle("INFORMATION");
+					alert.setHeaderText("INFORMATION");
+					alert.setContentText("Atleta2 já cadastrado, dados carregados do Banco!");
+					alert.showAndWait();
+					carregado2 = true;
+
+				}
+			}
+			if (!carregado) {
+				at1 = pa.cadastroAtleta(at1);
+			}
+			if (!carregado2) {
+				at2 = pa.cadastroAtleta(at2);
+			}
 
 			Categoria categoriaDupla = new Categoria();
 			for (Categoria c : categorias) {
@@ -208,14 +244,34 @@ public class ControllerDupla implements Initializable {
 					categoriaDupla.setNome(c.getNome());
 				}
 			}
+
 			Dupla dupla = new Dupla();
 			ArrayList<Atleta> atletas = new ArrayList<Atleta>();
 			atletas.add(at1);
 			atletas.add(at2);
 			dupla.setAtletaList(atletas);
-			dupla.setPontosRank(0);
 
-			dupla.setNome(nomeAtleta1.getText() + "/" + nomeAtleta2.getText());
+			int pontosRank = 0;
+			PersisteRankingIF pRanking = (PersisteRankingIF) Naming.lookup(Connection.getUrl() + "ranking");
+
+			if (carregado) {
+				for (Ranking r : pRanking.recuperaRankings()) {
+					if (r.getAtleta1().getId() == at1.getId()) {
+						pontosRank = pontosRank + r.getPontosrank();
+					}
+				}
+			}
+			if (carregado2) {
+				for (Ranking r : pRanking.recuperaRankings()) {
+					if (r.getAtleta1().getId() == at2.getId()) {
+						pontosRank = pontosRank + r.getPontosrank();
+					}
+				}
+			}
+
+			dupla.setPontosRank(pontosRank);
+
+			dupla.setNome(at1.getNome() + "/" + at2.getNome());
 			dupla.setCategoria(categoriaDupla);
 
 			String impedimento = selectImpedimento.getText();
@@ -223,54 +279,68 @@ public class ControllerDupla implements Initializable {
 			if (!impedimento.equalsIgnoreCase("Escolher Impedimento") && impedimento != null) {
 				dupla.setImpedimento(impedimento);
 			}
-			dupla = pa.cadastroDupla(dupla);
-			dupla = pa.atualizaDupla(dupla);
 
-			listDuplas = new ArrayList<Dupla>();
+			dupla = pa.cadastroDupla(dupla);
+//				dupla = pa.atualizaDupla(dupla);
+
+			Hibernate.initialize(at1);
+			Hibernate.initialize(at2);
+
+			Set<Dupla> listDuplas = new HashSet<Dupla>();
 			listDuplas.add(dupla);
+
+			if (carregado) {
+				for (Dupla duplasss : at1.getDuplas()) {
+					listDuplas.add(duplasss);
+				}
+			}
+			if (carregado2) {
+				for (Dupla duplasss : at2.getDuplas()) {
+					listDuplas.add(duplasss);
+				}
+			}
+
 			at1.setDuplas(listDuplas);
 			at2.setDuplas(listDuplas);
+
 			at1 = pa.atualizaAtleta(at1);
 			at2 = pa.atualizaAtleta(at2);
 
 			PersisteCircuitoIF pCircuito = (PersisteCircuitoIF) Naming.lookup(Connection.getUrl() + "circuito");
-			circuitos = pCircuito.recuperaCircuitos();
-			Circuito cct = circuitos.get(0);
+			ArrayList<Circuito> c = pCircuito.recuperaCircuitos();
 
-			Ranking ranking = new Ranking();
+			Circuito cct = c.get(0);
 
-			ranking.setRankingPK(new RankingPK(at1.getId(), cct.getId()));
-			ranking.setAtleta1(at1);
-			ranking.setPontosrank(0);
-			ranking.setCategoria(categoriaDupla);
-			ranking.setCircuito1(circuitos.get(0));
+			if (!carregado) {
+				Ranking ranking = new Ranking();
+				ranking.setRankingPK(new RankingPK(at1.getId(), cct.getId()));
+				ranking.setAtleta1(at1);
+				ranking.setPontosrank(0);
+				ranking.setCategoria(categoriaDupla);
+				ranking.setCircuito1(c.get(0));
+				ranking = pRanking.cadastroRanking(ranking);
 
-			Ranking ranking2 = new Ranking();
+			}
+			if (!carregado2) {
+				Ranking ranking2 = new Ranking();
+				ranking2.setRankingPK(new RankingPK(at2.getId(), cct.getId()));
+				ranking2.setAtleta1(at2);
+				ranking2.setPontosrank(0);
+				ranking2.setCategoria(categoriaDupla);
+				ranking2.setCircuito1(c.get(0));
+				ranking2 = pRanking.cadastroRanking(ranking2);
 
-			ranking2.setRankingPK(new RankingPK(at2.getId(), cct.getId()));
-			ranking2.setAtleta1(at2);
-			ranking2.setPontosrank(0);
-			ranking2.setCategoria(categoriaDupla);
-			ranking2.setCircuito1(circuitos.get(0));
-
-			PersisteRankingIF pRanking = (PersisteRankingIF) Naming.lookup(Connection.getUrl() + "ranking");
-
-			ranking = pRanking.cadastroRanking(ranking);
-			ranking2 = pRanking.cadastroRanking(ranking2);
+			}
 
 			PersisteEtapaIF pe = (PersisteEtapaIF) Naming.lookup(Connection.getUrl() + "etapa");
-			etapas = pe.recuperaEtapas();
+			ArrayList<Etapa> e = pe.recuperaEtapas();
 
 			Inscricao inscricao = new Inscricao();
-
-			Etapa etp = etapas.get(0);
-
+			Etapa etp = e.get(0);
 			inscricao.setInscricaoPK(new InscricaoPK(dupla.getId(), etp.getId()));
 			inscricao.setDupla1(dupla);
-
 			Date horaInsc = new Date();
-
-			inscricao.setEtapa1(etapas.get(0));
+			inscricao.setEtapa1(e.get(0));
 			inscricao.setHorainsc(horaInsc);
 
 			PersisteInscricaoIF pInscricao = (PersisteInscricaoIF) Naming.lookup(Connection.getUrl() + "inscricao");
@@ -278,9 +348,23 @@ public class ControllerDupla implements Initializable {
 			if (pInscricao.cadastroInscricao(inscricao) != null) {
 				System.out.println("dupla " + dupla.getNome() + " cadastrada com sucesso");
 			}
-			alertSuccess(atletas);
+
+			alert.setTitle("INFORMATION");
+			alert.setHeaderText("SUCESSO");
+			alert.setContentText("Dupla cadastrada com Sucesso!");
+			alert.showAndWait();
+			CadastrarDupla.sair();
+
+			atletas.clear();
+
 		} catch (Exception e) {
-			alertError(e);
+
+			Alert alertErro = new Alert(AlertType.ERROR);
+			alertErro.setTitle("ERRO");
+			alertErro.setHeaderText("ERRO");
+			alertErro.setContentText("ERRO inesperado, tente novamente!");
+			alertErro.showAndWait();
+			e.printStackTrace();
 		}
 	}
 

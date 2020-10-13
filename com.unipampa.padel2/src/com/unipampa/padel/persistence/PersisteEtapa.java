@@ -21,7 +21,7 @@ public class PersisteEtapa extends UnicastRemoteObject implements PersisteEtapaI
 	}
 
 	@Override
-	public Etapa cadastroEtapa(Etapa e) throws Exception {
+	public Etapa cadastroEtapa(Etapa e) throws RemoteException {
 
 		try {
 			EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
