@@ -10,18 +10,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.unipampa.padel.model.Atleta;
 import com.unipampa.padel.model.Categoria;
 import com.unipampa.padel.model.Dupla;
 import com.unipampa.padel.model.Inscricao;
-import com.unipampa.padel.persistence.PersisteAtleta;
-import com.unipampa.padel.persistence.PersisteCategoria;
 import com.unipampa.padel.view.ViewInscritos;
 
 import connection.Connection;
+
 import interfaces.PersisteAtletaIF;
 import interfaces.PersisteCategoriaIF;
 import interfaces.PersisteInscricaoIF;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -53,12 +52,12 @@ public class ControllerInscritos implements Initializable {
 
 	@FXML
 	private TableColumn<Dupla, String> situ;
-	
+
 	@FXML
 	private TableColumn<Dupla, String> pontos;
 
 	@FXML
-	private MenuButton catList;
+	private MenuButton categList;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -68,119 +67,105 @@ public class ControllerInscritos implements Initializable {
 		situ.setCellValueFactory(new PropertyValueFactory<>("suplente"));
 		pontos.setCellValueFactory(new PropertyValueFactory<>("pontos"));
 
-//		-- Evento para quando escolher o item do menu ele atualizar a tabela--
 		EventHandler<ActionEvent> eventoSelectCat = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				Categoria c = new Categoria();
 				c.setNome(((MenuItem) e.getSource()).getText());
-				catList.setText(c.getNome());
-				try {
-					tabela_inscritos.setItems(FXCollections.observableArrayList(atualizaSuplencia(c)));
-				} catch (MalformedURLException | RemoteException | NotBoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				categList.setText(c.getNome());
+				populaItensInscritos(c);
 			}
 		};
+		addItensCategoria(eventoSelectCat);
+		Categoria c = new Categoria();
+		c.setNome(categList.getAccessibleText());
+		populaItensInscritos(c);
+	}
 
-//        -- adicionando os itens de categoria nos botoes e adicionando o evento --
+	public void addItensCategoria(EventHandler<ActionEvent> eventoSelectCat) {
 		try {
 			PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
-		
-
 			for (Categoria c : pC.recuperaCategorias()) {
 				MenuItem m = new MenuItem(c.getNome());
 				m.setOnAction(eventoSelectCat);
-				catList.getItems().add(m);
+				categList.getItems().add(m);
 			}
 		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	}
 
-//        -- popula inicialmente a tabela sem nada --
-
-		Categoria c = new Categoria();
-		c.setNome(catList.getAccessibleText());
-
+	public void populaItensInscritos(Categoria c) {
 		try {
 			tabela_inscritos.setItems(FXCollections.observableArrayList(atualizaSuplencia(c)));
 		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
 	}
 
 	public void clickBotaoVoltar(ActionEvent event) {
-
 		ViewInscritos.sair();
-
 	}
 
-	public ArrayList<Inscritos> atualizaSuplencia(Categoria cat) throws MalformedURLException, RemoteException, NotBoundException {
+	public ArrayList<Inscritos> atualizaSuplencia(Categoria cat)
+			throws MalformedURLException, RemoteException, NotBoundException {
+
 		PersisteAtletaIF pA = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
 		PersisteInscricaoIF pI = (PersisteInscricaoIF) Naming.lookup(Connection.getUrl() + "inscricao");
 		ArrayList<Dupla> duplas = new ArrayList<>();
 		ArrayList<Inscricao> inscList = new ArrayList<>();
-
 		ArrayList<Inscritos> inscritos = new ArrayList<>();
-//		-- filtra as duplas por categoria escolhida para serem mostradas-- 
+
 		for (Inscricao insc : pI.recuperaInscricoes()) {
-//			System.out.println(d.getCategoria().getNome());
 			if (insc.getDupla1().getCategoria().getNome().equals(cat.getNome())) {
-//				if(d.getCategoria().getNome().equalsIgnoreCase(cat.getNome())) {
 				inscList.add(insc);
-//				duplas.add(insc.getDupla1());
-//				}
 			}
 		}
-//		-- ordena as inscricoes em ordem crescente tendo como condi��o o hor�rio de inscri��o --
-		
 		for (Inscricao insc : inscList) {
 			for (Inscricao insc2 : inscList) {
 				if (insc.getHorainsc().compareTo(insc2.getHorainsc()) < 0) {
 					Inscricao aux = new Inscricao();
-					
-				    aux.setDupla1(insc.getDupla1());
-				    aux.setEtapa1(insc.getEtapa1());
-				    aux.setHorainsc(insc.getHorainsc());
-				    aux.setInscricaoPK(insc.getInscricaoPK());
-				    
-				    insc.setDupla1(insc2.getDupla1());
-				    insc.setEtapa1(insc2.getEtapa1());
-				    insc.setHorainsc(insc2.getHorainsc());
-				    insc.setInscricaoPK(insc2.getInscricaoPK());
-				    
-				    insc2.setDupla1(aux.getDupla1());
-				    insc2.setEtapa1(aux.getEtapa1());
-				    insc2.setHorainsc(aux.getHorainsc());
-				    insc2.setInscricaoPK(aux.getInscricaoPK());
-					
+
+					aux.setDupla1(insc.getDupla1());
+					aux.setEtapa1(insc.getEtapa1());
+					aux.setHorainsc(insc.getHorainsc());
+					aux.setInscricaoPK(insc.getInscricaoPK());
+
+					insc.setDupla1(insc2.getDupla1());
+					insc.setEtapa1(insc2.getEtapa1());
+					insc.setHorainsc(insc2.getHorainsc());
+					insc.setInscricaoPK(insc2.getInscricaoPK());
+
+					insc2.setDupla1(aux.getDupla1());
+					insc2.setEtapa1(aux.getEtapa1());
+					insc2.setHorainsc(aux.getHorainsc());
+					insc2.setInscricaoPK(aux.getInscricaoPK());
 				}
 			}
 		}
-		
 		for (Inscricao insc : inscList) {
 			duplas.add(insc.getDupla1());
 		}
+		duplasSuplentes(pA, duplas);
+		return populaDuplas(inscList, inscritos);
+	}
 
-//		-- calcula quantas duplas ficaram suplentes e muda o atributo suplente da dupla para false as que n�o ser�o suplentes -- 
-		int resto = duplas.size() % 3;
-		for (int i = 0; i < duplas.size() - resto; i++) {
-			duplas.get(i).setSuplente(false);
-			pA.atualizaDupla(duplas.get(i));
-		}
-//		-- popula o array de inscritos com as duplas e transforma o atributo horaInscricao de date para String --
-		for (Inscricao i : inscList) {
+	public ArrayList<Inscritos> populaDuplas(ArrayList<Inscricao> listInscritos, ArrayList<Inscritos> inscritos) {
+		for (Inscricao i : listInscritos) {
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			String dataFormatada = dateFormat.format(i.getHorainsc());
 			Inscritos insc = new Inscritos(i.getDupla1().getNome(), i.getDupla1().isSuplente(), dataFormatada,
 					i.getDupla1().getCategoria(), i.getDupla1().getPontosRank());
 			inscritos.add(insc);
 		}
-
 		return inscritos;
+	}
+
+	public void duplasSuplentes(PersisteAtletaIF pA, ArrayList<Dupla> duplas) throws RemoteException {
+		int resto = duplas.size() % 3;
+		for (int i = 0; i < duplas.size() - resto; i++) {
+			duplas.get(i).setSuplente(false);
+			pA.atualizaDupla(duplas.get(i));
+		}
 	}
 
 	public static class Inscritos {
@@ -191,7 +176,6 @@ public class ControllerInscritos implements Initializable {
 		private final ObjectProperty<Categoria> categoria;
 		private final SimpleStringProperty pontos;
 
-
 		private Inscritos(String nome, boolean suplente, String horaInscricao, Categoria categoria, int pontos) {
 			this.nome = new SimpleStringProperty(nome);
 			if (suplente) {
@@ -199,45 +183,34 @@ public class ControllerInscritos implements Initializable {
 
 			} else {
 				this.suplente = new SimpleStringProperty("Inscrito");
-
 			}
 			this.horaInscricao = new SimpleStringProperty(horaInscricao);
 			this.categoria = new SimpleObjectProperty<Categoria>(categoria);
 			this.pontos = new SimpleStringProperty(Integer.toString(pontos));
 		}
-
 		public String getNome() {
 			return nome.get();
 		}
-
 		public void setNome(String nome) {
 			this.nome.set(nome);
 		}
-
 		public String getSuplente() {
 			return suplente.get();
 		}
-
 		public void setSuplente(String suplente) {
 			this.suplente.set(suplente);
 		}
-
 		public String getHoraInscricao() {
 			return horaInscricao.get();
 		}
-
 		public void setHoraInscricao(String horaInicio) {
 			this.horaInscricao.set(horaInicio);
 		}
-		
-		
 		public String getPontos() {
 			return pontos.get();
 		}
-
 		public void setPontos(String pontos) {
 			this.pontos.set(pontos);
 		}
 	}
-
 }
