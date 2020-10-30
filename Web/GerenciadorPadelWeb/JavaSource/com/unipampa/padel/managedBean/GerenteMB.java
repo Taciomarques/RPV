@@ -18,6 +18,8 @@ import com.unipampa.padel.model.Categoria;
 import com.unipampa.padel.model.Circuito;
 import com.unipampa.padel.model.Dupla;
 import com.unipampa.padel.model.Gerente;
+import com.unipampa.padel.parsers.GerenteParser;
+import com.unipampa.padel.util.JsfUtil;
 
 @ManagedBean(name = "gerenteMB")
 @SessionScoped
@@ -29,93 +31,19 @@ public class GerenteMB {
 	private Circuito circuito = new Circuito();
 
 	public ArrayList<Gerente> retornaGerentes() {
-
 		try {
 
-			String url = "http://localhost:8080/api/gerentes";
+			gerentes = GerenteParser.createGerente();
 
-			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "application/json");
-
-			if (conn.getResponseCode() != 200) {
-				System.out.println("Erro " + conn.getResponseCode() + " ao obter dados da URL " + url);
-			}
-
-			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-			String output = "";
-			String line;
-			while ((line = br.readLine()) != null) {
-				output += line;
-			}
-
-			conn.disconnect();
-
-//            Gson gson = new Gson();
-//            Dupla dupla = gson.fromJson(new String(output.getBytes()), Dupla.class);
-
-//            JSONArray response_json = new JSONArray (output);
-//            ObjectMapper mapper = new ObjectMapper();
-//            List<Object> listTest = mapper.readValue(String.valueOf(response_json), List.class);
-
-//            for(Object o : listTest) {
-//            	Dupla d = (Dupla)o;
-//            	System.out.println(d.getNome());
-//            }
-
-//			String json = new Gson().toJson(output);
-
-			ArrayList<Gerente> listaGerente = new ArrayList<Gerente>();
-
-			JsonParser jsonParser = new JsonParser();
-			JsonArray jsonArray = (JsonArray) jsonParser.parse(output);
-
-			int i = 0;
-			for (i = 0; i < jsonArray.size(); i++) {
-
-				JsonObject e = (JsonObject) jsonArray.get(i);
-//				System.out.println(e.get("nome"));
-				Gerente gerente = new Gerente();
-				gerente.setId(Integer.parseInt(e.get("id").toString()));
-				gerente.setLogin(e.get("login").toString());
-				gerente.setNome(e.get("nome").toString());
-				gerente.setSenha(e.get("senha").toString());
-				
-				ArrayList<Circuito> circuitos = new ArrayList<>();
-
-				JsonArray c = (JsonArray) e.get("circuitoList");
-//				System.out.println(c.size());
-				for (int j = 0; j < c.size(); j++) {
-
-					Circuito cir = new Circuito();
-					cir.setId(Integer.parseInt(c.get(j).toString()));
-					circuitos.add(cir);
-				}
-				gerente.setCircuitoList(circuitos);
-				
-				listaGerente.add(gerente);
-
-			}
-			
-//			System.out.println(listaGerente.size());
-			
-			gerentes = listaGerente;
-
-			return listaGerente;
+			return this.gerentes;
 
 		} catch (Exception e) {
-
 			return null;
-
 		}
 	}
 
 	public String login() {
 		for (Gerente g : retornaGerentes()) {
-//			System.out.println(gerente.getLogin()+" "+gerente.getSenha());
-//			System.out.println(g.getLogin()+" "+g.getSenha());
 			
 			if (g.getLogin().equals("\""+gerente.getLogin()+"\"") && g.getSenha().equals("\""+gerente.getSenha()+"\"")) {
 				JsfUtil.addSuccessMessage("Login Efetuado com Sucesso!");
@@ -125,7 +53,6 @@ public class GerenteMB {
 				gerenteLogado.setNome(g.getNome());
 				gerenteLogado.setSenha(g.getSenha());
 				gerenteLogado.setCircuitoList(g.getCircuitoList());
-//				System.out.println(gerenteLogado.getCircuitoList().get(0).getId());
 				return "paginaGerente";
 			}
 		}
@@ -159,9 +86,7 @@ public class GerenteMB {
 		circuito.setNome("test");
 		if (circuito.getId() == 1) {
 			JsfUtil.addSuccessMessage("Circuito " + circuito.getNome() + " carregado com Sucesso!");
-
 		}
-
 	}
 
 	public Circuito getCircuito() {

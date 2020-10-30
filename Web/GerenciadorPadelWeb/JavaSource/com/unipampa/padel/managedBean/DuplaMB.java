@@ -23,6 +23,9 @@ import com.unipampa.padel.model.Categoria;
 import com.unipampa.padel.model.Dupla;
 import com.unipampa.padel.model.Etapa;
 import com.unipampa.padel.model.Inscricao;
+import com.unipampa.padel.parsers.DuplaParser;
+import com.unipampa.padel.util.JsfUtil;
+import com.unipampa.padel.util.RestUtil;
 
 @ManagedBean(name = "duplaMB")
 @RequestScoped
@@ -51,79 +54,7 @@ public class DuplaMB implements Serializable {
 
 		try {
 
-			String url = "http://localhost:8080/api/duplas";
-
-			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "application/json");
-
-			if (conn.getResponseCode() != 200) {
-				System.out.println("Erro " + conn.getResponseCode() + " ao obter dados da URL " + url);
-			}
-
-			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-			String output = "";
-			String line;
-			while ((line = br.readLine()) != null) {
-				output += line;
-			}
-
-			conn.disconnect();
-
-//            Gson gson = new Gson();
-//            Dupla dupla = gson.fromJson(new String(output.getBytes()), Dupla.class);
-
-//            JSONArray response_json = new JSONArray (output);
-//            ObjectMapper mapper = new ObjectMapper();
-//            List<Object> listTest = mapper.readValue(String.valueOf(response_json), List.class);
-
-//            for(Object o : listTest) {
-//            	Dupla d = (Dupla)o;
-//            	System.out.println(d.getNome());
-//            }
-
-//			String json = new Gson().toJson(output);
-
-			ArrayList<Dupla> listaDupla = new ArrayList<Dupla>();
-
-			JsonParser jsonParser = new JsonParser();
-			JsonArray jsonArray = (JsonArray) jsonParser.parse(output);
-
-			int i = 0;
-			for (i = 0; i < jsonArray.size(); i++) {
-
-				JsonObject e = (JsonObject) jsonArray.get(i);
-//				System.out.println(e.get("nome"));
-				Dupla dupla = new Dupla();
-				dupla.setId(Integer.parseInt(e.get("id").toString()));
-				dupla.setNome(e.get("nome").toString());
-				Categoria cat = new Categoria();
-//				JsonObject c = (JsonObject) e.get("categoria");
-				cat.setId(Integer.parseInt(e.get("categoria").toString()));
-//				cat.setId(Integer.parseInt(c.get("id").toString()));
-//				cat.setNome(c.get("nome").toString());
-				dupla.setCategoria(cat);
-				dupla.setImpedimento(e.get("impedimento").toString());
-				if(e.get("suplente").toString().equalsIgnoreCase("true")) {
-					dupla.setSuplente(true);
-				}else {
-					dupla.setSuplente(false);
-				}
-				dupla.setPontosRank(Integer.parseInt(e.get("pontosRank").toString()));
-				listaDupla.add(dupla);
-
-			}
-
-//			System.out.println(listaDupla.size());
-//			
-//			for (Dupla d : listaDupla) {
-//				System.out.println("Id: " + d.getId());
-//				System.out.println("Nome: " + d.getNome());
-//			}
-
-			return listaDupla;
+			return DuplaParser.createDupla();
 
 		} catch (Exception e) {
 
