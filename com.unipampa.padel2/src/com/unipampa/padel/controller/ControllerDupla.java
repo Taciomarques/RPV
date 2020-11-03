@@ -23,12 +23,14 @@ import com.unipampa.padel.model.Inscricao;
 import com.unipampa.padel.model.InscricaoPK;
 import com.unipampa.padel.model.Ranking;
 import com.unipampa.padel.model.RankingPK;
+import com.unipampa.padel.parser.AtletaParser;
+import com.unipampa.padel.parser.CategoriaParser;
+import com.unipampa.padel.parser.CircuitoParser;
+import com.unipampa.padel.parser.DuplaParser;
+import com.unipampa.padel.parser.EtapaParser;
 import com.unipampa.padel.view.CadastrarDupla;
+
 import connection.Connection;
-import interfaces.PersisteAtletaIF;
-import interfaces.PersisteCategoriaIF;
-import interfaces.PersisteCircuitoIF;
-import interfaces.PersisteEtapaIF;
 import interfaces.PersisteInscricaoIF;
 import interfaces.PersisteRankingIF;
 import javafx.event.ActionEvent;
@@ -154,14 +156,15 @@ public class ControllerDupla implements Initializable {
 
 	public void populaItemCategoria() {
 		try {
-			PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
-			categorias = pC.recuperaCategorias();
+//			PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
+			categorias = CategoriaParser.createCategoria();
 			for (Categoria c : categorias) {
+				
 				MenuItem m = new MenuItem(c.getNome());
 				m.setOnAction(eventoSelectCat);
 				catDupla.getItems().add(m);
 			}
-		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 	}
@@ -201,9 +204,9 @@ public class ControllerDupla implements Initializable {
 			at2.setCpf(cpfAtleta2.getText());
 			at2.setNumCel(numCelAtleta2.getText());
 
-			PersisteAtletaIF pa = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
+//			PersisteAtletaIF pa = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
 
-			for (Atleta att : pa.recuperaAtleta()) {
+			for (Atleta att : AtletaParser.createAtletas()) {
 				if (att.getCpf().equals(at1.getCpf())) {
 
 					at1 = att;
@@ -230,11 +233,12 @@ public class ControllerDupla implements Initializable {
 
 				}
 			}
+			//TODO
 			if (!carregado) {
-				at1 = pa.cadastroAtleta(at1);
+//				at1 = AtletaParser.cadastroAtleta(at1);
 			}
 			if (!carregado2) {
-				at2 = pa.cadastroAtleta(at2);
+//				at2 = AtletaParser.cadastroAtleta(at2);
 			}
 
 			Categoria categoriaDupla = new Categoria();
@@ -252,6 +256,7 @@ public class ControllerDupla implements Initializable {
 			dupla.setAtletaList(atletas);
 
 			int pontosRank = 0;
+			//TODO
 			PersisteRankingIF pRanking = (PersisteRankingIF) Naming.lookup(Connection.getUrl() + "ranking");
 
 			if (carregado) {
@@ -280,8 +285,9 @@ public class ControllerDupla implements Initializable {
 				dupla.setImpedimento(impedimento);
 			}
 
-			dupla = pa.cadastroDupla(dupla);
-//				dupla = pa.atualizaDupla(dupla);
+			//TODO
+//			dupla = DuplaParser.cadastroDupla(dupla);
+
 
 			Hibernate.initialize(at1);
 			Hibernate.initialize(at2);
@@ -303,11 +309,12 @@ public class ControllerDupla implements Initializable {
 			at1.setDuplas(listDuplas);
 			at2.setDuplas(listDuplas);
 
-			at1 = pa.atualizaAtleta(at1);
-			at2 = pa.atualizaAtleta(at2);
+			//TODO
+//			at1 = AtletaParser.atualizaAtleta(at1);
+//			at2 = AtletaParser.atualizaAtleta(at2);
 
-			PersisteCircuitoIF pCircuito = (PersisteCircuitoIF) Naming.lookup(Connection.getUrl() + "circuito");
-			ArrayList<Circuito> c = pCircuito.recuperaCircuitos();
+//			PersisteCircuitoIF pCircuito = (PersisteCircuitoIF) Naming.lookup(Connection.getUrl() + "circuito");
+			ArrayList<Circuito> c = CircuitoParser.createCircuitos();
 
 			Circuito cct = c.get(0);
 
@@ -332,8 +339,8 @@ public class ControllerDupla implements Initializable {
 
 			}
 
-			PersisteEtapaIF pe = (PersisteEtapaIF) Naming.lookup(Connection.getUrl() + "etapa");
-			ArrayList<Etapa> e = pe.recuperaEtapas();
+//			PersisteEtapaIF pe = (PersisteEtapaIF) Naming.lookup(Connection.getUrl() + "etapa");
+			ArrayList<Etapa> e = EtapaParser.createEtapas();
 
 			Inscricao inscricao = new Inscricao();
 			Etapa etp = e.get(0);
@@ -343,6 +350,7 @@ public class ControllerDupla implements Initializable {
 			inscricao.setEtapa1(e.get(0));
 			inscricao.setHorainsc(horaInsc);
 
+			//TODO
 			PersisteInscricaoIF pInscricao = (PersisteInscricaoIF) Naming.lookup(Connection.getUrl() + "inscricao");
 
 			if (pInscricao.cadastroInscricao(inscricao) != null) {

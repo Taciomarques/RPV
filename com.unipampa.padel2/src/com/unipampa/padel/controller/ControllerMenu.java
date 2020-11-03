@@ -30,9 +30,6 @@ public class ControllerMenu implements Initializable {
 	private Button verificarParticipantes;
 
 	@FXML
-	private Button ranq;
-
-	@FXML
 	private Button encerraCadastro;
 
 	@FXML
@@ -69,15 +66,6 @@ public class ControllerMenu implements Initializable {
 		ViewInscritos vI = new ViewInscritos();
 		vI.start(new Stage());
 
-	}
-
-	public void clickBotaoRanking(ActionEvent event) {
-		ViewRanking r = new ViewRanking();
-		try {
-			r.start(new Stage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void clickBotaoGerChaves(ActionEvent event) {

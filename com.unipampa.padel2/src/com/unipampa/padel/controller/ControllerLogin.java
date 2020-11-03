@@ -2,28 +2,25 @@ package com.unipampa.padel.controller;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.unipampa.padel.model.Gerente;
+import com.unipampa.padel.parser.GerenteParser;
 import com.unipampa.padel.view.ViewGerente;
 import com.unipampa.padel.view.ViewLogin;
 
-import connection.Connection;
-import interfaces.PersisteGerenteIF;
-
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 
 public class ControllerLogin implements Initializable {
 
@@ -41,8 +38,8 @@ public class ControllerLogin implements Initializable {
 		
 	}
 	public void clickBotaoLogin(ActionEvent event) throws MalformedURLException, RemoteException, NotBoundException {
-		PersisteGerenteIF pG = (PersisteGerenteIF) Naming.lookup(Connection.getUrl() + "gerente");
-		ArrayList<Gerente> gerentes = pG.recuperaGerentes();	
+//		PersisteGerenteIF pG = (PersisteGerenteIF) Naming.lookup(Connection.getUrl() + "gerente");
+		ArrayList<Gerente> gerentes = GerenteParser.createGerente();	
 		Boolean sucesso = false;
 		for (Gerente g : gerentes ) {
 			if (campoLogin.getText().equals( g.getLogin() )) {

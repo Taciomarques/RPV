@@ -13,14 +13,13 @@ import java.util.ResourceBundle;
 import com.unipampa.padel.model.Categoria;
 import com.unipampa.padel.model.Dupla;
 import com.unipampa.padel.model.Inscricao;
+import com.unipampa.padel.parser.AtletaParser;
+import com.unipampa.padel.parser.CategoriaParser;
+import com.unipampa.padel.parser.DuplaParser;
 import com.unipampa.padel.view.ViewInscritos;
 
 import connection.Connection;
-
-import interfaces.PersisteAtletaIF;
-import interfaces.PersisteCategoriaIF;
 import interfaces.PersisteInscricaoIF;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -35,7 +34,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 public class ControllerInscritos implements Initializable {
 
 	@FXML
@@ -57,7 +55,7 @@ public class ControllerInscritos implements Initializable {
 	private TableColumn<Dupla, String> pontos;
 
 	@FXML
-	private MenuButton categList;
+	private MenuButton catList;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -66,30 +64,30 @@ public class ControllerInscritos implements Initializable {
 		nome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		situ.setCellValueFactory(new PropertyValueFactory<>("suplente"));
 		pontos.setCellValueFactory(new PropertyValueFactory<>("pontos"));
-
+		
 		EventHandler<ActionEvent> eventoSelectCat = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				Categoria c = new Categoria();
 				c.setNome(((MenuItem) e.getSource()).getText());
-				categList.setText(c.getNome());
+				catList.setText(c.getNome());
 				populaItensInscritos(c);
 			}
 		};
 		addItensCategoria(eventoSelectCat);
 		Categoria c = new Categoria();
-		c.setNome(categList.getAccessibleText());
+		c.setNome(catList.getAccessibleText());
 		populaItensInscritos(c);
 	}
 
 	public void addItensCategoria(EventHandler<ActionEvent> eventoSelectCat) {
 		try {
-			PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
-			for (Categoria c : pC.recuperaCategorias()) {
+//			PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
+			for (Categoria c : CategoriaParser.createCategoria()) {
 				MenuItem m = new MenuItem(c.getNome());
 				m.setOnAction(eventoSelectCat);
-				categList.getItems().add(m);
+				catList.getItems().add(m);
 			}
-		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 	}
@@ -109,7 +107,9 @@ public class ControllerInscritos implements Initializable {
 	public ArrayList<Inscritos> atualizaSuplencia(Categoria cat)
 			throws MalformedURLException, RemoteException, NotBoundException {
 
-		PersisteAtletaIF pA = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
+//		PersisteAtletaIF pA = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
+
+		//TODO
 		PersisteInscricaoIF pI = (PersisteInscricaoIF) Naming.lookup(Connection.getUrl() + "inscricao");
 		ArrayList<Dupla> duplas = new ArrayList<>();
 		ArrayList<Inscricao> inscList = new ArrayList<>();
@@ -145,7 +145,7 @@ public class ControllerInscritos implements Initializable {
 		for (Inscricao insc : inscList) {
 			duplas.add(insc.getDupla1());
 		}
-		duplasSuplentes(pA, duplas);
+		duplasSuplentes(duplas);
 		return populaDuplas(inscList, inscritos);
 	}
 
@@ -160,11 +160,12 @@ public class ControllerInscritos implements Initializable {
 		return inscritos;
 	}
 
-	public void duplasSuplentes(PersisteAtletaIF pA, ArrayList<Dupla> duplas) throws RemoteException {
+	public void duplasSuplentes(ArrayList<Dupla> duplas) throws RemoteException {
 		int resto = duplas.size() % 3;
 		for (int i = 0; i < duplas.size() - resto; i++) {
 			duplas.get(i).setSuplente(false);
-			pA.atualizaDupla(duplas.get(i));
+			//TODO
+//			DuplaParser.atualizaDupla(duplas.get(i));
 		}
 	}
 

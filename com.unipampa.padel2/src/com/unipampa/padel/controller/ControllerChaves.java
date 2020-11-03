@@ -8,12 +8,16 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
+
 import com.unipampa.padel.model.Categoria;
 import com.unipampa.padel.model.Chave;
 import com.unipampa.padel.model.Dupla;
 import com.unipampa.padel.model.Partida;
+import com.unipampa.padel.parser.CategoriaParser;
+import com.unipampa.padel.parser.ChaveParser;
+import com.unipampa.padel.parser.DuplaParser;
+
 import connection.Connection;
-import interfaces.PersisteAtletaIF;
 import interfaces.PersisteCategoriaIF;
 import interfaces.PersisteChaveIF;
 import interfaces.PersistePartidaIF;
@@ -23,10 +27,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -49,17 +53,18 @@ public class ControllerChaves implements Initializable {
 
 		eventoSelectCat = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				Categoria c = new Categoria();
-				c.setNome(((MenuItem) e.getSource()).getText());
-				menuButtonCategoria.setText(c.getNome());
-				carregaChaves(c);
+				
+				carregaChaves(e);
 			}
 		};
 		addItensCategoria();
 	}
 
-	public void carregaChaves(Categoria c) {
+	public void carregaChaves(ActionEvent e) {
 		try {
+			Categoria c = new Categoria();
+			c.setNome(((MenuItem) e.getSource()).getText());
+			menuButtonCategoria.setText(c.getNome());
 			loadChaves(c);
 		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
 			e1.printStackTrace();
@@ -82,8 +87,9 @@ public class ControllerChaves implements Initializable {
 
 	public void loadChaves(Categoria c) throws MalformedURLException, RemoteException, NotBoundException {
 		
-		PersisteChaveIF pchave = (PersisteChaveIF) Naming.lookup(Connection.getUrl() + "chave");
-		todasChaves = pchave.recuperaChaves();
+//		PersisteChaveIF pchave = (PersisteChaveIF) Naming.lookup(Connection.getUrl() + "chave");
+		ChaveParser pchave = new ChaveParser();	
+		todasChaves = pchave.createChaves();
 		chaves = new ArrayList<Chave>();
 		
 		for (Chave chaveIterator : todasChaves) {
@@ -152,15 +158,21 @@ public class ControllerChaves implements Initializable {
 
 	@SuppressWarnings("unchecked")
 	public static void geraChaves() throws MalformedURLException, RemoteException, NotBoundException {
-		PersisteAtletaIF pA = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
+//		PersisteAtletaIF pA = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
+		
+		DuplaParser pA = new DuplaParser();
+		ArrayList<Dupla> todasDuplas = pA.createDupla();
 
-		ArrayList<Dupla> todasDuplas = pA.recuperaDuplas();
+		
+//		PersisteCategoriaIF pc = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
+		
+		CategoriaParser pc = new CategoriaParser();
+		ArrayList<Categoria> categorias = pc.createCategoria();
 
-		PersisteCategoriaIF pc = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
-		ArrayList<Categoria> categorias = pc.recuperaCategorias();
-
-		PersisteChaveIF pchave = (PersisteChaveIF) Naming.lookup(Connection.getUrl() + "chave");
-
+//		PersisteChaveIF pchave = (PersisteChaveIF) Naming.lookup(Connection.getUrl() + "chave");
+		
+		ChaveParser pchave = new ChaveParser();
+		
 		for (Categoria categoria : categorias) {
 
 			ArrayList<Dupla> duplasPorCategoria = new ArrayList<>();
@@ -184,10 +196,10 @@ public class ControllerChaves implements Initializable {
 
 			createDuplaChave(pchave, duplasPorCategoria, chaves);
 		}
-		geraJogos();
+//		geraJogos();
 	}
 
-	public static void createDuplaChave(PersisteChaveIF pchave, ArrayList<Dupla> duplasPorCategoria,
+	public static void createDuplaChave(ChaveParser pchave, ArrayList<Dupla> duplasPorCategoria,
 			ArrayList<Chave> chaves) throws RemoteException {
 		int i = 0;
 		
@@ -207,7 +219,8 @@ public class ControllerChaves implements Initializable {
 			i++;
 		}
 		for (Chave chave : chaves) {
-			pchave.cadastroChave(chave);
+			//TODO
+//			pchave.cadastroChave(chave);
 			String nomeChave = chave.getNome();
 			String nomeCategoria = chave.getDuplaList().get(0).getCategoria().getNome();
 			String nomeDupla1 = chave.getDuplaList().get(0).getNome();
@@ -235,16 +248,25 @@ public class ControllerChaves implements Initializable {
 
 			duplas.add(chave.getDuplaList().get(0));
 			duplas.add(chave.getDuplaList().get(1));
+			p.setNome(chave.getDuplaList().get(0).getNome()+"|X|"+chave.getDuplaList().get(1).getNome());
+			p.setPontosDupla1(chave.getDuplaList().get(0).getPontosRank());
+			p.setPontosDupla2(chave.getDuplaList().get(1).getPontosRank());
 			p.setDuplaList(duplas);
 			duplas.clear();
 
 			duplas.add(chave.getDuplaList().get(1));
 			duplas.add(chave.getDuplaList().get(2));
+			p.setNome(chave.getDuplaList().get(1).getNome()+"|X|"+chave.getDuplaList().get(2).getNome());
+			p.setPontosDupla1(chave.getDuplaList().get(1).getPontosRank());
+			p.setPontosDupla2(chave.getDuplaList().get(2).getPontosRank());
 			p1.setDuplaList(duplas);
 			duplas.clear();
 
 			duplas.add(chave.getDuplaList().get(0));
 			duplas.add(chave.getDuplaList().get(2));
+			p.setNome(chave.getDuplaList().get(0).getNome()+"|X|"+chave.getDuplaList().get(2).getNome());
+			p.setPontosDupla1(chave.getDuplaList().get(0).getPontosRank());
+			p.setPontosDupla2(chave.getDuplaList().get(2).getPontosRank());
 			p2.setDuplaList(duplas);
 			duplas.clear();
 
