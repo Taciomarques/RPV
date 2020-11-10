@@ -1,10 +1,13 @@
 package com.unipampa.padel.parser;
 
+import java.io.BufferedReader;
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.unipampa.padel.model.Atleta;
 import com.unipampa.padel.model.Categoria;
 import com.unipampa.padel.model.Circuito;
 import com.unipampa.padel.remote.RestUtil;
@@ -38,6 +41,30 @@ public class CategoriaParser {
 			
 			return listaCategoria;
 
+		}
+		
+		private static ArrayList<Categoria> converteJsonParaCategoria(BufferedReader br) {
+
+			try {
+			ArrayList<Categoria> listaCategoria = new ArrayList<Categoria>();
+
+			String line;
+
+			Gson gson = new Gson();
+			
+			while ((line = br.readLine()) != null) {
+				
+				Categoria obj = gson.fromJson(line, Categoria.class);
+				listaCategoria.add(obj);
+				
+			}
+			
+			return listaCategoria;
+			
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+				return null;
+			}
 		}
 		
 	}

@@ -11,8 +11,8 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="175.0" prefWidth="184.0" VBox.vgrow="ALWAYS">
          <children>
-            <TextField fx:id="txtFieldLogin" layoutX="17.0" layoutY="90.0" promptText="Login" />
-            <PasswordField fx:id="passwordFieldLogin" layoutX="15.0" layoutY="132.0" promptText="Senha" />
+            <TextField fx:id="campoLogin" layoutX="17.0" layoutY="90.0" promptText="Login" />
+            <PasswordField fx:id="campoPassword" layoutX="15.0" layoutY="132.0" promptText="Senha" />
             <Button fx:id="btnLogin" layoutX="17.0" layoutY="177.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="152.0" text="Acessar" onAction="#clickBotaoLogin"/>
             <Label layoutX="43.0" layoutY="38.0" text="Login de Gerente" />
          </children>

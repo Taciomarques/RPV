@@ -1,31 +1,43 @@
 package com.unipampa.padel.parser;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.unipampa.padel.model.Atleta;
 import com.unipampa.padel.model.Categoria;
 import com.unipampa.padel.model.Chave;
 import com.unipampa.padel.model.Dupla;
+import com.unipampa.padel.model.Ranking;
 import com.unipampa.padel.remote.RestUtil;
 
 public class ChaveParser {
 	
-	private static String url = "http://localhost:8080/api/chaves";
+	private static String url_get = "http://localhost:8080/api/chaves";
+	private static String url_post = "http://localhost:8080/api/chave";
 	
 	public static ArrayList<Chave> createChaves(){
 		
-		return montaDuplaChave(convertJsonParaChave(RestUtil.retornaDados(url)));
+		return montaDuplaChave(convertJsonParaChave(RestUtil.retornaDados(url_get)));
 		
 	}
 	
-//	public static void cadastroChaves(ArrayList<Chave> chaves){
-//		
-//		return RestUtil.persisteDados(url,convertChaveParaJson(chaves));
-//		
-//	}
+	public static String cadastroChave(Chave chave) throws IOException {
+		return RestUtil.persisteDados(url_post, convertChaveParaJson(chave));
+	}
+
+	private static String convertChaveParaJson(Chave chave) {
+
+		Gson gson = new Gson();
+		String json = gson.toJson(chave);
+		System.out.println(json);
+	
+		return json;
+	}
 
 	private static ArrayList<Chave> convertJsonParaChave(String output) {
 
@@ -62,17 +74,6 @@ public class ChaveParser {
 
 	}
 	
-	private static JsonArray convertChaveParaJson(ArrayList<Chave> chaves) {
-
-		for(Chave c: chaves) {
-			Gson gson = new Gson();    
-		    String json = gson.toJson(c);
-		    System.out.println(json);
-		}
-
-		return null;
-	}
-
 	private static ArrayList<Chave> montaDuplaChave(ArrayList<Chave> listaChave) {
 		int index = 0;
 		DuplaParser duplaPr = new DuplaParser();

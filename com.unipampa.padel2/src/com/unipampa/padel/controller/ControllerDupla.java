@@ -2,7 +2,6 @@ package com.unipampa.padel.controller;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -28,11 +27,10 @@ import com.unipampa.padel.parser.CategoriaParser;
 import com.unipampa.padel.parser.CircuitoParser;
 import com.unipampa.padel.parser.DuplaParser;
 import com.unipampa.padel.parser.EtapaParser;
+import com.unipampa.padel.parser.InscricaoParser;
+import com.unipampa.padel.parser.RankingParser;
 import com.unipampa.padel.view.CadastrarDupla;
 
-import connection.Connection;
-import interfaces.PersisteInscricaoIF;
-import interfaces.PersisteRankingIF;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -233,12 +231,12 @@ public class ControllerDupla implements Initializable {
 
 				}
 			}
-			//TODO
+			
 			if (!carregado) {
-//				at1 = AtletaParser.cadastroAtleta(at1);
+				AtletaParser.cadastroAtleta(at1);
 			}
 			if (!carregado2) {
-//				at2 = AtletaParser.cadastroAtleta(at2);
+				AtletaParser.cadastroAtleta(at2);
 			}
 
 			Categoria categoriaDupla = new Categoria();
@@ -256,18 +254,18 @@ public class ControllerDupla implements Initializable {
 			dupla.setAtletaList(atletas);
 
 			int pontosRank = 0;
-			//TODO
-			PersisteRankingIF pRanking = (PersisteRankingIF) Naming.lookup(Connection.getUrl() + "ranking");
+			
+//			PersisteRankingIF pRanking = (PersisteRankingIF) Naming.lookup(Connection.getUrl() + "ranking");
 
 			if (carregado) {
-				for (Ranking r : pRanking.recuperaRankings()) {
+				for (Ranking r : RankingParser.createRanking()) {
 					if (r.getAtleta1().getId() == at1.getId()) {
 						pontosRank = pontosRank + r.getPontosrank();
 					}
 				}
 			}
 			if (carregado2) {
-				for (Ranking r : pRanking.recuperaRankings()) {
+				for (Ranking r : RankingParser.createRanking()) {
 					if (r.getAtleta1().getId() == at2.getId()) {
 						pontosRank = pontosRank + r.getPontosrank();
 					}
@@ -285,8 +283,7 @@ public class ControllerDupla implements Initializable {
 				dupla.setImpedimento(impedimento);
 			}
 
-			//TODO
-//			dupla = DuplaParser.cadastroDupla(dupla);
+			DuplaParser.cadastroDupla(dupla);
 
 
 			Hibernate.initialize(at1);
@@ -309,9 +306,9 @@ public class ControllerDupla implements Initializable {
 			at1.setDuplas(listDuplas);
 			at2.setDuplas(listDuplas);
 
-			//TODO
-//			at1 = AtletaParser.atualizaAtleta(at1);
-//			at2 = AtletaParser.atualizaAtleta(at2);
+			
+			at1 = AtletaParser.atualizaAtleta(at1.getCpf());
+			at2 = AtletaParser.atualizaAtleta(at2.getCpf());
 
 //			PersisteCircuitoIF pCircuito = (PersisteCircuitoIF) Naming.lookup(Connection.getUrl() + "circuito");
 			ArrayList<Circuito> c = CircuitoParser.createCircuitos();
@@ -325,7 +322,7 @@ public class ControllerDupla implements Initializable {
 				ranking.setPontosrank(0);
 				ranking.setCategoria(categoriaDupla);
 				ranking.setCircuito1(c.get(0));
-				ranking = pRanking.cadastroRanking(ranking);
+				RankingParser.cadastroRanking(ranking);
 
 			}
 			if (!carregado2) {
@@ -335,7 +332,7 @@ public class ControllerDupla implements Initializable {
 				ranking2.setPontosrank(0);
 				ranking2.setCategoria(categoriaDupla);
 				ranking2.setCircuito1(c.get(0));
-				ranking2 = pRanking.cadastroRanking(ranking2);
+				RankingParser.cadastroRanking(ranking2);
 
 			}
 
@@ -350,10 +347,10 @@ public class ControllerDupla implements Initializable {
 			inscricao.setEtapa1(e.get(0));
 			inscricao.setHorainsc(horaInsc);
 
-			//TODO
-			PersisteInscricaoIF pInscricao = (PersisteInscricaoIF) Naming.lookup(Connection.getUrl() + "inscricao");
+			
+//			PersisteInscricaoIF pInscricao = (PersisteInscricaoIF) Naming.lookup(Connection.getUrl() + "inscricao");
 
-			if (pInscricao.cadastroInscricao(inscricao) != null) {
+			if (InscricaoParser.cadastroInscricao(inscricao) != null) {
 				System.out.println("dupla " + dupla.getNome() + " cadastrada com sucesso");
 			}
 

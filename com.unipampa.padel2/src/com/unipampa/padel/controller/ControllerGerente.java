@@ -47,8 +47,7 @@ public class ControllerGerente implements Initializable {
 		try {
 //			PersisteCircuitoIF pC = (PersisteCircuitoIF) Naming.lookup(Connection.getUrl()
 //					+ "circuito");
-			CircuitoParser pC = new CircuitoParser();
-			for (Circuito c : pC.createCircuitos()) {
+			for (Circuito c : CircuitoParser.createCircuitos()) {
 				MenuItem m = new MenuItem(c.getNome());
 				m.setOnAction(eventoSelectCat);
 				menuBtnCircuitos.getItems().add(m);

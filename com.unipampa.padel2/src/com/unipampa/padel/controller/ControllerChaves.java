@@ -1,8 +1,8 @@
 package com.unipampa.padel.controller;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -17,10 +17,6 @@ import com.unipampa.padel.parser.CategoriaParser;
 import com.unipampa.padel.parser.ChaveParser;
 import com.unipampa.padel.parser.DuplaParser;
 
-import connection.Connection;
-import interfaces.PersisteCategoriaIF;
-import interfaces.PersisteChaveIF;
-import interfaces.PersistePartidaIF;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -57,7 +53,11 @@ public class ControllerChaves implements Initializable {
 				carregaChaves(e);
 			}
 		};
-		addItensCategoria();
+		try {
+			addItensCategoria();
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	public void carregaChaves(ActionEvent e) {
@@ -71,25 +71,18 @@ public class ControllerChaves implements Initializable {
 		}
 	}
 
-	public void addItensCategoria() {
-		try {
-			PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl()
-					+ "categoria");
-			for (Categoria c : pC.recuperaCategorias()) {
+	public void addItensCategoria() throws MalformedURLException {
+			for (Categoria c : CategoriaParser.createCategoria()) {
 				MenuItem m = new MenuItem(c.getNome());
 				m.setOnAction(eventoSelectCat);
 				menuButtonCategoria.getItems().add(m);
 			}
-		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
-			e1.printStackTrace();
-		}
 	}
 
 	public void loadChaves(Categoria c) throws MalformedURLException, RemoteException, NotBoundException {
 		
 //		PersisteChaveIF pchave = (PersisteChaveIF) Naming.lookup(Connection.getUrl() + "chave");
-		ChaveParser pchave = new ChaveParser();	
-		todasChaves = pchave.createChaves();
+		todasChaves = ChaveParser.createChaves();
 		chaves = new ArrayList<Chave>();
 		
 		for (Chave chaveIterator : todasChaves) {
@@ -157,22 +150,17 @@ public class ControllerChaves implements Initializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void geraChaves() throws MalformedURLException, RemoteException, NotBoundException {
+	public static void geraChaves() throws NotBoundException, IOException {
 //		PersisteAtletaIF pA = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
 		
-		DuplaParser pA = new DuplaParser();
-		ArrayList<Dupla> todasDuplas = pA.createDupla();
+		ArrayList<Dupla> todasDuplas = DuplaParser.createDupla();
 
-		
 //		PersisteCategoriaIF pc = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
 		
-		CategoriaParser pc = new CategoriaParser();
-		ArrayList<Categoria> categorias = pc.createCategoria();
+		ArrayList<Categoria> categorias = CategoriaParser.createCategoria();
 
 //		PersisteChaveIF pchave = (PersisteChaveIF) Naming.lookup(Connection.getUrl() + "chave");
-		
-		ChaveParser pchave = new ChaveParser();
-		
+				
 		for (Categoria categoria : categorias) {
 
 			ArrayList<Dupla> duplasPorCategoria = new ArrayList<>();
@@ -194,13 +182,13 @@ public class ControllerChaves implements Initializable {
 				chaves.add(chave);
 			}
 
-			createDuplaChave(pchave, duplasPorCategoria, chaves);
+			createDuplaChave(duplasPorCategoria, chaves);
 		}
 //		geraJogos();
 	}
 
-	public static void createDuplaChave(ChaveParser pchave, ArrayList<Dupla> duplasPorCategoria,
-			ArrayList<Chave> chaves) throws RemoteException {
+	public static void createDuplaChave(ArrayList<Dupla> duplasPorCategoria,
+			ArrayList<Chave> chaves) throws IOException {
 		int i = 0;
 		
 		for (Chave chave : chaves) {
@@ -219,8 +207,8 @@ public class ControllerChaves implements Initializable {
 			i++;
 		}
 		for (Chave chave : chaves) {
-			//TODO
-//			pchave.cadastroChave(chave);
+			
+			ChaveParser.cadastroChave(chave);
 			String nomeChave = chave.getNome();
 			String nomeCategoria = chave.getDuplaList().get(0).getCategoria().getNome();
 			String nomeDupla1 = chave.getDuplaList().get(0).getNome();
@@ -232,10 +220,10 @@ public class ControllerChaves implements Initializable {
 	}
 
 	public static void geraJogos() throws MalformedURLException, RemoteException, NotBoundException {
-		PersisteChaveIF pchave = (PersisteChaveIF) Naming.lookup(Connection.getUrl() + "chave");
-		ArrayList<Chave> chaves = pchave.recuperaChaves();
+//		PersisteChaveIF pchave = (PersisteChaveIF) Naming.lookup(Connection.getUrl() + "chave");
+		ArrayList<Chave> chaves = ChaveParser.createChaves();
 
-		PersistePartidaIF ptida = (PersistePartidaIF) Naming.lookup(Connection.getUrl() + "partida");
+//		PersistePartidaIF ptida = (PersistePartidaIF) Naming.lookup(Connection.getUrl() + "partida");
 
 		for (int i = 0; i < chaves.size(); i++) {
 
@@ -270,9 +258,9 @@ public class ControllerChaves implements Initializable {
 			p2.setDuplaList(duplas);
 			duplas.clear();
 
-			ptida.cadastroPartida(p);
-			ptida.cadastroPartida(p1);
-			ptida.cadastroPartida(p2);
+//			ptida.cadastroPartida(p);
+//			ptida.cadastroPartida(p1);
+//			ptida.cadastroPartida(p2);
 		}
 	}
 }

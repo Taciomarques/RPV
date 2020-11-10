@@ -39,11 +39,11 @@ public class ControllerLogin implements Initializable {
 	}
 	public void clickBotaoLogin(ActionEvent event) throws MalformedURLException, RemoteException, NotBoundException {
 //		PersisteGerenteIF pG = (PersisteGerenteIF) Naming.lookup(Connection.getUrl() + "gerente");
-		ArrayList<Gerente> gerentes = GerenteParser.createGerente();	
+		ArrayList<Gerente> gerentes = GerenteParser.createGerente();
 		Boolean sucesso = false;
 		for (Gerente g : gerentes ) {
-			if (campoLogin.getText().equals( g.getLogin() )) {
-				if (campoPassword.getText().equals(g.getSenha())) {
+			if (campoLogin.getText().equals( g.getLogin().substring(1, g.getLogin().length()-1) )) {
+				if (campoPassword.getText().equals(g.getSenha().substring(1, g.getLogin().length()-1))) {
 					sucesso = true;
 					ViewGerente viewGerente = new ViewGerente();
 					viewGerente.start(new Stage());

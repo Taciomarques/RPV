@@ -1,40 +1,18 @@
 package com.unipampa.padel.controller;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.ResourceBundle;
 
-import com.unipampa.padel.model.Categoria;
-import com.unipampa.padel.model.Chave;
-import com.unipampa.padel.model.Dupla;
 import com.unipampa.padel.model.Partida;
-import com.unipampa.padel.persistence.PersisteAtleta;
-import com.unipampa.padel.persistence.PersisteCategoria;
-import com.unipampa.padel.persistence.PersisteChave;
-import com.unipampa.padel.persistence.PersistePartida;
 
-import connection.Connection;
-import interfaces.PersisteCategoriaIF;
-import interfaces.PersistePartidaIF;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -49,52 +27,52 @@ public class ControllerPartidas implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 
-		EventHandler<ActionEvent> eventoSelectCat = eventoCategoriaSelecionada();
+//		EventHandler<ActionEvent> eventoSelectCat = eventoCategoriaSelecionada();
 
-		try {
-			PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
+//		try {
+//			PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
 
-			adicionaCategoriasBotao(eventoSelectCat, pC);
+//			adicionaCategoriasBotao(eventoSelectCat, pC);
 
-		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
-			e1.printStackTrace();
-		}
+//		} catch (MalformedURLException | RemoteException | NotBoundException e1) {
+//			e1.printStackTrace();
+//		}
 	}
 
-	private EventHandler<ActionEvent> eventoCategoriaSelecionada() {
-		EventHandler<ActionEvent> eventoSelectCat = new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				Categoria c = new Categoria();
-				c.setNome(((MenuItem) e.getSource()).getText());
-				menuButtonCategoria.setText(c.getNome());
-				try {
-					carregaPartidas(c);
-				} catch (MalformedURLException | RemoteException | NotBoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		};
-		return eventoSelectCat;
-	}
+//	private EventHandler<ActionEvent> eventoCategoriaSelecionada() {
+//		EventHandler<ActionEvent> eventoSelectCat = new EventHandler<ActionEvent>() {
+//			public void handle(ActionEvent e) {
+//				Categoria c = new Categoria();
+//				c.setNome(((MenuItem) e.getSource()).getText());
+//				menuButtonCategoria.setText(c.getNome());
+//				try {
+//					carregaPartidas(c);
+//				} catch (MalformedURLException | RemoteException | NotBoundException e1) {
+//					e1.printStackTrace();
+//				}
+//			}
+//		};
+//		return eventoSelectCat;
+//	}
 
-	private void adicionaCategoriasBotao(EventHandler<ActionEvent> eventoSelectCat, PersisteCategoriaIF pC)
-			throws RemoteException {
-		for (Categoria c : pC.recuperaCategorias()) {
-			MenuItem m = new MenuItem(c.getNome());
-			m.setOnAction(eventoSelectCat);
-			menuButtonCategoria.getItems().add(m);
-		}
-	}
+//	private void adicionaCategoriasBotao(EventHandler<ActionEvent> eventoSelectCat, PersisteCategoriaIF pC)
+//			throws RemoteException {
+//		for (Categoria c : pC.recuperaCategorias()) {
+//			MenuItem m = new MenuItem(c.getNome());
+//			m.setOnAction(eventoSelectCat);
+//			menuButtonCategoria.getItems().add(m);
+//		}
+//	}
 
-	public void carregaPartidas(Categoria c) throws MalformedURLException, RemoteException, NotBoundException {
-		ArrayList<Partida> partidas = filtraPartidasPorCategoria(c);
-
-		if (partidas.isEmpty()) {
-			alertWarningSemPartidas();
-		} else {
-			adicionaPartidasPainel(partidas);
-		}
-	}
+//	public void carregaPartidas(Categoria c) throws MalformedURLException, RemoteException, NotBoundException {
+//		ArrayList<Partida> partidas = filtraPartidasPorCategoria(c);
+//
+//		if (partidas.isEmpty()) {
+//			alertWarningSemPartidas();
+//		} else {
+//			adicionaPartidasPainel(partidas);
+//		}
+//	}
 
 	private void adicionaPartidasPainel(ArrayList<Partida> partidas) {
 		GridPane mainGrid = new GridPane();
@@ -136,20 +114,20 @@ public class ControllerPartidas implements Initializable {
 		}
 	}
 
-	private ArrayList<Partida> filtraPartidasPorCategoria(Categoria c)
-			throws NotBoundException, MalformedURLException, RemoteException {
-		PersistePartidaIF ptida = (PersistePartidaIF) Naming.lookup(Connection.getUrl() + "partida");
-		ArrayList<Partida> todasPartidas = ptida.recuperaPartida();
-
-		ArrayList<Partida> partidas = new ArrayList<Partida>();
-
-		for (Partida partidaIterator : todasPartidas) {
-			if (partidaIterator.getDuplaList().get(0).getCategoria().getNome().equalsIgnoreCase(c.getNome())) {
-				partidas.add(partidaIterator);
-			}
-		}
-		return partidas;
-	}
+//	private ArrayList<Partida> filtraPartidasPorCategoria(Categoria c)
+//			throws NotBoundException, MalformedURLException, RemoteException {
+//		PersistePartidaIF ptida = (PersistePartidaIF) Naming.lookup(Connection.getUrl() + "partida");
+//		ArrayList<Partida> todasPartidas = ptida.recuperaPartida();
+//
+//		ArrayList<Partida> partidas = new ArrayList<Partida>();
+//
+//		for (Partida partidaIterator : todasPartidas) {
+//			if (partidaIterator.getDuplaList().get(0).getCategoria().getNome().equalsIgnoreCase(c.getNome())) {
+//				partidas.add(partidaIterator);
+//			}
+//		}
+//		return partidas;
+//	}
 
 	private void alertWarningSemPartidas() {
 		Alert alertErro = new Alert(AlertType.ERROR);

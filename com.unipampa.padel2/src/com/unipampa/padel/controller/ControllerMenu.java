@@ -1,5 +1,6 @@
 package com.unipampa.padel.controller;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -68,7 +69,7 @@ public class ControllerMenu implements Initializable {
 
 	}
 
-	public void clickBotaoGerChaves(ActionEvent event) {
+	public void clickBotaoGerChaves(ActionEvent event) throws IOException {
 		try {
 			ControllerChaves.geraChaves();
 		} catch (MalformedURLException | RemoteException | NotBoundException e) {

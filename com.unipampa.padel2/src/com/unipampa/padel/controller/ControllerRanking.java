@@ -2,27 +2,19 @@ package com.unipampa.padel.controller;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.unipampa.padel.controller.ControllerInscritos.Inscritos;
 import com.unipampa.padel.model.Atleta;
 import com.unipampa.padel.model.Categoria;
 import com.unipampa.padel.model.Dupla;
-import com.unipampa.padel.persistence.PersisteAtleta;
-import com.unipampa.padel.persistence.PersisteCategoria;
+import com.unipampa.padel.parser.CategoriaParser;
+import com.unipampa.padel.parser.DuplaParser;
 import com.unipampa.padel.view.ViewRanking;
 
-import connection.Connection;
-import interfaces.PersisteAtletaIF;
-import interfaces.PersisteCategoriaIF;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -79,9 +71,9 @@ public class ControllerRanking implements Initializable {
 
 	private void adicionaItensEvento(EventHandler<ActionEvent> eventoCategoria)
 			throws NotBoundException, MalformedURLException, RemoteException {
-		PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
+//		PersisteCategoriaIF pC = (PersisteCategoriaIF) Naming.lookup(Connection.getUrl() + "categoria");
 
-		for (Categoria c : pC.recuperaCategorias()) {
+		for (Categoria c : CategoriaParser.createCategoria()) {
 			MenuItem m = new MenuItem(c.getNome());
 			m.setOnAction(eventoCategoria);
 			categoriaLista.getItems().add(m);
@@ -113,12 +105,12 @@ public class ControllerRanking implements Initializable {
 
 	public ArrayList<Atleta> atualizaRanking(Categoria c)
 			throws MalformedURLException, RemoteException, NotBoundException {
-		PersisteAtletaIF pA = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
+//		PersisteAtletaIF pA = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
 		ArrayList<Atleta> atleta = new ArrayList<>();
 
 		ArrayList<Atleta> atletasRanking = new ArrayList<>();
 //		-- filtra as duplas por categoria escolhida para serem mostradas-- 
-		for (Dupla d : pA.recuperaDuplas()) {
+		for (Dupla d : DuplaParser.createDupla()) {
 			if (d.getCategoria().getNome().equals(c.getNome())) {
 				atleta.add(d.getAtletaList().get(0));
 				atleta.add(d.getAtletaList().get(1));

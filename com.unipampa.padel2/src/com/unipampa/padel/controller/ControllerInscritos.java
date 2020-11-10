@@ -2,7 +2,6 @@ package com.unipampa.padel.controller;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.DateFormat;
@@ -13,13 +12,11 @@ import java.util.ResourceBundle;
 import com.unipampa.padel.model.Categoria;
 import com.unipampa.padel.model.Dupla;
 import com.unipampa.padel.model.Inscricao;
-import com.unipampa.padel.parser.AtletaParser;
 import com.unipampa.padel.parser.CategoriaParser;
 import com.unipampa.padel.parser.DuplaParser;
+import com.unipampa.padel.parser.InscricaoParser;
 import com.unipampa.padel.view.ViewInscritos;
 
-import connection.Connection;
-import interfaces.PersisteInscricaoIF;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -109,15 +106,22 @@ public class ControllerInscritos implements Initializable {
 
 //		PersisteAtletaIF pA = (PersisteAtletaIF) Naming.lookup(Connection.getUrl() + "atleta");
 
-		//TODO
-		PersisteInscricaoIF pI = (PersisteInscricaoIF) Naming.lookup(Connection.getUrl() + "inscricao");
+//		PersisteInscricaoIF pI = (PersisteInscricaoIF) Naming.lookup(Connection.getUrl() + "inscricao");
 		ArrayList<Dupla> duplas = new ArrayList<>();
 		ArrayList<Inscricao> inscList = new ArrayList<>();
 		ArrayList<Inscritos> inscritos = new ArrayList<>();
 
-		for (Inscricao insc : pI.recuperaInscricoes()) {
-			if (insc.getDupla1().getCategoria().getNome().equals(cat.getNome())) {
-				inscList.add(insc);
+		for (Inscricao insc : InscricaoParser.createInscricoes()) {
+			for(Dupla d : DuplaParser.createDupla()) {
+				if(d.getId() == insc.getDupla1().getId()) {
+					for(Categoria c : CategoriaParser.createCategoria()) {
+						if (d.getCategoria().getId() == c.getId()) {
+							if(c.getNome().equals(cat.getNome())) {
+								inscList.add(insc);
+							}
+						}
+					}
+				}
 			}
 		}
 		for (Inscricao insc : inscList) {
@@ -164,8 +168,8 @@ public class ControllerInscritos implements Initializable {
 		int resto = duplas.size() % 3;
 		for (int i = 0; i < duplas.size() - resto; i++) {
 			duplas.get(i).setSuplente(false);
-			//TODO
-//			DuplaParser.atualizaDupla(duplas.get(i));
+			
+			DuplaParser.atualizaDupla(duplas.get(i));
 		}
 	}
 

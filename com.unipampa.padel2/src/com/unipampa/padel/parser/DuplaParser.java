@@ -1,21 +1,41 @@
 package com.unipampa.padel.parser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.unipampa.padel.model.Atleta;
 import com.unipampa.padel.model.Categoria;
 import com.unipampa.padel.model.Dupla;
 import com.unipampa.padel.remote.RestUtil;
 
 public class DuplaParser {
 	
+	private static String url_get = "http://localhost:8080/api/duplas";
+	private static String url_post = "http://localhost:8080/api/dupla";
+	
 	public static ArrayList<Dupla> createDupla(){
-		
-		String url = "http://localhost:8080/api/duplas";
-		return converteJsonParaDupla(RestUtil.retornaDados(url));
-		
+		return converteJsonParaDupla(RestUtil.retornaDados(url_get));	
+	}
+	
+	public static String cadastroDupla(Dupla dupla) throws IOException {
+		return RestUtil.persisteDados(url_post, convertDuplaParaJson(dupla));
+	}
+	
+	public static void atualizaDupla(Dupla dupla) {
+		RestUtil.atualizaDados(url_post,convertDuplaParaJson(dupla));
+	}
+	
+	private static String convertDuplaParaJson(Dupla dupla) {
+
+		Gson gson = new Gson();
+		String json = gson.toJson(dupla);
+		System.out.println(json);
+
+		return json;
 	}
 
 	private static ArrayList<Dupla> converteJsonParaDupla(String output){
@@ -49,9 +69,7 @@ public class DuplaParser {
 			listaDupla.add(dupla);
 
 		}
-		
 		return listaDupla;
-
 	}
 	
 }
